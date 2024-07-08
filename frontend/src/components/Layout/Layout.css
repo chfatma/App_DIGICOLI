@@ -1,0 +1,15 @@
+
+.layout {
+  display: flex;
+  margin-top: 60px; /* Adjust top margin as needed */
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  transition: margin-left 0.3s ease; /* Add transition for smooth animation */
+}
+
+.content.menu-open {
+  margin-left: 220px; /* Adjust based on Menu width */
+}
