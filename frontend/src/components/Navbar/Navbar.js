@@ -1,12 +1,9 @@
 import React from 'react';
 import './Navbar.css';
 
-const Navbar = ({ toggleMenu }) => {
+const Navbar = () => {
   return (
     <nav className="navbar">
-      <div className="navbar-logo" onClick={toggleMenu}>
-        <img src={process.env.PUBLIC_URL + '/favicon.png'} alt="Logo" />
-      </div>
       <div className="navbar-search">
         <input type="text" placeholder="Search..." className="search-input" />
         <button className="search-button">

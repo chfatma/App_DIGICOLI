@@ -7,6 +7,7 @@ import Dashboard from './pages/Admin/Dashboard/Dashboard';
 import Client from './pages/Admin/ListeClients/Client';
 import Evaluation from './pages/Evaluation/Evaluation';
 import ListeColis from './pages/Admin/ListeColis/ListeColis';
+import Livreurliste from './pages/Admin/Livreurliste/Livreurliste';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/dashboard" element={<ProtectedRoute component={Dashboard} />} />
         <Route path="/client" element={<ProtectedRoute component={Client} />} />
         <Route path="/ListeColis" element={<ProtectedRoute component={ListeColis} />} />
+        <Route path="/livreurs" element={<ProtectedRoute component={Livreurliste} />} />
         <Route path="/evaluation" element={<Evaluation />} /> 
       </Routes>
     </Router>

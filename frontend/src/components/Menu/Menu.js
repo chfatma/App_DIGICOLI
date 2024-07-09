@@ -2,10 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom'; 
 import './Menu.css';
 
-const Menu = ({ isOpen }) => {
+const Menu = () => {
   return (
-    <aside className={`menu ${isOpen ? 'open' : ''}`}>
+    <aside className="menu open">
+      <div className="navbar-logo">
+        <img src={process.env.PUBLIC_URL + '/favicon.png'} alt="Logo" />
+      </div>
       <ul>
+        {/* Menu items */}
         <li>
           <Link to="/dashboard">
             <i className="fa fa-tachometer-alt"></i> Dashboard
@@ -61,7 +65,6 @@ const Menu = ({ isOpen }) => {
             <i className="fa fa-life-ring"></i> Support
           </Link>
         </li>
-        {/* Add more menu items as needed */}
       </ul>
     </aside>
   );

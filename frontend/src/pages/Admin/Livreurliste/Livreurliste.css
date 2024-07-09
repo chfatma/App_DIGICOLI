@@ -1,0 +1,214 @@
+.livreur-page {
+  padding: 20px;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.filter-cards-container {
+  display: flex;
+  justify-content: flex-end; /* Align cards to the right */
+  gap: 20px;
+}
+
+.filter-card {
+  width: 180px; /* Adjust width as needed */
+  background-color: #5fa2db; /* Button background color */
+  color: white; /* Button text color */
+  border: none;
+  border-radius: 4px;
+  padding: 15px;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative; /* Position for dropdown */
+  transition: background-color 0.3s ease;
+}
+
+.filter-card:hover {
+  background-color: #7ab8f5; /* Button hover background color */
+}
+
+.filter-card .filter-icon-container {
+  position: relative;
+  width: 50px; /* Size of the circle container */
+  height: 50px; /* Size of the circle container */
+  background-color: #204f77; /* Dark blue circle background */
+  border-radius: 50%;
+  margin: 0 auto; /* Center the circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px; /* Adjust margin as needed */
+}
+
+.filter-card .filter-icon {
+  font-size: 1.5em; /* Icon size */
+  color: white; /* Icon color */
+}
+
+.filter-card .title {
+  font-size: 0.9em; /* Title font size */
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.filter-card .arrow-icon {
+  font-size: 0.8em; /* Arrow icon size */
+  position: absolute;
+  right: 10px; /* Adjust position as needed */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #204f77; /* Dark blue color */
+}
+
+.filter-card.active .arrow-icon {
+  color: black; /* Noir color when active */
+}
+
+.dropdown-content {
+  position: absolute;
+  top: calc(100% + 10px); /* Position dropdown below card */
+  left: 0;
+  background-color: rgb(176, 88, 88);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  width: 100%;
+  border-radius: 4px;
+  display: none;
+}
+
+.filter-card:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-item {
+  padding: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #121212;
+}
+
+.current-date {
+  padding: 12px;
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+.title {
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.cards {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 1150px; /* Fixed width */
+  height: 200px; /* Fixed height */
+  margin: 0 auto; /* Center the card horizontally */
+  overflow: hidden; /* Hide overflow content */
+}
+
+.card + .card {
+  margin-top: 20px; /* Add spacing between cards */
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.form-group {
+  flex: 1;
+  min-width: 0; /* Allow flex items to shrink */
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Adjust spacing between inputs in the form */
+.form-group:not(:last-child) {
+  margin-bottom: 10px; /* Space between inputs */
+  margin-right: 10px; /* Space between inputs */
+}
+
+/* Make Governorat input smaller */
+.form-group.governorat {
+  flex: 0.5; /* Adjust flex to make it smaller */
+}
+
+.add-button {
+  background-color: #ff5733;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: center; /* Center the button */
+  margin-top: 10px; /* Space above button */
+}
+
+.add-button:hover {
+  background-color: #ff7849;
+}
+
+.livreurs-table-container {
+  overflow: auto; /* Enable scrolling */
+  max-height: 260px; /* Limit height before scrolling */
+}
+
+.livreurs-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.livreurs-table th,
+.livreurs-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.livreurs-table th {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.livreurs-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.icon-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  margin: 0 5px;
+}
+
+.icon-button:hover {
+  background-color: #f2f2f2;
+  border-radius: 50%;
+}
