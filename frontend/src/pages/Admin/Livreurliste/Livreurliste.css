@@ -1,214 +1,107 @@
-.livreur-page {
+.livreur-list-container {
+  display: flex;
+  justify-content: space-between;
   padding: 20px;
-  background-color: #f5f5f5;
+}
+
+.right-content {
   display: flex;
-  flex-direction: column;
   gap: 20px;
 }
 
-.filter-cards-container {
+.small-button {
+  background-color: #ffffff;
+  padding: 8px; /* Adjusted padding */
+ /*  border: 1px solid #007bff; Blue border */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+  width: 180px; /* Increased width */
+  cursor: pointer; /* Pointer cursor on hover */
   display: flex;
-  justify-content: flex-end; /* Align cards to the right */
-  gap: 20px;
-}
-
-.filter-card {
-  width: 180px; /* Adjust width as needed */
-  background-color: #5fa2db; /* Button background color */
-  color: white; /* Button text color */
-  border: none;
-  border-radius: 4px;
-  padding: 15px;
-  cursor: pointer;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: relative; /* Position for dropdown */
-  transition: background-color 0.3s ease;
-}
-
-.filter-card:hover {
-  background-color: #7ab8f5; /* Button hover background color */
-}
-
-.filter-card .filter-icon-container {
-  position: relative;
-  width: 50px; /* Size of the circle container */
-  height: 50px; /* Size of the circle container */
-  background-color: #204f77; /* Dark blue circle background */
-  border-radius: 50%;
-  margin: 0 auto; /* Center the circle */
-  display: flex;
-  align-items: center;
   justify-content: center;
-  margin-bottom: 10px; /* Adjust margin as needed */
+  align-items: center;
+  flex-direction: column; /* Arrange children vertically */
 }
 
-.filter-card .filter-icon {
-  font-size: 1.5em; /* Icon size */
-  color: white; /* Icon color */
+.small-button:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.filter-card .title {
-  font-size: 0.9em; /* Title font size */
+.icon-circle {
+  background-color: #007bff; /* Blue background for icon circle */
+  color: #ffffff; /* White icon color */
+  border-radius: 50%;
+  width: 30px; /* Reduced size */
+  height: 30px; /* Reduced size */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 4px; /* Adjusted spacing between icon and title */
+}
+
+.card-title {
+  display: flex;
+  align-items: center; /* Center align items horizontally */
   font-weight: bold;
-  margin-bottom: 8px;
+  font-size: 14px; /* Increased font size */
+  color: #333333;
+  padding: 0px 0; /* Reduced padding */
 }
 
-.filter-card .arrow-icon {
-  font-size: 0.8em; /* Arrow icon size */
+.title-text {
+  margin-left: 4px; /* Adjusted margin between icon and text */
+}
+
+.clickable {
+  background: none;
+  border: none;
+  color: #007bff; /* Blue color for chevron icon */
+  font-size: 12px; /* Adjusted font size */
+  margin-top: 4px; /* Adjusted margin */
+}
+
+.gouvernement-dropdown {
   position: absolute;
-  right: 10px; /* Adjust position as needed */
-  top: 50%;
-  transform: translateY(-50%);
-  color: #204f77; /* Dark blue color */
-}
-
-.filter-card.active .arrow-icon {
-  color: black; /* Noir color when active */
-}
-
-.dropdown-content {
-  position: absolute;
-  top: calc(100% + 10px); /* Position dropdown below card */
+  top: calc(100% + 4px);
   left: 0;
-  background-color: rgb(176, 88, 88);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1;
   width: 100%;
-  border-radius: 4px;
-  display: none;
-}
-
-.filter-card:hover .dropdown-content {
-  display: block;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;
 }
 
 .dropdown-item {
-  padding: 12px;
+  padding: 8px;
+  font-size: 12px; /* Adjusted font size */
+  color: #333333;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .dropdown-item:hover {
-  background-color: #121212;
+  background-color: #f2f2f2;
 }
 
-.current-date {
-  padding: 12px;
-  font-weight: bold;
-}
-
-
-
-
-
-
-
-.title {
-  font-size: 1.5em;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-.cards {
-  background-color: white;
+.selected-info {
+  padding: 2px;
+  background-color: #f2f2f2;
   border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 1150px; /* Fixed width */
-  height: 200px; /* Fixed height */
-  margin: 0 auto; /* Center the card horizontally */
-  overflow: hidden; /* Hide overflow content */
-}
-
-.card + .card {
-  margin-top: 20px; /* Add spacing between cards */
-}
-
-.form-row {
+  font-size: 12px; /* Adjusted font size */
+  color: #333333;
+  margin-top: 4px; /* Adjusted margin */
   display: flex;
-  gap: 20px;
+  align-items: center;
 }
 
-.form-group {
-  flex: 1;
-  min-width: 0; /* Allow flex items to shrink */
+.selected-info i {
+  margin-right: 4px;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-  color: #666;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-/* Adjust spacing between inputs in the form */
-.form-group:not(:last-child) {
-  margin-bottom: 10px; /* Space between inputs */
-  margin-right: 10px; /* Space between inputs */
-}
-
-/* Make Governorat input smaller */
-.form-group.governorat {
-  flex: 0.5; /* Adjust flex to make it smaller */
-}
-
-.add-button {
-  background-color: #ff5733;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  align-self: center; /* Center the button */
-  margin-top: 10px; /* Space above button */
-}
-
-.add-button:hover {
-  background-color: #ff7849;
-}
-
-.livreurs-table-container {
-  overflow: auto; /* Enable scrolling */
-  max-height: 260px; /* Limit height before scrolling */
-}
-
-.livreurs-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.livreurs-table th,
-.livreurs-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: left;
-}
-
-.livreurs-table th {
-  background-color: #f2f2f2;
-  color: #333;
-}
-
-.livreurs-table tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.icon-button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 5px;
-  margin: 0 5px;
-}
-
-.icon-button:hover {
-  background-color: #f2f2f2;
-  border-radius: 50%;
+.date-info {
+  font-size: 12px; /* Adjusted font size */
+  color: #333333;
+  margin-top: 4px; /* Adjusted margin */
 }

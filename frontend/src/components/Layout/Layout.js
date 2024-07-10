@@ -1,12 +1,13 @@
 import React from 'react';
 import Navbar from '../Navbar/Navbar';
-import Menu from '../Menu/Menu';
+
+import MenuLivreure from '../Menu/MenuLivreur'
 import './Layout.css';
 
 const Layout = ({ children }) => {
   return (
     <div className="layout">
-      <Menu />
+      <MenuLivreure />
       <div className="content menu-open">
         <Navbar />
         {children}

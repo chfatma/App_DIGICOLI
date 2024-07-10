@@ -1,0 +1,134 @@
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: auto; /* Enable scrolling */
+  }
+  
+  /* LivreurInterface.css */
+  .livreur-page {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    padding: 20px;
+    min-height: 100vh; /* Ensure the container takes at least the full viewport height */
+    overflow: auto; /* Enable scrolling within the page */
+  }
+  
+  .title {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .cards {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Adjust to fit within the container */
+    max-width: 1150px; /* Maximum width */
+    margin: 20px auto; /* Center the card horizontally */
+    overflow: hidden; /* Hide overflow content */
+  }
+  
+  .livreur-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 20px; /* Add padding to the bottom */
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .form-group {
+    flex: 1;
+    min-width: 0; /* Allow flex items to shrink */
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+  }
+  
+  .form-group input {
+    width: 95%; /* Make input take the full width of the flex item */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Adjust spacing between inputs in the form */
+  .form-group:not(:last-child) {
+    margin-bottom: 10px; /* Space between inputs */
+    margin-right: 10px; /* Space between inputs */
+  }
+  
+  /* Make Governorat input smaller */
+  .form-group.governorat {
+    flex: 1; /* Adjust flex to make it smaller */
+  }
+  
+  /* Make Adresse input larger */
+  .form-group.adresse {
+    flex: 3; /* Adjust flex to make it larger */
+  }
+  
+  .add-button {
+    background-color: #ff5733;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    align-self: center; /* Center the button */
+    margin-top: 10px; /* Space above button */
+  }
+  
+  .add-button:hover {
+    background-color: #ff7849;
+  }
+  
+  .livreurs-table-container {
+    overflow: auto; /* Enable scrolling */
+    max-height: 260px; /* Limit height before scrolling */
+  }
+  
+  .livreurs-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .livreurs-table th, .livreurs-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .livreurs-table th {
+    background-color: #f2f2f2;
+    color: #333;
+  }
+  
+  .livreurs-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .icon-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    margin: 0 5px;
+  }
+  
+  .icon-button:hover {
+    background-color: #f2f2f2;
+    border-radius: 50%;
+  }
+  
