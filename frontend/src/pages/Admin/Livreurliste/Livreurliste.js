@@ -3,15 +3,15 @@ import './LivreurListe.css';
 
 const LivreurListe = () => {
   const [currentDate, setCurrentDate] = useState('');
-  const [setSelectedGouvernement] = useState(''); // eslint-disable-next-line no-unused-vars
+  const [setSelectedGouvernement] = useState(''); 
 
   const [showDropdown, setShowDropdown] = useState(false);
 
-  const gouvernements = ["Tunis", "Sousse", "Sfax"]; // Example list of gouvernements
+  const gouvernements = ["Tunis", "Sousse", "Sfax"];
 
   const handleGouvernementSelect = (gouvernement) => {
     setSelectedGouvernement(gouvernement);
-    setShowDropdown(false); // Hide dropdown after selection
+    setShowDropdown(false); 
   };
 
   const toggleDropdown = () => {
@@ -24,14 +24,13 @@ const LivreurListe = () => {
     }
   };
 
-  // Initialize current date
+ 
   useEffect(() => {
     const today = new Date();
     const formattedDate = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
     setCurrentDate(formattedDate);
   }, []);
 
-  // Event listener for clicking outside the dropdown
   useEffect(() => {
     document.addEventListener('mousedown', handleOutsideClick);
     return () => {
@@ -41,12 +40,11 @@ const LivreurListe = () => {
 
   return (
     <div className="livreur-list-container">
-      {/* Left Content */}
+   
       <div className="left-content">
-        {/* Your main content goes here */}
+     
       </div>
       
-      {/* Right Side Cards */}
       <div className="right-content">
         <div className="small-button gouvernement-card">
           <div className="card-title" onClick={toggleDropdown}>

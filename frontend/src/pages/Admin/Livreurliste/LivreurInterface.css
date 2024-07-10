@@ -6,14 +6,14 @@ html, body {
     overflow: auto; /* Enable scrolling */
   }
   
-  /* LivreurInterface.css */
+
   .livreur-page {
     display: flex;
     flex-direction: column;
     align-items: left;
     padding: 20px;
-    min-height: 100vh; /* Ensure the container takes at least the full viewport height */
-    overflow: auto; /* Enable scrolling within the page */
+    min-height: 100vh; 
+    overflow: auto;
   }
   
   .title {
@@ -69,14 +69,14 @@ html, body {
     margin-right: 10px; /* Space between inputs */
   }
   
-  /* Make Governorat input smaller */
+ 
   .form-group.governorat {
-    flex: 1; /* Adjust flex to make it smaller */
+    flex: 1;
   }
   
-  /* Make Adresse input larger */
+
   .form-group.adresse {
-    flex: 3; /* Adjust flex to make it larger */
+    flex: 3; 
   }
   
   .add-button {
@@ -87,7 +87,7 @@ html, body {
     border-radius: 4px;
     cursor: pointer;
     align-self: center; /* Center the button */
-    margin-top: 10px; /* Space above button */
+    margin-top: 10px;
   }
   
   .add-button:hover {
