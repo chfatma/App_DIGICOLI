@@ -1,0 +1,84 @@
+.filter-card {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 150px;
+  margin-top: 10px;
+  margin-left: auto;
+  transition: box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.filter-card.open {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.filter-content {
+  display: flex;
+  align-items: center;
+}
+
+.filter-icon,
+.arrow-icon {
+  margin-right: 10px;
+}
+
+.filter-label {
+  flex: 1;
+  font-size: 1rem;
+  color: #333;
+  margin-right: 10px;
+}
+
+.options {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.filter-card.open .options {
+  display: block;
+}
+
+.option {
+  padding: 10px;
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.option:hover {
+  background-color: #f0f0f0;
+}
+
+.selected-option {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  margin-top: 10px;
+}

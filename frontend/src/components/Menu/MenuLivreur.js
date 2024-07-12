@@ -11,7 +11,7 @@ const Menu = () => {
       <ul>
        
         <li>
-          <Link to="/dashboard">
+          <Link to="/livreurs">
             <i className="fa fa-tachometer-alt"></i> Dashboard
           </Link>
         </li>
@@ -21,7 +21,7 @@ const Menu = () => {
           </Link>
         </li>
         <li>
-          <Link to="/client">
+          <Link to="/TousClientsLivreur">
             <i className="fa fa-users"></i> Client
           </Link>
         </li>

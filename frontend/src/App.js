@@ -8,6 +8,7 @@ import Client from './pages/Admin/ListeClients/Client';
 import Evaluation from './pages/Evaluation/Evaluation';
 import ListDesColis from './pages/Livreur/ListDesColis/list';
 import LivreurInterface from './pages/Admin/Livreurliste/LivreurInterface';
+import TousClientsLivreur from './pages/Livreur/TousClientLivreur/TousClientsLivreur'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         
         <Route path="/livreurs" element={<ProtectedRoute component={LivreurInterface} />} />
         <Route path="/livlistcoli" element={<ProtectedRoute component={ListDesColis} />} />
+        <Route path="/TousClientsLivreur" element={<ProtectedRoute component={TousClientsLivreur} />} />
         <Route path="/evaluation" element={<Evaluation />} /> 
       </Routes>
     </Router>
