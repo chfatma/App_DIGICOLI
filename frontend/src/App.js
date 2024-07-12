@@ -6,8 +6,7 @@ import Login from './pages/Login/login';
 import Dashboard from './pages/Admin/Dashboard/Dashboard';
 import Client from './pages/Admin/ListeClients/Client';
 import Evaluation from './pages/Evaluation/Evaluation';
-import ListeColis from './pages/Admin/ListeColis/ListeColis';
-
+import ListDesColis from './pages/Livreur/ListDesColis/list';
 import LivreurInterface from './pages/Admin/Livreurliste/LivreurInterface';
 
 function App() {
@@ -17,8 +16,9 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<ProtectedRoute component={Dashboard} />} />
         <Route path="/client" element={<ProtectedRoute component={Client} />} />
-        <Route path="/ListeColis" element={<ProtectedRoute component={ListeColis} />} />
+        
         <Route path="/livreurs" element={<ProtectedRoute component={LivreurInterface} />} />
+        <Route path="/livlistcoli" element={<ProtectedRoute component={ListDesColis} />} />
         <Route path="/evaluation" element={<Evaluation />} /> 
       </Routes>
     </Router>

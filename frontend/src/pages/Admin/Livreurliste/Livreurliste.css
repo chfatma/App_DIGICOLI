@@ -1,3 +1,4 @@
+/* LivreurListe.css */
 .livreur-list-container {
   display: flex;
   justify-content: space-between;
@@ -10,18 +11,17 @@
 }
 
 .small-button {
+  position: relative;
   background-color: #ffffff;
-  padding: 8px; /* Adjusted padding */
- /*  border: 1px solid #007bff; Blue border */
+  padding: 10px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease-in-out;
-  width: 180px; /* Increased width */
-  cursor: pointer; /* Pointer cursor on hover */
+  width: 160px;
+  cursor: pointer;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  flex-direction: column; /* Arrange children vertically */
 }
 
 .small-button:hover {
@@ -29,36 +29,29 @@
 }
 
 .icon-circle {
-  background-color: #007bff; /* Blue background for icon circle */
-  color: #ffffff; /* White icon color */
+  background-color: #007bff;
+  color: #ffffff;
   border-radius: 50%;
-  width: 30px; /* Reduced size */
-  height: 30px; /* Reduced size */
+  width: 24px;
+  height: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 4px; /* Adjusted spacing between icon and title */
+  margin-right: 8px;
 }
 
 .card-title {
   display: flex;
-  align-items: center; /* Center align items horizontally */
+  align-items: center;
   font-weight: bold;
-  font-size: 14px; /* Increased font size */
+  font-size: 14px;
   color: #333333;
-  padding: 0px 0; /* Reduced padding */
+  padding: 0px 8px;
+  cursor: pointer;
 }
 
 .title-text {
-  margin-left: 4px; /* Adjusted margin between icon and text */
-}
-
-.clickable {
-  background: none;
-  border: none;
-  color: #007bff; /* Blue color for chevron icon */
-  font-size: 12px; /* Adjusted font size */
-  margin-top: 4px; /* Adjusted margin */
+  margin-left: 4px;
 }
 
 .gouvernement-dropdown {
@@ -67,41 +60,55 @@
   left: 0;
   width: 100%;
   background-color: #ffffff;
-  border: 1px solid #cccccc;
+  border: 1px solid #007bff;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  z-index: 10;
+  z-index: 100;
 }
 
 .dropdown-item {
   padding: 8px;
-  font-size: 12px; /* Adjusted font size */
+  font-size: 14px;
   color: #333333;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .dropdown-item:hover {
-  background-color: #f2f2f2;
+  background-color: #f0f0f0;
 }
 
-.selected-info {
-  padding: 2px;
-  background-color: #f2f2f2;
-  border-radius: 8px;
-  font-size: 12px; /* Adjusted font size */
-  color: #333333;
-  margin-top: 4px; /* Adjusted margin */
+.selected {
+  background-color: #f0f0f0; /* Selected item background color */
+}
+
+.date-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.icon-title {
   display: flex;
   align-items: center;
-}
-
-.selected-info i {
-  margin-right: 4px;
-}
-
-.date-info {
-  font-size: 12px; /* Adjusted font size */
+  font-weight: bold;
+  font-size: 14px;
   color: #333333;
-  margin-top: 4px; /* Adjusted margin */
+  padding: 0px 8px;
+  cursor: pointer;
+}
+
+.date-input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.selected-gouvernement {
+  padding: 8px 8px;
+  font-size: 14px;
+  color: #333333;
 }

@@ -9,14 +9,14 @@ const Menu = () => {
         <img src={process.env.PUBLIC_URL + '/favicon.png'} alt="Logo" />
       </div>
       <ul>
-        {/* Menu items */}
+       
         <li>
           <Link to="/dashboard">
             <i className="fa fa-tachometer-alt"></i> Dashboard
           </Link>
         </li>
         <li>
-          <Link to="/ListeColis">
+          <Link to="/livlistcoli">
             <i className="fa fa-box"></i> Listes des colis
           </Link>
         </li>
@@ -27,7 +27,7 @@ const Menu = () => {
         </li>
        
         <li>
-          <Link to="/evaluation">
+          <Link to="/livlistcoli">
             <i className="fa fa-star"></i> Evaluation
           </Link>
         </li>
