@@ -35,17 +35,17 @@
 .search-input {
   padding: 10px;
   border: none;
-  border-radius: 20px; /* Rounded shape */
+  border-radius: 4px; /* Rounded shape */
   font-size: 16px;
   outline: none;
   width: 100%; /* Take full width */
-  max-width: 400px; /* But no more than 300px */
+  max-width: 600px; /* But no more than 300px */
 }
 
 .search-button {
-  background-color: #555;
+  background-color: white;
   border: none;
-  color: #060606;
+  color: #193A69;
   padding: 10px;
   border-radius: 50%; /* Round shape for button */
   cursor: pointer;
@@ -57,7 +57,7 @@
 }
 
 .search-button:hover {
-  background-color: #666;
+  background-color: #F26622;
 }
 
 .navbar-items {
@@ -69,14 +69,14 @@
 .navbar-button {
   background: none;
   border: none;
-  color: #050505;
+  color: #193A69;
   font-size: 24px;
   cursor: pointer;
-  margin-right: 20px;
+  margin-right: 15px;
 }
 
 .navbar-button:hover {
-  color: #fcecec;
+  color: #F26622;
 }
 
 .navbar-greeting {

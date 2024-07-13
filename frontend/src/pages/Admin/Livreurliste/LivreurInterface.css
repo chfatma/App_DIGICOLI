@@ -29,7 +29,6 @@ html, body {
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.143);
     width: 100%; /* Adjust to fit within the container */
-    max-width: 1150px; /* Maximum width */
     margin: 20px auto; /* Center the card horizontally */
     overflow: hidden; /* Hide overflow content */
   }

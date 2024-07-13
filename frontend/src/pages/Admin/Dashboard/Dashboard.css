@@ -49,6 +49,7 @@
 }
 
 .dashboard-cards {
+  padding: 40px;
   display: flex;
   justify-content: space-between;
   gap: 20px;
@@ -118,6 +119,7 @@
 }
 
 .dashboard-large-cards {
+  padding: 40px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
