@@ -1,17 +1,16 @@
 .filter-card {
   position: relative;
-  display: flex;
-  justify-content: flex-end;
-  padding: 15px;
+  padding: 20px; /* Increased padding for larger card */
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 150px;
+  width: 200px;
   margin-top: 10px;
   margin-left: auto;
   transition: box-shadow 0.3s ease;
   cursor: pointer;
+  text-align: center;
 }
 
 .filter-card.open {
@@ -21,18 +20,35 @@
 .filter-content {
   display: flex;
   align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
-.filter-icon,
-.arrow-icon {
+.filter-icon {
   margin-right: 10px;
+  font-size: 1.5rem; /* Larger icon size */
+}
+
+.arrow-icon {
+  margin-left: 10px;
 }
 
 .filter-label {
   flex: 1;
   font-size: 1rem;
   color: #333;
-  margin-right: 10px;
+}
+
+.selected-option {
+  margin-top: -40px; /* Adjust margin-top as needed */
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 1rem;
+  color: #555;
+  text-align: center;
 }
 
 .options {
@@ -67,18 +83,6 @@
   background-color: #f0f0f0;
 }
 
-.selected-option {
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 0;
-  width: 100%;
-  padding: 10px;
-  font-size: 1rem;
-  color: #333;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  margin-top: 10px;
+.option.selected {
+  background-color: #e0e0e0;
 }

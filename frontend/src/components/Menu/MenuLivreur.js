@@ -16,8 +16,8 @@ const Menu = () => {
         <img src={process.env.PUBLIC_URL + '/favicon.png'} alt="Logo" />
       </div>
       <ul>
-        <li className={active === '/livreurs' ? 'active' : ''}>
-          <Link to="/livreurs" onClick={() => handleClick('/livreurs')}>
+        <li className={active === '/dashboard' ? 'active' : ''}>
+          <Link to="/dashboard" onClick={() => handleClick('/livreurs')}>
             <i className="fa fa-tachometer-alt"></i> Dashboard
           </Link>
         </li>

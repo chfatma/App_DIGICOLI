@@ -2,12 +2,7 @@ import React, { useState } from 'react';
 import './TousClientLivreurFilter.css';
 
 const TousClientLivreurFilter = ({ onFilterChange }) => {
-  const options = [
-    'Tout par défaut',
-    'Tunis',
-    'sousse',
-    
-  ];
+  const options = ['Tout', 'Tunis', 'Sousse'];
 
   const [selectedOption, setSelectedOption] = useState('Tout');
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +14,7 @@ const TousClientLivreurFilter = ({ onFilterChange }) => {
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setIsOpen(false);
-    onFilterChange(option); 
+    onFilterChange(option);
   };
 
   return (
@@ -35,16 +30,23 @@ const TousClientLivreurFilter = ({ onFilterChange }) => {
           <i className={`fa ${isOpen ? 'fa-angle-up' : 'fa-angle-down'}`} aria-hidden="true"></i>
         </div>
       </div>
-      <div className="options">
-        {options.map((option, index) => (
-          <div key={index} className="option" onClick={() => handleOptionSelect(option)}>
-            {option}
-          </div>
-        ))}
-      </div>
       <div className="selected-option">
+       
         <span>{selectedOption}</span>
       </div>
+      {isOpen && (
+        <div className="options">
+          {options.map((option, index) => (
+            <div
+              key={index}
+              className={`option ${option === selectedOption ? 'selected' : ''}`}
+              onClick={() => handleOptionSelect(option)}
+            >
+              {option}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
