@@ -8,13 +8,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .dashboard-title {
   font-size: 28px;
   font-weight: bold;
-  color: #34495e;
+  color: #193A69;
+  padding: 40px;
   margin-top: 0px; /* Adjust this value to change the space from the top */
 }
 
@@ -27,10 +28,10 @@
   display: flex;
   align-items: center;
   background-color: #ffffff;
-  color: #34495e;
-  padding: 10px 15px;
+  color: #5e3f34;
+  padding: 5px 10px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: #000000;
 }
 
 .filter-icon {
@@ -39,11 +40,12 @@
 
 .filter-icon i {
   font-size: 18px;
-  color: #3498db;
+  color: #193A69;
 }
 
 .filter-text {
   font-size: 16px;
+  color: #193A69;
 }
 
 .dashboard-cards {
@@ -55,7 +57,7 @@
 .dashboard-card {
   background-color: #ffffff;
   color: #000000;
-  padding: 20px;
+  padding: 30px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -73,7 +75,7 @@
 }
 
 .card-circle {
-  background-color: #2980b9;
+  background-color: #F26622;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -92,22 +94,27 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  color: #193A69;
 }
 
 .card-title {
   font-size: 24px;
   margin-bottom: 5px;
+  color: #193A69;
+  font-weight: bold;
 }
 
 .card-phrase {
   font-size: 16px;
   margin: 0;
+  color: #193A69;
 }
 
 .card-percentage {
   font-size: 14px;
-  color: #2ecc71;
+  color: #178f49c8;
   margin-top: 5px;
+  font-weight: bold;
 }
 
 .dashboard-large-cards {
@@ -119,7 +126,7 @@
 
 .dashboard-large-card {
   background-color: #ffffff;
-  color: #34495e;
+  color: #193A69;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

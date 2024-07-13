@@ -1,11 +1,10 @@
 .navbar {
-  position: fixed;
   top: 0;
   left: 220px; /* Adjust to the width of the menu */
   z-index: 900; /* Ensure navbar is below the menu */
   background-color: #ecf3fd;
   color: #000000;
-  width: calc(100% - 220px); /* Full width minus the menu width */
+  width: auto; /* Full width minus the menu width */
   height: 60px;
   display: flex;
   align-items: center;

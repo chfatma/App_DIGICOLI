@@ -1,13 +1,17 @@
 .menu {
-  width: 220px; /* Adjust width as needed */
+  width: 260px; /* Adjust width as needed */
   background-color: #ffffff; 
-  color: #050b55; /* White text */
+  color: #193A69; /* Updated text color */
   height: 100%;
   position: fixed;
   top: 0; 
   left: 0;
   z-index: 1000; 
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.042); 
+}
+
+.navbar-logo{
+  margin: 0px 40px;
 }
 
 .menu ul {
@@ -17,29 +21,33 @@
 }
 
 .menu li {
-  border-bottom: 1px solid #34495e; /* Darker border */
-  transition: background-color 0.3s ease;
-}
-
-.menu li:hover {
-  background-color: #34495e; /* Darker background on hover */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .menu li a {
   display: block;
-  padding: 15px;
+  padding: 20px;
   text-decoration: none;
-  color: #150303;
+  color: #193A69; /* Default item color */
+}
+
+.menu li:hover {
+  background-color: #f2672245; /* Darker background on hover */
 }
 
 .menu li a i {
-  margin-right: 10px;
+  margin-right: 20px;
 }
 
 .menu li:first-child {
-  border-top: 1px solid #34495e; /* Darker top border for first item */
+  border-top: 4px solid #193A69; /* Darker top border for first item */
 }
 
 .menu li:last-child {
   border-bottom: none; /* Remove bottom border for last item */
+}
+
+/* Active class for clicked items */
+.menu li.active a {
+  color: #F26622; /* Color when clicked */
 }

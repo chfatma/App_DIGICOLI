@@ -1,5 +1,7 @@
 import React from 'react';
 import './Dashboard.css';
+import Chart1 from '../DoughnutChart/Doughnut Chart1/DoughnutChart11';
+import Chart2 from '../DoughnutChart/Doughnut Chart2/DoughnutChart22';
 
 const Dashboard = () => {
   return (
@@ -67,14 +69,16 @@ const Dashboard = () => {
       <div className="dashboard-large-cards">
         <div className="dashboard-large-card">
          
-          <h3>Chart 1</h3>
-        </div>
-        <div className="dashboard-large-card">
-       
-          <h3>Chart 2</h3>
-        </div>
-      </div>
+        <h3>Chart 1</h3>
+  <Chart1 /> {/* Intégration du composant Chart1 */}
+</div>
+<div className="dashboard-large-card">
+
+  <h3>Chart 2</h3>
+  <Chart2 />
     </div>
+  </div>
+</div>
   );
 };
 
