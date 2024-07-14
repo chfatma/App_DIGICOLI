@@ -18,7 +18,7 @@
   
   .colis-table th,
   .colis-table td {
-    border: 1px solid #ddd;
+    border: 1px solid #853a3a;
     padding: 8px 12px; 
     text-align: left;
   }
@@ -38,7 +38,7 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    background-color: #007bff;
+    background-color: #fff;
     color: #fff;
     transition: background-color 0.3s, color 0.3s;
   }
@@ -58,13 +58,13 @@
     background-color: #fff;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
     z-index: 1;
-    border: 1px solid #ddd;
+    border: 1px solid #fff;
     border-radius: 4px;
     width: 120px; 
   }
   
   .dropdown-content button {
-    color: #333;
+    color: #F26622;
     padding: 8px 12px;
     text-decoration: none;
     display: block;
