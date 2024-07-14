@@ -42,7 +42,7 @@
 .colis-table th,
 .colis-table td {
   border-bottom: 1px solid #193a6917; /* Only bottom border for cells */
-  padding: 30px;
+  padding: 15px; /* Adjust padding as needed */
   text-align: center;
 }
 
@@ -53,12 +53,20 @@
   color: black;
 }
 
-.colis-table tbody tr{
-  background-color: #fff;
-  color: rgba(0, 0, 0, 0.721);
+.colis-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
 
 .colis-table tbody tr:hover {
+  background-color: #ddd;
+}
+
+.colis-table select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   background-color: #fff;
-  color:#F26622;
+  color: #333;
+  width: 100%;
+  max-width: 150px; /* Adjust max-width as needed */
 }

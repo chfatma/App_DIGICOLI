@@ -1,25 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ListDesColis.css';
 import ListDesColisFilter from './ListDesColisFilter';
 
 const ListDesColis = () => {
-
   const fakeColisData = [
-    { code: 'test', expediteur: 'test', destinataire: 'test', telephone: 'test', montant: 'test', depot: 'test', adresse: 'test', statut: 'En cours' },
-    { code: 'test', expediteur: 'test', destinataire: 'test', telephone: 'test', montant: 'test', depot: 'test', adresse: 'test', statut: 'Terminé' },
-   
-    { code: 'test', expediteur: 'test', destinataire: 'test', telephone: 'test', montant: 'test', depot: 'test', adresse: 'test', statut: 'En cours' },
-    { code: 'test', expediteur: 'test', destinataire: 'test', telephone: 'test', montant: 'test', depot: 'test', adresse: 'test', statut: 'Terminé' },
-    { code: 'test', expediteur: 'test', destinataire: 'test', telephone: 'test', montant: 'test', depot: 'test', adresse: 'test', statut: 'En cours' },
-    { code: 'test', expediteur: 'test', destinataire: 'test', telephone: 'test', montant: 'test', depot: 'test', adresse: 'test', statut: 'Terminé' },
-    { code: 'test', expediteur: 'test', destinataire: 'test', telephone: 'test', montant: 'test', depot: 'test', adresse: 'test', statut: 'En cours' },
-    { code: 'test', expediteur: 'test', destinataire: 'test', telephone: 'test', montant: 'test', depot: 'test', adresse: 'test', statut: 'Terminé' },
-    { code: 'test', expediteur: 'test', destinataire: 'test', telephone: 'test', montant: 'test', depot: 'test', adresse: 'test', statut: 'En cours' },
-    { code: 'test', expediteur: 'test', destinataire: 'test', telephone: 'test', montant: 'test', depot: 'test', adresse: 'test', statut: 'Terminé' },
-    { code: 'test', expediteur: 'test', destinataire: 'test', telephone: 'test', montant: 'test', depot: 'test', adresse: 'test', statut: 'En cours' },
-    { code: 'test', expediteur: 'test', destinataire: 'test', telephone: 'test', montant: 'test', depot: 'test', adresse: 'test', statut: 'Terminé' },
-   
+    { id: 1, code: 'C001', expediteur: 'Alice', destinataire: 'Bob', telephone: '1234567890', montant: '100', depot: 'Depot A', adresse: 'Adresse A', statut: 'En cours' },
+    { id: 2, code: 'C002', expediteur: 'Charlie', destinataire: 'David', telephone: '0987654321', montant: '200', depot: 'Depot B', adresse: 'Adresse B', statut: 'Terminé' },
+    // Add more data as needed
   ];
+
+  const [colisData, setColisData] = useState(fakeColisData);
+
+  const handleStatusChange = (e, id) => {
+    const { value } = e.target;
+    const updatedColisData = colisData.map(colis => {
+      if (colis.id === id) {
+        return { ...colis, statut: value };
+      }
+      return colis;
+    });
+    setColisData(updatedColisData);
+  };
 
   return (
     <div className="list-des-colis-container">
@@ -43,8 +44,8 @@ const ListDesColis = () => {
               </tr>
             </thead>
             <tbody>
-              {fakeColisData.map((colis, index) => (
-                <tr key={index}>
+              {colisData.map(colis => (
+                <tr key={colis.id}>
                   <td>{colis.code}</td>
                   <td>{colis.expediteur}</td>
                   <td>{colis.destinataire}</td>
@@ -52,7 +53,18 @@ const ListDesColis = () => {
                   <td>{colis.montant}</td>
                   <td>{colis.depot}</td>
                   <td>{colis.adresse}</td>
-                  <td>{colis.statut}</td>
+                  <td>
+                    <select
+                      value={colis.statut}
+                      onChange={(e) => handleStatusChange(e, colis.id)}
+                    >
+                      <option value="En cours">En cours</option>
+                      <option value="Terminé">Terminé</option>
+                      <option value="Livre">Livre</option>
+                      <option value="En Attente">En Attente</option>
+                      <option value="Annuler">Annuler</option>
+                    </select>
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -1,58 +1,70 @@
 import React, { useState } from 'react';
 import './ListDesColisFilter.css';
 
-const ListDesColisFilter = () => {
-  const [showStatusOptions, setShowStatusOptions] = useState(false);
-  const [selectedStatus, setSelectedStatus] = useState('Tout');
+const ListDesColisFilter = ({ onFilterChange }) => {
+  const options = ['Tout', 'En cours', 'Livré'];
+
+  const [selectedOption, setSelectedOption] = useState('Tout');
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
 
-  const statuses = ["En cours", "Terminé", "Annulé", "Tout"];
-
-  const handleStatusSelect = (status) => {
-    setSelectedStatus(status);
-    setShowStatusOptions(false);
+  const handleToggleOptions = () => {
+    setIsOpen(!isOpen);
   };
 
-  const handleDateChange = (e) => {
-    setSelectedDate(e.target.value);
-    setSelectedStatus('Tout'); 
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+    setIsOpen(false);
+    onFilterChange(option);
+  };
+
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+    // You can add filtering logic based on the selected date if needed
   };
 
   return (
-    <div className="list-des-colis-filter-container">
-      <div className="filter-card">
-        <div className="card-header" onClick={() => setShowStatusOptions(!showStatusOptions)}>
-          <div className="icon-circle">
-            <i className="fa fa-list-alt"></i>
+    <div className="filters-container">
+      {/* Filter Card */}
+      <div className={`filter-card ${isOpen ? 'open' : ''}`}>
+        <div className="filter-content" onClick={handleToggleOptions}>
+          <div className="filter-icon">
+            <i className="fa fa-filter" aria-hidden="true"></i>
           </div>
-          <span className="card-title">Statut</span>
-          <i className={`fa ${showStatusOptions ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
+          <div className="filter-label">
+            <span>État</span>
+          </div>
+          <div className="arrow-icon">
+            <i className={`fa ${isOpen ? 'fa-angle-up' : 'fa-angle-down'}`} aria-hidden="true"></i>
+          </div>
         </div>
-        <div className="selected-status-display">
-          {selectedStatus}
+        <div className="selected-option">
+          <span>{selectedOption}</span>
         </div>
-        <div className={`status-options ${showStatusOptions ? 'active' : ''}`}>
-          {statuses.map((status, index) => (
-            <div
-              key={index}
-              className={`status-option ${status === selectedStatus ? 'selected' : ''}`}
-              onClick={() => handleStatusSelect(status)}
-            >
-              {status}
-            </div>
-          ))}
-        </div>
+        {isOpen && (
+          <div className="options">
+            {options.map((option, index) => (
+              <div
+                key={index}
+                className={`option ${option === selectedOption ? 'selected' : ''}`}
+                onClick={() => handleOptionSelect(option)}
+              >
+                {option}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-
-      <div className="filter-card">
-        <div className="card-header">
-          <div className="icon-circle">
-            <i className="fa fa-calendar"></i>
+      
+      {/* Date Input */}
+      <div className="filter-card date-card">
+        <div className="filter-content">
+          <div className="filter-icon">
+            <i className="fa fa-calendar" aria-hidden="true"></i>
           </div>
-          <span className="card-title">Jours</span>
-        </div>
-        <div className="selected-date-display">
-          {selectedDate || 'jj/mm/aaaa'}
+          <div className="filter-label">
+            <span>Jour</span>
+          </div>
         </div>
         <input
           type="date"
