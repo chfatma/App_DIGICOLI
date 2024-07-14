@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import Login from './pages/Login/login';
 import Dashboard from './pages/Admin/Dashboard/Dashboard';
+import Profil from './pages/Profil/profil';
 import Client from './pages/Admin/ListeClients/Client';
 import Evaluation from './pages/Evaluation/Evaluation';
 import ListDesColis from './pages/Livreur/ListDesColis/list';
@@ -15,6 +16,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/profile" element={<ProtectedRoute component={Profil} />} />
         <Route path="/dashboard" element={<ProtectedRoute component={Dashboard} />} />
         <Route path="/client" element={<ProtectedRoute component={Client} />} />
         
