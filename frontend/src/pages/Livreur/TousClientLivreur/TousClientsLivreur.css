@@ -1,12 +1,14 @@
 .tous-clients-livreur {
-    padding: 30px;
+    padding: 40px;
     background-color: #ecf3fd; 
   }
   
   .section-title {
-    font-size: 1.8rem;
+    font-size: 1.5em;
     margin-bottom: 20px;
     text-align: left;
+    color: #193A69;
+    font-weight: bold;
   }
   
   .card-container {
@@ -16,7 +18,6 @@
   
   .tous-clients-livreur-container {
     width: 100%;
-    max-width: 1200px;
     padding: 30px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -66,17 +67,17 @@
   
   .normal-button {
     padding: 12px 40px;
-    background-color: #007bff;
+    background-color: #f26722c8;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 1.1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
   
   .normal-button:hover {
-    background-color: #0056b3; 
+    background-color: #F26622; 
   }
   
   .additional-card {
@@ -89,8 +90,10 @@
   }
   
   .card-title {
-    font-size: 1.5rem;
+    font-size: 1.5em;
     margin-bottom: 15px;
+    color: #193A69;
+    font-weight: bold;
   }
   
   .table-container {

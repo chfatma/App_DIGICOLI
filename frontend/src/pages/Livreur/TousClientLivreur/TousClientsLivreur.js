@@ -61,7 +61,7 @@ const TousClientsLivreur = () => {
       </div>
 
       <TousClientLivreurFilter onFilterChange={handleFilterChange} />   {/* fix heeeeeer*/}
-    
+      <h2 className="section-title">Liste des Client</h2>
       <div className="additional-card">
         <h2 className="card-title">Clients</h2>
         <div className="table-container">
