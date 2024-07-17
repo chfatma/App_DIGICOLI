@@ -7,7 +7,7 @@ body, html {
     font-family: Arial, sans-serif;
   }
   
-  .login-page {
+  .logins-pages {
     background: url('../../../public/favicon.png') no-repeat center center fixed;
     background-size: cover;
     display: flex;
@@ -16,7 +16,7 @@ body, html {
     height: 100vh;
   }
   
-  .card {
+  .crd {
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -25,13 +25,13 @@ body, html {
     text-align: center;
   }
   
-  .form-toggle {
+  .formes-toggles {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
   }
   
-  .form-toggle button {
+  .formes-toggles button {
     flex: 1;
     padding: 10px;
     border: none;
@@ -40,34 +40,34 @@ body, html {
     font-size: 16px;
   }
   
-  .form-toggle .active {
+  .formes-toggle .active {
     font-weight: bold;
     border-bottom: 2px solid #333;
   }
   
-  .form-container {
+  .formes-container {
     display: flex;
     justify-content: center;
     align-items: center;
   }
   
-  .form {
+  .formes {
     display: flex;
     flex-direction: column;
   }
   
-  .form h2 {
+  .formes h2 {
     margin-bottom: 20px;
   }
   
-  .form input {
+  .formes input {
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
   
-  .form button {
+  .formes button {
     padding: 10px;
     border: none;
     background-color: #333;
@@ -76,7 +76,7 @@ body, html {
     border-radius: 4px;
   }
   
-  .form button:hover {
+  .formes button:hover {
     background-color: #555;
   }
   

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import './Livreurliste.css';
+import './LivreurlisteFilterAdmin.css';
 
 const LivreurListe = ({ selectedGouvernement, setSelectedGouvernement, setSelectedDate }) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -25,7 +25,7 @@ const LivreurListe = ({ selectedGouvernement, setSelectedGouvernement, setSelect
 
   const handleDateChange = (e) => {
     setSelectedDateInternal(e.target.value);
-    setSelectedDate(e.target.value); // Pass selected date up to parent component
+    setSelectedDate(e.target.value); 
   };
 
   const handleOutsideClick = useCallback((event) => {
@@ -47,8 +47,8 @@ const LivreurListe = ({ selectedGouvernement, setSelectedGouvernement, setSelect
       <div className="right-content">
         <div className="small-button gouvernement-card">
           <div className="card-title" onClick={toggleDropdown}>
-            <div className="icon-circle">
-              <i className="fa fa-map-pin"></i>
+            <div className="icon-circle" style={{ width: '35px', height: '35px' }}>
+              <i className="fa fa-map-pin" style={{ width: '15px', height: '15px'  }}></i>
             </div>
             <span className="title-text">Gouvernement</span>
             <i className={`fa ${showDropdown ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
@@ -66,14 +66,14 @@ const LivreurListe = ({ selectedGouvernement, setSelectedGouvernement, setSelect
               ))}
             </div>
           )}
-          {!showDropdown && (
-            <div className="selected-gouvernement">{selectedGouvernementInternal}</div>
-          )}
         </div>
+        {!showDropdown && (
+          <div className="selected-gouvernement">{selectedGouvernementInternal}</div>
+        )}
         <div className="small-button date-card">
           <div className="icon-title">
-            <div className="icon-circle">
-              <i className="fa fa-calendar"></i>
+            <div className="icon-circle" style={{ width: '35px', height: '35px' }}>
+              <i className="fa fa-calendar" style={{ width: '15px', height: '15px'  }}></i>
             </div>
             <span className="title-text">Date</span>
           </div>

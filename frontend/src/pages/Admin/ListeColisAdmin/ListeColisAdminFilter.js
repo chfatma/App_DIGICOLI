@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './ListDesColisFilter.css';
+import './ListeColisAdminFilter.css';
 
-const ListDesColisFilter = ({ onFilterChange }) => {
+const ListeColisAdminFilter = ({ onFilterChange }) => {
   const options = ['Tout', 'En cours', 'Livré'];
 
   const [selectedOption, setSelectedOption] = useState('Tout');
@@ -15,19 +15,19 @@ const ListDesColisFilter = ({ onFilterChange }) => {
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setIsOpen(false);
-    onFilterChange(option, selectedDate);
+    onFilterChange(option, selectedDate); // Pass both option and selectedDate to the parent
   };
 
   const handleDateChange = (event) => {
     const date = event.target.value;
     setSelectedDate(date);
-    onFilterChange(selectedOption, date); 
+    onFilterChange(selectedOption, date); // Pass both selectedOption and new date to the parent
   };
 
   return (
-    <div className="filters-container">
-      <div className={`filter-card ${isOpen ? 'open' : ''}`}>
-        <div className="filter-content" onClick={handleToggleOptions}>
+    <div className="filters-containers">
+      <div className={`filter-carde ${isOpen ? 'open' : ''}`}>
+        <div className="filter-contente" onClick={handleToggleOptions}>
           <div className="filter-icon">
             <i className="fa fa-filter" aria-hidden="true"></i>
           </div>
@@ -38,7 +38,7 @@ const ListDesColisFilter = ({ onFilterChange }) => {
             <i className={`fa ${isOpen ? 'fa-angle-up' : 'fa-angle-down'}`} aria-hidden="true"></i>
           </div>
         </div>
-        <div className="selected-option">
+        <div className="selectede-options">
           <span>{selectedOption}</span>
         </div>
         {isOpen && (
@@ -56,7 +56,7 @@ const ListDesColisFilter = ({ onFilterChange }) => {
         )}
       </div>
       
-    
+      {/* Date Input */}
       <div className="filter-card date-card">
         <div className="filter-content">
           <div className="filter-icon">
@@ -77,4 +77,4 @@ const ListDesColisFilter = ({ onFilterChange }) => {
   );
 };
 
-export default ListDesColisFilter;
+export default ListeColisAdminFilter;

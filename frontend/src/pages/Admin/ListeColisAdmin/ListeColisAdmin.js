@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import './ListDesColis.css';
-import ListDesColisFilter from './ListDesColisFilter';
+import './ListeColisAdmin.css';
+import ListeColisAdminFilter from './ListeColisAdminFilter';
 
-const ListDesColis = () => {
+const ListeColisAdmin = () => {
   const fakeColisData = [
     { id: 1, code: 'C001', expediteur: 'Alice', destinataire: 'Bob', telephone: '1234567890', montant: '100', depot: 'Depot A', adresse: 'Adresse A', statut: 'En cours' },
     { id: 2, code: 'C002', expediteur: 'Charlie', destinataire: 'David', telephone: '0987654321', montant: '200', depot: 'Depot B', adresse: 'Adresse B', statut: 'Terminé' },
-    
+    // Add more data as needed
   ];
 
   const [colisData, setColisData] = useState(fakeColisData);
-  const [filteredData, setFilteredData] = useState(fakeColisData); 
+  const [filteredData, setFilteredData] = useState(fakeColisData); // State to hold filtered data
 
   const handleStatusChange = (e, id) => {
     const { value } = e.target;
@@ -31,8 +31,8 @@ const ListDesColis = () => {
     }
 
     if (date) {
-      // ask about it 
-    
+      // Filter based on date logic here
+      // Example: filtered = filtered.filter(colis => colis.date === date);
     }
 
     setFilteredData(filtered);
@@ -40,7 +40,7 @@ const ListDesColis = () => {
 
   return (
     <div className="list-des-colis-container">
-      <ListDesColisFilter onFilterChange={handleFilterChange} />
+      <ListeColisAdminFilter onFilterChange={handleFilterChange} />
       <div className="colis-card">
         <div className="card-header">
           <span className="card-title">Liste des Colis</span>
@@ -72,7 +72,7 @@ const ListDesColis = () => {
                   <td>
                     <select
                       value={colis.statut}
-                      onChange={(e) => handleStatusChange(e, colis.id)}
+                      onChange={(e) => handleStatusChange(e, colis.id)} // Call handleStatusChange here
                     >
                       <option value="En cours">En cours</option>
                       <option value="Terminé">Terminé</option>
@@ -91,4 +91,4 @@ const ListDesColis = () => {
   );
 };
 
-export default ListDesColis;
+export default ListeColisAdmin;

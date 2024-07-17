@@ -16,8 +16,8 @@ const Menu = () => {
         <img src={process.env.PUBLIC_URL + '/favicon.png'} alt="Logo" />
       </div>
       <ul>
-        <li className={active === '/dashboard' ? 'active' : ''}>
-          <Link to="/dashboard" onClick={() => handleClick('/livreurs')}>
+        <li className={active === '/DashboardLivreur' ? 'active' : ''}>
+          <Link to="/DashboardLivreur" onClick={() => handleClick('/livreurs')}>
             <i className="fa fa-tachometer-alt"></i> Dashboard
           </Link>
         </li>
@@ -29,6 +29,11 @@ const Menu = () => {
         <li className={active === '/TousClientsLivreur' ? 'active' : ''}>
           <Link to="/TousClientsLivreur" onClick={() => handleClick('/TousClientsLivreur')}>
             <i className="fa fa-users"></i> Client
+          </Link>
+        </li>
+        <li className={active === '/Ramassage' ? 'active' : ''}>
+          <Link to="/Ramassage" onClick={() => handleClick('/Ramassage')}>
+            <i className="fa fa-map-marker"></i> Ramassage
           </Link>
         </li>
         <li className={active === '/evaluation' ? 'active' : ''}>
@@ -43,7 +48,7 @@ const Menu = () => {
         </li>
         <li className={active === '/Emplacement' ? 'active' : ''}>
           <Link to="/Emplacement" onClick={() => handleClick('/Emplacement')}>
-            <i className="fa fa-life-ring"></i> Support
+            <i className="fa fa-map-marker"></i> Emplacement
           </Link>
         </li>
       </ul>

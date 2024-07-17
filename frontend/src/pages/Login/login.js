@@ -23,22 +23,22 @@ const Login = () => {
   };
 
   return (
-    <div className="login-page">
-      <div className="card">
-        <div className="form-toggle">
+    <div className="logins-pages">
+      <div className="crd">
+        <div className="formes-toggles">
           <button onClick={toggleForm} className={!isSignUp ? 'active' : ''}>Sign In</button>
           <button onClick={toggleForm} className={isSignUp ? 'active' : ''}>Sign Up</button>
         </div>
-        <div className="form-container">
+        <div className="formes-container">
           {!isSignUp ? (
-            <form className="form" onSubmit={handleLogin}>
+            <form className="formes" onSubmit={handleLogin}>
               <h2>Sign In</h2>
               <input type="email" placeholder="Email" required />
               <input type="password" placeholder="Password" required />
               <button type="submit">Sign In</button>
             </form>
           ) : (
-            <form className="form" onSubmit={handleSignUp}>
+            <form className="formes" onSubmit={handleSignUp}>
               <h2>Sign Up</h2>
               <input type="text" placeholder="First Name" required />
               <input type="text" placeholder="Last Name" required />

@@ -16,12 +16,12 @@ const Menu = () => {
           </Link>
         </li>
         <li>
-          <Link to="/ListeColis">
+          <Link to="/Adminlistcoli">
             <i className="fa fa-box"></i> Listes des colis
           </Link>
         </li>
         <li>
-          <Link to="/client">
+          <Link to="/ListeClientsAdmin">
             <i className="fa fa-users"></i> Client
           </Link>
         </li>

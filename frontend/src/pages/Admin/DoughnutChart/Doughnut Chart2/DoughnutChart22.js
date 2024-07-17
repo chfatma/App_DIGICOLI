@@ -131,8 +131,8 @@ class DoughnutChart22 extends Component {
 			<CanvasJSChart options = {this.options} 
 				 onRef={ref => this.chart = ref}
 			/>
-			{/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
-			<button className="btn invisible" id="backButton" style={buttonStyle}>&lt; Back</button>
+			{/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods
+			<button className="btn invisible" id="backButton" style={buttonStyle}>&lt; Back</button>*/}
 		</div>
 		);
 	}

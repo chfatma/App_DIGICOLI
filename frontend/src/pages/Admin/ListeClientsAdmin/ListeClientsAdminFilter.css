@@ -1,0 +1,89 @@
+.filter-card {
+    position: relative;
+    padding: 20px; /* Increased padding for larger card */
+    border: 1px solid #fff;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 150px;
+    margin-top: 10px;
+    margin-left: auto;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .filter-card.open {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .filter-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .filter-icon {
+    margin-right: 10px;
+    font-size: 1.5rem; /* Larger icon size */
+  }
+  
+  .arrow-icon {
+    margin-left: 10px;
+  }
+  
+  .filter-label {
+    flex: 1;
+    font-size: 1rem;
+    color: #193A69;
+  }
+  
+  .selected-option {
+    margin-top: -40px; /* Adjust margin-top as needed */
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: #F26622;
+    text-align: center;
+  }
+  
+  .options {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #fff;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+  
+  .filter-card.open .options {
+    display: block;
+  }
+  
+  .option {
+    padding: 10px;
+    font-size: 1rem;
+    color: black;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .option:hover {
+    background-color: #f26722b6;
+  }
+  
+  .option.selected {
+    background-color: #f2672264;
+  }
+  
