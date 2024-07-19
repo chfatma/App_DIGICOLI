@@ -1,13 +1,37 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import './Navbar.css';
-import './ProfilePopup.css'; // Import the CSS for the profile popup
 
 const Navbar = () => {
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
+  const popupRef = useRef(null);
+  const navigate = useNavigate();
 
   const toggleProfilePopup = () => {
-    setIsProfileOpen(!isProfileOpen);
+    setIsProfilePopupOpen(!isProfilePopupOpen);
+  };
+
+  const handleClickOutside = (event) => {
+    if (popupRef.current && !popupRef.current.contains(event.target)) {
+      setIsProfilePopupOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isProfilePopupOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isProfilePopupOpen]);
+
+  const handleEditProfile = () => {
+    navigate('/EditProfile');
+    setIsProfilePopupOpen(false); 
   };
 
   return (
@@ -31,28 +55,16 @@ const Navbar = () => {
         <button className="navbar-button" onClick={toggleProfilePopup}>
           <i className="fa fa-user-circle"></i>
         </button>
-        {isProfileOpen && (
-          <div className="profile-popup">
+        {isProfilePopupOpen && (
+          <div className="profile-popup" ref={popupRef}>
             <div className="profile-header">
-              <img src="profile-image-url" alt="Profile" className="profile-image" />
-              <h3>Amira</h3>
-              <p className="profile-email">amira@example.com</p>
-            </div>
-            <div className="profile-details">
-              <p><i className="fa fa-phone"></i> +1234567890</p>
-              <p><i className="fa fa-map-marker"></i> 123 Main St, City, Country</p>
+              <img src="path/to/profile-image.jpg" alt="Profile" className="profile-image" />
+              <h3>Nom Prénom</h3>
+              <p>Email: amira@example.com</p>
             </div>
             <div className="profile-actions">
-              <button className="profile-action-button settings-button">
-                <Link to="/profile">
-                  <i className="fa fa-cog"></i> Settings
-                </Link>
-              </button>
-              <button className="profile-action-button logout-button">
-                <Link to="/">
-                  <i className="fa fa-sign-out"></i> Logout
-                </Link>
-              </button>
+              <button className="profile-button" onClick={handleEditProfile}>Modifier</button>
+              <button className="profile-button">Logout</button>
             </div>
           </div>
         )}

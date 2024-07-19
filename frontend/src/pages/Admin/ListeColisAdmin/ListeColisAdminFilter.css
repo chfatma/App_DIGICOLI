@@ -1,101 +1,106 @@
-.filters-containers {
-    display: flex;
-    justify-content: flex-end; /* Align items to the right */
-    gap: 20px; /* Add space between cards */
-    padding: 20px; /* Optional: Add padding to the container for better spacing */
-  }
-  
-  .filter-carde, .date-card {
-    
-    width: 20%; /* Set card width to 20% */
-    border: 1px solid #ccc; /* Debugging border color */
-    border-radius: 8px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
-    text-align: center;
-    min-width: 200px; /* Ensure a minimum width for the cards */
-  }
-  
-  .filter-carde.open {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .filter-contente {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 15px; /* Added padding */
-  }
-  
-  .filter-icon {
-    margin-right: 10px;
-    font-size: 1.5rem;
-  }
-  
-  .arrow-icon {
-    margin-left: 10px;
-  }
-  
-  .filter-label {
-    font-size: 1rem; /* Adjusted font size */
-    color: #333;
-  }
-  
-  .selectede-options {
-    margin-top: 10px;
-    padding: 10px; /* Adjusted padding */
-    font-size: 1rem; /* Adjusted font size */
-    color: #555;
-    text-align: center;
-  }
-  
-  .options {
-    display: none;
-    position: absolute;
-    top: calc(100% + 10px);
-    left: 0;
-    width: 100%;
-    max-height: 200px;
-    overflow-y: auto;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-top: none;
-    border-radius: 0 0 8px 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-  }
-  
-  .filter-card.open .options {
-    display: block;
-  }
-  
-  .option {
-    padding: 10px 15px; /* Adjusted padding */
-    font-size: 1rem; /* Adjusted font size */
-    color: #333;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .option:hover {
-    background-color: #f0f0f0; /* Changed hover color */
-  }
-  
-  .option.selected {
-    background-color: #e0e0e0; /* Changed selected color */
-  }
-  
-  .date-input {
-    width: calc(100% - 30px); /* Adjusted for icon width */
-    padding: 10px;
-    margin-top: 10px;
-    font-size: 1rem; /* Adjusted font size */
-    border: 1px solid #ddd; /* Changed border color */
-    border-radius: 4px;
-  }
-  
-  .fa {
-    font-family: FontAwesome;
-  }
-  
+.listcolis-filters-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px; /* Optional: Add padding to the container for better spacing */
+}
+
+.listcolis-filters-container {
+  display: flex;
+  gap: 20px; /* Add space between cards */
+  margin-left: 650px;; /* Push the container to the right */
+}
+
+.listcolis-filter-card, .listcolis-date-card {
+  width: 20%; /* Set card width to 20% */
+  border: 1px solid #ccc; /* Debugging border color */
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  text-align: center;
+  min-width: 200px; /* Ensure a minimum width for the cards */
+  position: relative; /* Ensure options appear correctly */
+}
+
+.listcolis-filter-card.listcolis-open {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.listcolis-filter-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px; /* Added padding */
+  cursor: pointer; /* Add cursor pointer */
+}
+
+.listcolis-filter-icon {
+  margin-right: 10px;
+  font-size: 1.5rem;
+}
+
+.listcolis-arrow-icon {
+  margin-left: 10px;
+}
+
+.listcolis-filter-label {
+  font-size: 1rem; /* Adjusted font size */
+  color: #333;
+}
+
+.listcolis-selected-options {
+  margin-top: 10px;
+  padding: 10px; /* Adjusted padding */
+  font-size: 1rem; /* Adjusted font size */
+  color: #555;
+  text-align: center;
+}
+
+.listcolis-options {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.listcolis-filter-card.listcolis-open .listcolis-options {
+  display: block;
+}
+
+.listcolis-option {
+  padding: 10px 15px; /* Adjusted padding */
+  font-size: 1rem; /* Adjusted font size */
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.listcolis-option:hover {
+  background-color: #f0f0f0; /* Changed hover color */
+}
+
+.listcolis-option.listcolis-selected {
+  background-color: #e0e0e0; /* Changed selected color */
+}
+
+.listcolis-date-input {
+  width: calc(100% - 30px); /* Adjusted for icon width */
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 1rem; /* Adjusted font size */
+  border: 1px solid #ddd; /* Changed border color */
+  border-radius: 4px;
+}
+
+.fa {
+  font-family: FontAwesome;
+}

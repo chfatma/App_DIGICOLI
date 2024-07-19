@@ -2,14 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom'; 
 import './Menu.css';
 
-const Menu = () => {
+const MenuSuperAdmin = () => {
   return (
     <aside className="menu open">
       <div className="navbar-logo">
         <img src={process.env.PUBLIC_URL + '/favicon.png'} alt="Logo" />
       </div>
       <ul>
-        {/* Menu items */}
+      
         <li>
           <Link to="/dashboard">
             <i className="fa fa-tachometer-alt"></i> Dashboard
@@ -70,4 +70,4 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+export default MenuSuperAdmin;

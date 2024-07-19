@@ -1,68 +1,59 @@
-.livreur-list-container {
+.livreur-list-container-custom {
   display: flex;
   justify-content: space-between;
   padding: 20px;
 }
 
-.right-content {
+.right-content-custom {
   display: flex;
   gap: 20px;
 }
 
-.title-text {
-  margin-left: 4px;
-  font-size: 14px; 
-  margin-right: 15px;
-}
-
-
-.small-button {
+.small-button-custom {
   position: relative;
   background-color: #ffffff;
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease-in-out;
-  width: 200px; 
+  width: 200px;
   cursor: pointer;
   display: flex;
-  flex-direction: column; /* Stack items vertically */
-  align-items: flex-start; /* Align items to the start */
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-
-
-.small-button:hover {
+.small-button-custom:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.icon-circle {
+.icon-circle-custom {
   background-color: #007bff;
   color: #ffffff;
   border-radius: 50%;
-  width: 10px; /* Adjust the width and height as needed */
-  height: 10px; /* Adjust the width and height as needed */
+  width: 35px;
+  height: 35px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 8px;
 }
 
-.card-title {
+.card-title-custom {
   display: flex;
   align-items: center;
   font-weight: bold;
   font-size: 14px;
   color: #333333;
-  padding: 0px 8px;
+  padding: 0 8px;
   cursor: pointer;
 }
 
-.title-text {
-  margin-left: 2px;
+.title-text-custom {
+  margin-left: 4px;
 }
 
-.gouvernement-dropdown {
+.gouvernement-dropdown-custom {
   position: absolute;
   top: calc(100% + 4px);
   left: 0;
@@ -74,39 +65,38 @@
   z-index: 100;
 }
 
-.dropdown-item {
-
+.dropdown-item-custom {
+  padding: 8px;
   font-size: 14px;
   color: #333333;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.dropdown-item:hover {
+.dropdown-item-custom:hover {
   background-color: #f0f0f0;
 }
 
-.selected {
-  background-color: #f0f0f0; /* Selected item background color */
+.selected-custom {
+  background-color: #f0f0f0;
 }
 
-.date-card {
-  position: relative;
+.date-card-custom {
   display: flex;
   flex-direction: column;
 }
 
-.icon-title {
+.icon-title-custom {
   display: flex;
   align-items: center;
   font-weight: bold;
   font-size: 14px;
   color: #333333;
-  padding: 0px 8px;
+  padding: 0 8px;
   cursor: pointer;
 }
 
-.date-input {
+.date-input-custom {
   width: 100%;
   padding: 8px;
   font-size: 14px;
@@ -115,13 +105,13 @@
   box-sizing: border-box;
 }
 
-.selected-gouvernement {
+.selected-gouvernement-custom {
   padding: 8px;
   font-size: 14px;
   color: #333333;
   text-align: left;
-  margin-top: 50px  ;
-  white-space: nowrap; /* Prevent text from wrapping */
-  overflow: hidden; /* Hide overflow text */
-  text-overflow: ellipsis; /* Show ellipsis for overflow text */
+  margin-top: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

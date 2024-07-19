@@ -8,10 +8,11 @@
   left: 0;
   z-index: 1000; 
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.042); 
+  overflow-y: auto; /* Add scroll if content overflows */
 }
 
 .navbar-logo{
-  margin: 0px 40px;
+  margin: 20px; /* Adjust margin as needed */
 }
 
 .menu ul {
@@ -22,11 +23,15 @@
 
 .menu li {
   transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex; /* Use flex to align items */
+  align-items: center; /* Center items vertically */
+  min-height: 50px; /* Set minimum height for each item */
 }
 
 .menu li a {
-  display: block;
-  padding: 20px;
+  display: flex; /* Flex to align icon and text */
+  align-items: center; /* Center items vertically */
+  padding: 15px 20px; /* Adjust padding as needed */
   text-decoration: none;
   color: #193A69; /* Default item color */
 }
@@ -36,7 +41,7 @@
 }
 
 .menu li a i {
-  margin-right: 20px;
+  margin-right: 15px; /* Adjust spacing between icon and text */
 }
 
 .menu li:first-child {

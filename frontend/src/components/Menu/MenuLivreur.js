@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom'; 
 import './Menu.css';
 
-const Menu = () => {
+const MenuLivreur = () => {
   const location = useLocation();
   const [active, setActive] = useState(location.pathname);
 
@@ -31,11 +31,7 @@ const Menu = () => {
             <i className="fa fa-users"></i> Client
           </Link>
         </li>
-        <li className={active === '/Ramassage' ? 'active' : ''}>
-          <Link to="/Ramassage" onClick={() => handleClick('/Ramassage')}>
-            <i className="fa fa-map-marker"></i> Ramassage
-          </Link>
-        </li>
+      
         <li className={active === '/evaluation' ? 'active' : ''}>
           <Link to="/evaluation" onClick={() => handleClick('/Evaluation')}>
             <i className="fa fa-star"></i> Evaluation
@@ -56,4 +52,4 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+export default MenuLivreur;

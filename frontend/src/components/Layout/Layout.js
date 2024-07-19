@@ -3,12 +3,13 @@ import Navbar from '../Navbar/Navbar';
 
 
 import './Layout.css';
-import MenuAdmin from '../Menu/MenuAdmin'
+
+import MenuClients from '../Menu/MenuClient';
 
 const Layout = ({ children }) => {
   return (
     <div className="layout">
-      <MenuAdmin />
+      <MenuClients />
       <div className="content menu-open">
         <Navbar />
         {children}

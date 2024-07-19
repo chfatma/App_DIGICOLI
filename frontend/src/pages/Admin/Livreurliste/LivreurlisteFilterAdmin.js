@@ -29,7 +29,7 @@ const LivreurListe = ({ selectedGouvernement, setSelectedGouvernement, setSelect
   };
 
   const handleOutsideClick = useCallback((event) => {
-    if (!event.target.closest('.gouvernement-card')) {
+    if (!event.target.closest('.gouvernement-card-custom')) {
       setShowDropdown(false);
     }
   }, []);
@@ -42,23 +42,24 @@ const LivreurListe = ({ selectedGouvernement, setSelectedGouvernement, setSelect
   }, [handleOutsideClick]);
 
   return (
-    <div className="livreur-list-container">
-      <div className="left-content"></div>
-      <div className="right-content">
-        <div className="small-button gouvernement-card">
-          <div className="card-title" onClick={toggleDropdown}>
-            <div className="icon-circle" style={{ width: '35px', height: '35px' }}>
-              <i className="fa fa-map-pin" style={{ width: '15px', height: '15px'  }}></i>
+    <div className="livreur-list-container-custom">
+      <div className="left-content-custom"></div>
+      <div className="right-content-custom">
+        <div className="small-button-custom gouvernement-card-custom">
+          <div className="card-title-custom" onClick={toggleDropdown}>
+            <div className="icon-circle-custom">
+              <i className="fa fa-map-pin"></i>
             </div>
-            <span className="title-text">Gouvernement</span>
+            <span className="title-text-custom">Gouvernement</span>
             <i className={`fa ${showDropdown ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
           </div>
+          <div className="selected-gouvernement-custom">{selectedGouvernementInternal}</div>
           {showDropdown && (
-            <div className="gouvernement-dropdown">
+            <div className="gouvernement-dropdown-custom">
               {gouvernements.map((gouvernement, index) => (
                 <div
                   key={index}
-                  className={`dropdown-item ${gouvernement === selectedGouvernement ? 'selected' : ''}`}
+                  className={`dropdown-item-custom ${gouvernement === selectedGouvernement ? 'selected-custom' : ''}`}
                   onClick={() => handleGouvernementSelect(gouvernement)}
                 >
                   {gouvernement}
@@ -67,21 +68,18 @@ const LivreurListe = ({ selectedGouvernement, setSelectedGouvernement, setSelect
             </div>
           )}
         </div>
-        {!showDropdown && (
-          <div className="selected-gouvernement">{selectedGouvernementInternal}</div>
-        )}
-        <div className="small-button date-card">
-          <div className="icon-title">
-            <div className="icon-circle" style={{ width: '35px', height: '35px' }}>
-              <i className="fa fa-calendar" style={{ width: '15px', height: '15px'  }}></i>
+        <div className="small-button-custom date-card-custom">
+          <div className="icon-title-custom">
+            <div className="icon-circle-custom">
+              <i className="fa fa-calendar"></i>
             </div>
-            <span className="title-text">Date</span>
+            <span className="title-text-custom">Date</span>
           </div>
           <input
             type="date"
             value={selectedDate}
             onChange={handleDateChange}
-            className="date-input"
+            className="date-input-custom"
           />
         </div>
       </div>
