@@ -11,12 +11,12 @@ const MenuClients = () => {
       <ul>
        
         <li>
-          <Link to="/dashboard">
+          <Link to="/DashboardClient">
             <i className="fa fa-tachometer-alt"></i> Dashboard
           </Link>
         </li>
         <li>
-          <Link to="/listecolisclient">
+          <Link to="/DashboardClient">
             <i className="fa fa-box"></i> Listes des colis
           </Link>
         </li>

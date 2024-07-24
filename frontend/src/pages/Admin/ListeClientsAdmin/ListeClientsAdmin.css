@@ -127,3 +127,29 @@
 .action-button:hover {
   background-color: #218838;
 }
+/* Existing styles */
+
+.icon-button {
+  padding: 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.icon-button:hover {
+  color: #007bff;
+}
+
+.icon-button:focus {
+  outline: none;
+}
+
+.icon-button .fa-edit {
+  color: #007bff; /* Blue color for edit icon */
+  margin-right: 10px; /* Space between icons */
+}
+
+.icon-button .fa-trash {
+  color: #dc3545; /* Red color for delete icon */
+}

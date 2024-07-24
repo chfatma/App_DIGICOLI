@@ -1,19 +1,54 @@
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './Ramassage.css';
 
 const Ramassage = () => {
-  const pickups = [
-    { client: 'test', date: '12/03/24', totalColis: 1, livreur: 'abir' },
-    { client: 'test', date: '12/03/24', totalColis: 2, livreur: 'fatma' },
-    { client: 'test', date: '12/03/24', totalColis: 8, livreur: 'test' },
-    { client: 'test', date: '12/03/24', totalColis: 6, livreur: 'test' },
-    { client: 'test', date: '12/03/24', totalColis: 36, livreur: 'test' },
-     { client: 'test', date: '12/03/24', totalColis: 8, livreur: 'test' },
-    { client: 'test', date: '12/03/24', totalColis: 6, livreur: 'test' },
-    { client: 'test', date: '12/03/24', totalColis: 36, livreur: 'test' },
-    
-  ];
+  const [clients, setClients] = useState([]);
+  const [livreurs, setLivreurs] = useState([]);
+  const [pickups, setPickups] = useState([]); // Added state for pickups
+  const [selectedClient, setSelectedClient] = useState('');
+  const [selectedLivreur, setSelectedLivreur] = useState('');
+
+  useEffect(() => {
+    const fetchClients = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/clients');
+        setClients(response.data);
+      } catch (error) {
+        console.error('Error fetching clients:', error);
+      }
+    };
+
+    const fetchLivreurs = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/users/role/livreur');
+        setLivreurs(response.data);
+      } catch (error) {
+        console.error('Error fetching livreurs:', error);
+      }
+    };
+
+    const fetchPickups = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/pickups'); // Adjust the endpoint as needed
+        setPickups(response.data);
+      } catch (error) {
+        console.error('Error fetching pickups:', error);
+      }
+    };
+
+    fetchClients();
+    fetchLivreurs();
+    fetchPickups(); // Fetch pickups data
+  }, []);
+
+  const handleClientChange = (event) => {
+    setSelectedClient(event.target.value);
+  };
+
+  const handleLivreurChange = (event) => {
+    setSelectedLivreur(event.target.value);
+  };
 
   return (
     <div className="ramassage-container">
@@ -24,9 +59,11 @@ const Ramassage = () => {
             <div className="form-row">
               <div className="form-group">
                 <label>CLIENT</label>
-                <select>
-                  <option value="fashion store">test</option>
-                  <option value="bio products">test</option>
+                <select value={selectedClient} onChange={handleClientChange}>
+                  <option value="">Select a client</option>
+                  {clients.map(client => (
+                    <option key={client.id} value={client.id}>{client.name}</option>
+                  ))}
                 </select>
               </div>
               <div className="form-group">
@@ -39,10 +76,11 @@ const Ramassage = () => {
               </div>
               <div className="form-group">
                 <label>LIVREUR</label>
-                <select>
-                  <option value="ahmed">abir</option>
-                  <option value="sami">fatma</option>
-                
+                <select value={selectedLivreur} onChange={handleLivreurChange}>
+                  <option value="">Select a livreur</option>
+                  {livreurs.map(livreur => (
+                    <option key={livreur.id} value={livreur.id}>{livreur.name}</option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -52,9 +90,8 @@ const Ramassage = () => {
       </div>
       <h2>Liste des PIKUPS</h2>
       <div className="cards-container">
-   
         <div className="table-card">
-        <h2>PIKUPS</h2>
+          <h2>PIKUPS</h2>
           <table>
             <thead>
               <tr>

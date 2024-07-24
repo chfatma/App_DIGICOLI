@@ -1,41 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './ListeColisAdmin.css';
 import ListeColisAdminFilter from './ListeColisAdminFilter';
+import qrCodeIcon from '../../../assets/qr-code.png';
 
 const ListeColisAdmin = () => {
-  const fakeColisData = [
-    { id: 1, code: 'C001', expediteur: 'Alice', destinataire: 'Bob', telephone: '1234567890', montant: '100', depot: 'Depot A', adresse: 'Adresse A', statut: 'En cours' },
-    { id: 2, code: 'C002', expediteur: 'Charlie', destinataire: 'David', telephone: '0987654321', montant: '200', depot: 'Depot B', adresse: 'Adresse B', statut: 'Terminé' },
-    // Add more data as needed
-  ];
+  const navigate = useNavigate();
+  const [colisData, setColisData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
-  const [colisData, setColisData] = useState(fakeColisData);
-  const [filteredData, setFilteredData] = useState(fakeColisData); // State to hold filtered data
-
-  const handleStatusChange = (e, id) => {
-    const { value } = e.target;
-    const updatedColisData = colisData.map(colis => {
-      if (colis.id === id) {
-        return { ...colis, statut: value };
-      }
-      return colis;
-    });
-    setColisData(updatedColisData);
+  // Function to fetch colis data from the backend
+  const fetchColisData = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/api/colis');
+      setColisData(response.data);
+      setFilteredData(response.data);
+    } catch (error) {
+      console.error('Error fetching colis data:', error);
+    }
   };
 
+  useEffect(() => {
+    fetchColisData();
+  }, []);
+
   const handleFilterChange = (option, date) => {
-    let filtered = fakeColisData;
+    let filtered = colisData;
 
     if (option !== 'Tout') {
-      filtered = fakeColisData.filter(colis => colis.statut === option);
+      filtered = colisData.filter(colis => colis.statut === option);
     }
 
     if (date) {
-      // Filter based on date logic here
-      // Example: filtered = filtered.filter(colis => colis.date === date);
+      // Apply date filtering if necessary
     }
 
     setFilteredData(filtered);
+  };
+
+  const handleQRCodeClick = (colis) => {
+    navigate(`/QRCodeGenerator/${colis.id}`, { state: colis });
   };
 
   return (
@@ -57,6 +62,7 @@ const ListeColisAdmin = () => {
                 <th>Dépôt</th>
                 <th>Adresse</th>
                 <th>Statut</th>
+                <th>QR Code</th> {/* New column */}
               </tr>
             </thead>
             <tbody>
@@ -69,17 +75,11 @@ const ListeColisAdmin = () => {
                   <td>{colis.montant}</td>
                   <td>{colis.depot}</td>
                   <td>{colis.adresse}</td>
+                  <td>{colis.statut}</td>
                   <td>
-                    <select
-                      value={colis.statut}
-                      onChange={(e) => handleStatusChange(e, colis.id)} // Call handleStatusChange here
-                    >
-                      <option value="En cours">En cours</option>
-                      <option value="Terminé">Terminé</option>
-                      <option value="Livre">Livre</option>
-                      <option value="En Attente">En Attente</option>
-                      <option value="Annuler">Annuler</option>
-                    </select>
+                    <button onClick={() => handleQRCodeClick(colis)}>
+                      <img src={qrCodeIcon} alt="QR Code" style={{ width: '24px', height: '24px' }} /> {/* Set appropriate width and height */}
+                    </button>
                   </td>
                 </tr>
               ))}

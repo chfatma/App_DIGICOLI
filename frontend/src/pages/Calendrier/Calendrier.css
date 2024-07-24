@@ -1,0 +1,65 @@
+.calendar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .calendar-navigation {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .calendar-navigation button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* Ensure 7 columns */
+    gap: 1px;
+    width: 100%;
+    max-width: 700px; /* Adjust as needed */
+  }
+  
+  .calendar-header,
+  .calendar-body {
+    display: contents;
+  }
+  
+  .calendar-day-name {
+    background-color: #f0f0f0;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .calendar-day {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+  }
+  
+  .calendar-day.empty {
+    background-color: #fff;
+  }
+  
+  .calendar-day.sunday {
+    background-color: #ff4c4c; /* Red color for Sundays */
+    color: white; /* Text color for Sundays */
+  }
+  
+  .calendar-day.holiday {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .calendar-day.sunday.holiday {
+    background-color: red; /* Ensure holidays on Sundays are also red */
+    color: white; /* Text color for holidays on Sundays */
+  }
+  

@@ -1,2 +1,3 @@
 npm install express mysql body-parser
 npm install react-icons --save // make it in the outside of the folder frontend 
+npm install qrcode.react

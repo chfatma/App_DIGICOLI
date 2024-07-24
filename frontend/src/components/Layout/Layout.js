@@ -4,12 +4,13 @@ import Navbar from '../Navbar/Navbar';
 
 import './Layout.css';
 
-import MenuClients from '../Menu/MenuClient';
+
+import MenuAdmin from './../Menu/MenuAdmin';
 
 const Layout = ({ children }) => {
   return (
     <div className="layout">
-      <MenuClients />
+      <MenuAdmin />
       <div className="content menu-open">
         <Navbar />
         {children}

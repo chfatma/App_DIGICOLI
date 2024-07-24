@@ -1,0 +1,79 @@
+/* src/components/EditClientAdmin.css */
+.edit-client-admin {
+    padding: 40px;
+    background-color: #ecf3fd;
+  }
+  
+  .section-title {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    text-align: left;
+    color: #193A69;
+    font-weight: bold;
+  }
+  
+  .card-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .edit-client-admin-container {
+    width: 100%;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .input-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+  
+  .input-wrapper {
+    flex: 1;
+    margin-right: 45px;
+  }
+  
+  .input-wrapper:last-child {
+    margin-right: 0;
+  }
+  
+  .input-wrapper label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+  
+  .input-wrapper input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  
+  .button-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  
+  .normal-button {
+    padding: 12px 40px;
+    background-color: #f26722c8;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .normal-button:hover {
+    background-color: #F26622;
+  }
+  

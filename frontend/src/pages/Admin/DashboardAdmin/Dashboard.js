@@ -3,6 +3,7 @@ import './Dashboard.css';
 import Chart1 from '../DoughnutChart/Doughnut Chart1/DoughnutChart11';
 import Chart2 from '../DoughnutChart/Doughnut Chart2/DoughnutChart22';
 
+ 
 const Dashboard = () => {
   return (
     <div className="dashboard-container">
@@ -15,6 +16,7 @@ const Dashboard = () => {
             </div>
             <p className="filter-text">Filter</p>
           </div>
+       
         </div>
       </div>
       <div className="dashboard-cards">

@@ -51,13 +51,13 @@ const MenuAdmin = () => {
             <i className="fa fa-arrows-alt"></i> Ramassage
           </Link>
         </li>
-        <li className={location.pathname === '/calendrier' ? 'active' : ''}>
-          <Link to="/calendrier">
+        <li className={location.pathname === '/Calendrier' ? 'active' : ''}>
+          <Link to="/Calendrier">
             <i className="fa fa-calendar"></i> Calendrier
           </Link>
         </li>
-        <li className={location.pathname === '/depots' ? 'active' : ''}>
-          <Link to="/depots">
+        <li className={location.pathname === '/QRCodeGenerator' ? 'active' : ''}>
+          <Link to="/QRCodeGenerator">
             <i className="fa fa-building"></i> Dépôts
           </Link>
         </li>

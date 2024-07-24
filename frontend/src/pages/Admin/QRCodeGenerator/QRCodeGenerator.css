@@ -1,0 +1,32 @@
+/* Ensure the parent container takes up the full viewport */
+.qr-code-generator-container {
+  display: flex;
+  justify-content: center;  /* Center horizontally */
+  align-items: center;      /* Center vertically */
+  min-height: 100vh;        /* Ensure it takes at least the full height of the viewport */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.qr-code-generator {
+  text-align: center;
+}
+
+.qr-code {
+  margin-top: 20px;
+}
+
+.download-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.download-btn:hover {
+  background-color: #45a049;
+}
