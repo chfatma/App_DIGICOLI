@@ -1,6 +1,5 @@
 const db = require('../config/db');
 
-
 const User = function(user) {
   this.email = user.email;
   this.first_name = user.first_name;
@@ -13,7 +12,6 @@ const User = function(user) {
   this.date_naissance = user.date_naissance;
 };
 
-// get all by role
 User.getByRole = (role, result) => {
   db.query('SELECT * FROM users WHERE role = ?', [role], (err, res) => {
     if (err) {
@@ -25,19 +23,17 @@ User.getByRole = (role, result) => {
   });
 };
 
-// Create 
 User.create = (newUser, result) => {
   db.query("INSERT INTO users SET ?", newUser, (err, res) => {
-      if (err) {
-          console.log("error: ", err);
-          result(err, null);
-          return;
-      }
-      result(null, { id: res.insertId, ...newUser });
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+    result(null, { id: res.insertId, ...newUser });
   });
 };
 
-// Find by id
 User.findById = (userId, result) => {
   db.query('SELECT * FROM users WHERE id = ?', [userId], (err, res) => {
     if (err) {
@@ -53,11 +49,10 @@ User.findById = (userId, result) => {
   });
 };
 
-// Update by id
 User.updateById = (id, user, result) => {
   db.query(
-    'UPDATE users SET email = ?, first_name = ?, last_name = ?, password = ?, phone = ?, address = ?, governorate = ?, role = ?, dateNaissance = ? WHERE id = ?',
-    [user.email, user.first_name, user.last_name, user.password, user.phone, user.address, user.governorate, user.role, user.dateNaissance, id],
+    'UPDATE users SET email = ?, first_name = ?, last_name = ?, password = ?, phone = ?, address = ?, governorate = ?, role = ?, date_naissance = ? WHERE id = ?',
+    [user.email, user.first_name, user.last_name, user.password, user.phone, user.address, user.governorate, user.role, user.date_naissance, id],
     (err, res) => {
       if (err) {
         console.log('error: ', err);
@@ -73,7 +68,6 @@ User.updateById = (id, user, result) => {
   );
 };
 
-// Delete by id
 User.remove = (id, result) => {
   db.query('DELETE FROM users WHERE id = ?', id, (err, res) => {
     if (err) {
@@ -89,7 +83,6 @@ User.remove = (id, result) => {
   });
 };
 
-// get all 
 User.getAll = result => {
   db.query('SELECT * FROM users', (err, res) => {
     if (err) {

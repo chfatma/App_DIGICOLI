@@ -1,82 +1,116 @@
-
 body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
-  }
-  
-  .login-page {
-    background: url('../../../public/favicon.png') no-repeat center center fixed;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .card {
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    width: 300px;
-    text-align: center;
-  }
-  
-  .form-toggle {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  .form-toggle button {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .form-toggle .active {
-    font-weight: bold;
-    border-bottom: 2px solid #333;
-  }
-  
-  .form-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form h2 {
-    margin-bottom: 20px;
-  }
-  
-  .form input {
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .form button {
-    padding: 10px;
-    border: none;
-    background-color: #333;
-    color: white;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  .form button:hover {
-    background-color: #555;
-  }
-  
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+.login-page-renamed {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Full height of the viewport */
+  background: url('../../../public/favicon.png') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.card-renamed {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  width: 300px;
+  text-align: center;
+  margin: auto; /* Center the card vertically */
+}
+
+.form-container-renamed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.form-renamed {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-renamed h2 {
+  margin-bottom: 20px;
+  margin-left: 3px;
+  color: #193A69;
+}
+
+.form-renamed input {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%; /* Ensure all input fields take the full width of the form */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.forgot-password-renamed {
+  align-self: flex-start;
+  margin-bottom: 10px;
+  color: #193A69;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.forgot-password-renamed:hover {
+  text-decoration: underline;
+}
+
+.form-renamed button {
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  background-color: #f26722d1;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.form-renamed button:hover {
+  background-color: #F26622;
+}
+
+.form-toggle-renamed {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.form-toggle-renamed button {
+  flex: 1;
+  padding: 5px; /* Reduce padding for smaller buttons */
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px; /* Reduce font size */
+  max-height: 30px; /* Set a smaller max height */
+  margin: 0 5px; /* Add some margin to separate the buttons */
+  border-radius: 4px; /* Add border-radius for rounded corners */
+  background-color: #10244184; /* Background color */
+  color: #fff;
+}
+
+.form-toggle-renamed .active-renamed {
+  font-weight: bold;
+  border-bottom: 2px solid #841616;
+}
+
+.form-toggle-renamed button:hover {
+  background-color: #193A69; /* Hover background color */
+}
+
+.footerr {
+  margin-top: auto; /* Push the footer to the bottom */
+  font-size: 14px;
+  color: #193A69;
+  text-align: center;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.9); /* Match card background color */
+}

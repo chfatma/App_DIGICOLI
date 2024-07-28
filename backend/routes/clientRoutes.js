@@ -1,15 +1,12 @@
 // routes/clientRoutes.js
-module.exports = app => {
-  const clients = require('../controllers/clientController');
+const express = require('express');
+const router = express.Router();
+const clients = require('../controllers/clientController');
 
-  app.post('/clients', clients.create);
-  app.get('/clients', clients.findAll);
-  app.get('/clients/:clientId', clients.findOne);
-  app.put('/clients/:clientId', clients.update);
+router.post('/', clients.create);
+router.get('/', clients.findAll);
+router.get('/:clientId', clients.findOne);
+router.put('/:clientId', clients.update);
+router.delete('/:clientId', clients.delete);
 
-  
-  app.delete('/clients/:clientId', clients.delete);
-
-
-
-};
+module.exports = router;

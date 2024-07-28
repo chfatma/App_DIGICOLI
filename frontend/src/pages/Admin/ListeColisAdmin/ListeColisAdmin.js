@@ -9,8 +9,17 @@ const ListeColisAdmin = () => {
   const navigate = useNavigate();
   const [colisData, setColisData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [newColis, setNewColis] = useState({
+    code: '',
+    expediteur: '',
+    destinataire: '',
+    telephone: '',
+    montant: '',
+    depot: '',
+    adresse: '',
+    statut: 'En Attente',
+  });
 
-  // Function to fetch colis data from the backend
   const fetchColisData = async () => {
     try {
       const response = await axios.get('http://localhost:3000/api/colis');
@@ -43,14 +52,147 @@ const ListeColisAdmin = () => {
     navigate(`/QRCodeGenerator/${colis.id}`, { state: colis });
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewColis(prevState => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await axios.post('http://localhost:3000/api/colis', newColis);
+      fetchColisData();
+      setNewColis({
+        code: '',
+        expediteur: '',
+        destinataire: '',
+        telephone: '',
+        montant: '',
+        depot: '',
+        adresse: '',
+        statut: 'En Attente',
+      });
+    } catch (error) {
+      console.error('Error adding colis:', error);
+    }
+  };
+
   return (
-    <div className="list-des-colis-container">
+    <div className="liste-colis-admin-container">
       <ListeColisAdminFilter onFilterChange={handleFilterChange} />
-      <div className="colis-card">
-        <div className="card-header">
-          <span className="card-title">Liste des Colis</span>
+      <div className="add-colis-card">
+        <div className="add-colis-card-header">
+          <span className="add-colis-card-title">Ajouter Colis</span>
         </div>
-        <div className="table-container">
+        <form className="add-colis-form-container" onSubmit={handleSubmit}>
+          <div className="add-colis-form-row">
+            <div className="add-colis-input-group">
+              <label htmlFor="code">Code</label>
+              <input
+                type="text"
+                id="code"
+                name="code"
+                value={newColis.code}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="add-colis-input-group">
+              <label htmlFor="expediteur">Expéditeur</label>
+              <input
+                type="text"
+                id="expediteur"
+                name="expediteur"
+                value={newColis.expediteur}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="add-colis-input-group">
+              <label htmlFor="destinataire">Destinataire</label>
+              <input
+                type="text"
+                id="destinataire"
+                name="destinataire"
+                value={newColis.destinataire}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="add-colis-input-group">
+              <label htmlFor="telephone">Téléphone</label>
+              <input
+                type="text"
+                id="telephone"
+                name="telephone"
+                value={newColis.telephone}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+          <div className="add-colis-form-row">
+            <div className="add-colis-input-group">
+              <label htmlFor="montant">Montant</label>
+              <input
+                type="text"
+                id="montant"
+                name="montant"
+                value={newColis.montant}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="add-colis-input-group">
+              <label htmlFor="depot">Dépôt</label>
+              <input
+                type="text"
+                id="depot"
+                name="depot"
+                value={newColis.depot}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="add-colis-input-group">
+              <label htmlFor="adresse">Adresse</label>
+              <input
+                type="text"
+                id="adresse"
+                name="adresse"
+                value={newColis.adresse}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="add-colis-input-group">
+              <label htmlFor="statut">Statut</label>
+              <select
+                id="statut"
+                name="statut"
+                value={newColis.statut}
+                onChange={handleChange}
+              >
+                <option value="En Attente">En Attente</option>
+                <option value="En Cours">En Cours</option>
+                <option value="Livré">Livré</option>
+              </select>
+            </div>
+          </div>
+          <div className="add-colis-button-container">
+            <button type="submit">Ajouter</button>
+          </div>
+        </form>
+      </div>
+      <div className="colis-list-card">
+        <div className="colis-list-card-header">
+          <span className="colis-list-card-title">Liste des Colis</span>
+        </div>
+        <div className="colis-table-container">
           <table className="colis-table">
             <thead>
               <tr>
@@ -62,7 +204,7 @@ const ListeColisAdmin = () => {
                 <th>Dépôt</th>
                 <th>Adresse</th>
                 <th>Statut</th>
-                <th>QR Code</th> {/* New column */}
+                <th>QR Code</th>
               </tr>
             </thead>
             <tbody>
@@ -77,9 +219,12 @@ const ListeColisAdmin = () => {
                   <td>{colis.adresse}</td>
                   <td>{colis.statut}</td>
                   <td>
-                    <button onClick={() => handleQRCodeClick(colis)}>
-                      <img src={qrCodeIcon} alt="QR Code" style={{ width: '24px', height: '24px' }} /> {/* Set appropriate width and height */}
-                    </button>
+                    <img
+                      src={qrCodeIcon}
+                      alt="QR Code"
+                      onClick={() => handleQRCodeClick(colis)}
+                      style={{ cursor: 'pointer', width: '25px', height: '25px' }}
+                    />
                   </td>
                 </tr>
               ))}

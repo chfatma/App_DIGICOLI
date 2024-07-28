@@ -1,11 +1,110 @@
-.list-des-colis-container {
+/* Container for the entire list page */
+.liste-colis-admin-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 40px;
 }
 
-.colis-card {
+/* Card for adding new colis */
+.add-colis-card {
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  max-width: 100%; /* Set to full width */
+  width: 1150px; /* Explicit width */
+}
+
+/* Header section inside the add colis card */
+.add-colis-card-header {
+  margin-bottom: 20px;
+}
+
+/* Title for the add colis card */
+.add-colis-card-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Form container inside the add colis card */
+.add-colis-form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Rows in the form, containing input groups */
+.add-colis-form-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+/* Input group within a form row */
+.add-colis-input-group {
+  flex: 1;
+  margin-right: 10px;
+  
+  min-width: 220px; /* Ensure minimum width for each input */
+}
+
+/* Remove margin-right from the last input group */
+.add-colis-input-group:last-child {
+  margin-right: 0;
+}
+
+/* Labels for inputs within the form */
+.add-colis-input-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+/* Consistent styling for all input fields and select boxes */
+.add-colis-input-group input,
+.add-colis-input-group select {
+  width: 100%; /* Full width of the input group */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 16px; /* Consistent font size */
+}
+
+/* Ensure select boxes match input fields */
+.add-colis-input-group select {
+  max-width: 100%; /* Ensure it doesn't exceed container width */
+  background-color: #fff; /* Ensure background color consistency */
+  color: black; /* Ensure text color consistency */
+}
+
+/* Container for the submit button */
+.add-colis-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Styling for the submit button */
+.add-colis-button-container button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-colis-button-container button:hover {
+  background-color: #0056b3;
+}
+
+/* Card for listing colis */
+.colis-list-card {
   width: 100%;
   margin-top: 20px;
   background-color: #ffffff;
@@ -15,25 +114,29 @@
   transition: all 0.3s ease;
 }
 
-.colis-card .card-header {
+/* Header section inside the list colis card */
+.colis-list-card-header {
   background-color: #fff;
   padding: 10px;
   border-bottom: 1px solid #fff;
 }
 
-.colis-card .card-header .card-title {
+/* Title for the list colis card */
+.colis-list-card-title {
   font-size: 1.5em;
   font-weight: bold;
   color: #193A69;
   margin-bottom: 1px;
 }
 
-.table-container {
+/* Container for the table within the colis list card */
+.colis-table-container {
   overflow-x: auto;
   max-height: 350px; /* Maximum height for the table container */
   padding: 10px;
 }
 
+/* Styling for the table */
 .colis-table {
   width: 100%;
   border-collapse: collapse;
@@ -53,12 +156,12 @@
   color: black;
 }
 
-.colis-table tbody tr{
+.colis-table tbody tr {
   background-color: #fff;
 }
 
 .colis-table tbody tr:hover {
-  background-color: #fff;
+  background-color: #f0f0f0;
 }
 
 .colis-table select {

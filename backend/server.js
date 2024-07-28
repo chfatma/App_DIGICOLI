@@ -1,13 +1,26 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+const authRoutes = require('./routes/authRoutes');
 const app = express();
-
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+
+
+
+
+
+
+
+
+app.use('/auth', authRoutes);
+
+
+
+
 
 // Simple route to try 
 app.get('/', (req, res) => {
@@ -15,17 +28,23 @@ app.get('/', (req, res) => {
 });
 
 // User routes
-require('./routes/userRoutes')(app);
-
+const userRoutes = require('./routes/userRoutes');
+userRoutes(app);
 
 // Client routes
-require('./routes/clientRoutes')(app);
-
-
+const clientRoutes = require('./routes/clientRoutes');
+app.use('/clients', clientRoutes);  // Updated route prefix
 
 // Colis routes
 const colisRoutes = require('./routes/colisRoutes');
 app.use('/api/colis', colisRoutes);
+
+
+
+// Import and use pickup routes
+const pickupRoutes = require('./routes/pickupRoutes');
+app.use('/api', pickupRoutes);  // Ensure the path prefix matches
+
 
 
 

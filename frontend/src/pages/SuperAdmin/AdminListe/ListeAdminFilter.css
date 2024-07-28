@@ -1,0 +1,117 @@
+.superAdmin-list-container-custom {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.right-content-custom {
+  display: flex;
+  gap: 20px;
+}
+
+.small-button-custom {
+  position: relative;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+  width: 200px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.small-button-custom:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.icon-circle-custom {
+  background-color: #007bff;
+  color: #ffffff;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 8px;
+}
+
+.card-title-custom {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333333;
+  padding: 0 8px;
+  cursor: pointer;
+}
+
+.title-text-custom {
+  margin-left: 4px;
+}
+
+.gouvernement-dropdown-custom {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #007bff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.dropdown-item-custom {
+  padding: 8px;
+  font-size: 14px;
+  color: #333333;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item-custom:hover {
+  background-color: #f0f0f0;
+}
+
+.selected-custom {
+  background-color: #f0f0f0;
+}
+
+.date-card-custom {
+  display: flex;
+  flex-direction: column;
+}
+
+.icon-title-custom {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333333;
+  padding: 0 8px;
+  cursor: pointer;
+}
+
+.date-input-custom {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.selected-gouvernement-custom {
+  padding: 8px;
+  font-size: 14px;
+  color: #333333;
+  text-align: left;
+  margin-top: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

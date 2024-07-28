@@ -1,0 +1,137 @@
+.dashboard-container {
+  padding: 20px;
+  text-align: left;
+  font-family: 'Arial', sans-serif;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.dashboard-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #193A69;
+  padding: 40px;
+  margin-top: 0px; /* Adjust this value to change the space from the top */
+}
+
+.filter-card-container {
+  margin-top: 5px; /* Adjust this value to change the space between the title and the filter card */
+  
+}
+
+.filter-card {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  color: #5e3f34;
+  padding: 5px 10px;
+  border-radius: 8px;
+  box-shadow: #000000;
+}
+
+.filter-icon {
+  margin-right: 10px;
+}
+
+.filter-icon i {
+  font-size: 18px;
+  color: #193A69;
+}
+
+.filter-text {
+  font-size: 16px;
+  color: #193A69;
+}
+
+.dashboard-cards {
+  padding: 40px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.dashboard-card {
+  background-color: #ffffff;
+  color: #000000;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  flex: 1;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.card-circle {
+  background-color: #F26622;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+.card-circle i {
+  font-size: 30px;
+  color: #ffffff;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: #193A69;
+}
+
+.card-title {
+  font-size: 24px;
+  margin-bottom: 5px;
+  color: #193A69;
+  font-weight: bold;
+}
+
+.card-phrase {
+  font-size: 16px;
+  margin: 0;
+  color: #193A69;
+}
+
+.card-percentage {
+  font-size: 14px;
+  color: #178f49c8;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+.dashboard-large-cards {
+  padding: 40px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 80px; /* Space between the small cards and the large cards */
+}
+
+.dashboard-large-card {
+  background-color: #ffffff;
+  color: #193A69;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  height: 300px; /* Adjust height as needed */
+}

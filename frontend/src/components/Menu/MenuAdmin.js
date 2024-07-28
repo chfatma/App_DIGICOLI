@@ -71,6 +71,11 @@ const MenuAdmin = () => {
             <i className="fa fa-life-ring"></i> Support
           </Link>
         </li>
+        <li className={location.pathname === '/suivi-colis' ? 'active' : ''}>
+          <Link to="/suivi-colis">
+            <i className="fa fa-truck"></i> Suivi Colis
+          </Link>
+        </li>
       </ul>
     </aside>
   );
