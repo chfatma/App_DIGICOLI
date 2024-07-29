@@ -1,50 +1,58 @@
-const db = require('../config/db'); 
+// models/Colis.js
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../config/database');
+const Admin = require('../models/adminModel');
 
-// Create 
-exports.createColis = (colis, callback) => {
-    const query = 'INSERT INTO colis (code, expediteur, destinataire, telephone, montant, depot, adresse, statut) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-    const values = [colis.code, colis.expediteur, colis.destinataire, colis.telephone, colis.montant, colis.depot, colis.adresse, colis.statut];
-  
-    db.query(query, values, (err, result) => {
-      if (err) {
-        return callback(err);
-      }
-      callback(null, result);
-    });
-  };
+const Colis = sequelize.define('Colis', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  code: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  expediteur: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  destinataire: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  telephone: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      is: /^[0-9]{10,15}$/, // adjust regex according to your phone number format
+    },
+  },
+  montant: {
+    type: DataTypes.DECIMAL(10, 2), // assuming it's a monetary amount
+    allowNull: false,
+  },
+  depot: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  adresse: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  statut: {
+    type: DataTypes.ENUM('livrais', 'en attente', 'en cours'),
+    allowNull: false,
+  },
+  adminId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Admin, // Reference to the Admin model
+      key: 'id',
+    },
+    allowNull: false,
+  },
+});
+Colis.belongsTo(Admin, { foreignKey: 'adminId' });
 
-// Get all 
-exports.getAllColis = (callback) => {
-    const query = 'SELECT * FROM colis';
-    db.query(query, (err, results) => {
-        if (err) return callback(err);
-        callback(null, results);
-    });
-};
-
-// Get by id
-exports.getColisById = (id, callback) => {
-    const query = 'SELECT * FROM colis WHERE id = ?';
-    db.query(query, [id], (err, results) => {
-        if (err) return callback(err);
-        callback(null, results[0]);
-    });
-};
-
-// Update by id
-exports.updateColis = (id, data, callback) => {
-    const query = 'UPDATE colis SET code = ?, expediteur = ?, destinataire = ?, telephone = ?, montant = ?, depot = ?, adresse = ?, statut = ? WHERE id = ?';
-    db.query(query, [data.code, data.expediteur, data.destinataire, data.telephone, data.montant, data.depot, data.adresse, data.statut, id], (err, results) => {
-        if (err) return callback(err);
-        callback(null, results);
-    });
-};
-
-// Delete by id
-exports.deleteColis = (id, callback) => {
-    const query = 'DELETE FROM colis WHERE id = ?';
-    db.query(query, [id], (err, results) => {
-        if (err) return callback(err);
-        callback(null, results);
-    });
-};
+module.exports = Colis;

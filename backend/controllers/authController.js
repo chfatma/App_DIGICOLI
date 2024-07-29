@@ -1,49 +1,50 @@
-const db = require('../config/db');
+// controllers/authController.js
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const Admin = require('../models/adminModel');
+const User = require('../models/userModel'); // Import User model if you have one
 
-exports.login = (req, res) => {
-  const { email, password } = req.body;
+const saltRounds = 10; // Number of rounds for bcrypt
 
-  // Check if user exists in users table
-  const query = 'SELECT * FROM users WHERE email = ?';
-  db.query(query, [email], (err, userResults) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Server error' });
+// Helper function to find a user by email in both Admin and User tables
+const findUserByEmail = async (email) => {
+  // Search in Admin table
+  let user = await Admin.findOne({ where: { email } });
+
+  if (!user) {
+    // If not found in Admin table, search in User table
+    user = await User.findOne({ where: { email } });
+  }
+
+  return user;
+};
+
+// Unified login function
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Find the user in both Admin and User tables
+    const user = await findUserByEmail(email);
+
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    if (userResults.length === 0) {
-      // Check if user exists in clients table
-      const clientQuery = 'SELECT * FROM clients WHERE email = ?';
-      db.query(clientQuery, [email], (err, clientResults) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).json({ message: 'Server error' });
-        }
-
-        if (clientResults.length === 0) {
-          return res.status(404).json({ message: 'User not found' });
-        }
-
-        // Compare password for clients (plain text)
-        const client = clientResults[0];
-        if (password === client.password) {
-          // Passwords match
-          return res.status(200).json({ message: 'Login successful', role: client.role });
-        } else {
-          // Passwords do not match
-          return res.status(401).json({ message: 'Invalid credentials' });
-        }
-      });
-    } else {
-      // Compare password for users (plain text)
-      const user = userResults[0];
-      if (password === user.password) {
-        // Passwords match
-        return res.status(200).json({ message: 'Login successful', role: user.role });
-      } else {
-        // Passwords do not match
-        return res.status(401).json({ message: 'Invalid credentials' });
-      }
-    }
-  });
+    // // Compare the password
+    // const isMatch = await bcrypt.compare(password, user.password);
+    // if (!isMatch) {
+    //   return res.status(401).json({ message: 'Invalid email or password' });
+    // }
+   // Compare the password (plain text comparison)
+   if (password !== user.password) {
+    return res.status(401).json({ message: 'Invalid email or password' });
+  }
+    // Generate JWT token
+    // const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, 'hrdesfjd1541fgd78fd@dfhdfsghf5d524g524', { expiresIn: '1h' });
+console.log(res);
+    res.status(200).json({ message: 'Login successful' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error logging in', error });
+  }
 };

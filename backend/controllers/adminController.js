@@ -1,68 +1,102 @@
-const adminModel = require('../models/adminModel');
+// controllers/adminController.js
+const Admin = require('../models/adminModel');
 
-const getAllAdmins = (req, res) => {
-  adminModel.getAllAdmins((err, results) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
-    res.json(results);
-  });
+// Get all admins
+exports.getAllAdmins = async (req, res) => {
+  try {
+    const admins = await Admin.findAll();
+    res.status(200).json(admins);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching admins', error });
+  }
 };
 
-const getAdminById = (req, res) => {
-  const { id } = req.params;
-  adminModel.getAdminById(id, (err, results) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
-    if (results.length === 0) {
+// Get admin by ID
+exports.getAdminById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const admin = await Admin.findByPk(id);
+
+    if (!admin) {
       return res.status(404).json({ message: 'Admin not found' });
     }
-    res.json(results[0]);
-  });
+
+    res.status(200).json(admin);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching admin', error });
+  }
 };
 
-const createAdmin = (req, res) => {
-  const newAdmin = req.body;
-  adminModel.createAdmin(newAdmin, (err, results) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
-    res.status(201).json({ id: results.insertId, ...newAdmin });
-  });
+// Create a new admin
+exports.createAdmin = async (req, res) => {
+  try {
+    const { email, first_name, last_name, password, phone, address, role, governorate, date_naissance } = req.body;
+
+    // Create a new admin
+    const newAdmin = await Admin.create({
+      email,
+      first_name,
+      last_name,
+      password,
+      phone,
+      address,
+      role,
+      governorate,
+      date_naissance,
+    });
+
+    res.status(201).json({ message: 'Admin created successfully', admin: newAdmin });
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating admin', error });
+  }
 };
 
-const updateAdmin = (req, res) => {
-  const { id } = req.params;
-  const updatedAdmin = req.body;
-  adminModel.updateAdmin(id, updatedAdmin, (err, results) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
-    if (results.affectedRows === 0) {
-      return res.status(404).json({ message: 'Admin not found or not updated' });
-    }
-    res.json({ message: 'Admin updated successfully' });
-  });
-};
+// Update an existing admin
+exports.updateAdmin = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { email, first_name, last_name, password, phone, address, role, governorate, date_naissance } = req.body;
 
-const deleteAdmin = (req, res) => {
-  const { id } = req.params;
-  adminModel.deleteAdmin(id, (err, results) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
-    if (results.affectedRows === 0) {
+    const admin = await Admin.findByPk(id);
+
+    if (!admin) {
       return res.status(404).json({ message: 'Admin not found' });
     }
-    res.json({ message: 'Admin deleted successfully' });
-  });
+
+    // Update the admin details
+    admin.email = email;
+    admin.first_name = first_name;
+    admin.last_name = last_name;
+    admin.password = password;
+    admin.phone = phone;
+    admin.address = address;
+    admin.role = role;
+    admin.governorate = governorate;
+    admin.date_naissance = date_naissance;
+
+    await admin.save();
+
+    res.status(200).json({ message: 'Admin updated successfully', admin });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating admin', error });
+  }
 };
 
-module.exports = {
-  getAllAdmins,
-  getAdminById,
-  createAdmin,
-  updateAdmin,
-  deleteAdmin
+// Delete an admin
+exports.deleteAdmin = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const admin = await Admin.findByPk(id);
+
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin not found' });
+    }
+
+    await admin.destroy();
+
+    res.status(200).json({ message: 'Admin deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting admin', error });
+  }
 };

@@ -1,115 +1,121 @@
+// controllers/clientController.js
 const Client = require('../models/clientModel');
+const Admin = require('../models/adminModel'); // Adjust the path as necessary
 
-// Create and Save a new Client
-exports.create = (req, res) => {
-
-  if (!req.body) {
-    return res.status(400).send({
-      message: 'Content cannot be empty!'
-    });
+// Get all clients
+exports.getAllClients = async (req, res) => {
+  try {
+    const clients = await Client.findAll();
+    res.status(200).json(clients);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching clients', error });
   }
-
-  // Create a Client
-  const client = new Client({
-    email: req.body.email,
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    password: req.body.password,
-    phone: req.body.phone,
-    address: req.body.address,
-    governorate: req.body.governorate,
-    date_naissance: req.body.date_naissance,
-    role: req.body.role || 'client',
-    colisALivrer: req.body.colisALivrer
-  });
-
-  // Save Client in the database
-  Client.create(client, (err, data) => {
-    if (err) {
-      return res.status(500).send({
-        message: err.message || 'Some error occurred while creating the Client.'
-      });
-    } else {
-      return res.send(data);
-    }
-  });
 };
 
-// get all Clients from the database
-exports.findAll = (req, res) => {
-  Client.getAll((err, data) => {
-    if (err) {
-      return res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving clients.'
-      });
-    } else {
-      return res.send(data);
+// Get client by ID
+exports.getClientById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const client = await Client.findByPk(id);
+
+    if (!client) {
+      return res.status(404).json({ message: 'Client not found' });
     }
-  });
-};
 
-// Find one Client with a Id
-exports.findOne = (req, res) => {
-  Client.findById(req.params.clientId, (err, data) => {
-    if (err) {
-      if (err.kind === 'not_found') {
-        return res.status(404).send({
-          message: `Not found Client with id ${req.params.clientId}.`
-        });
-      } else {
-        return res.status(500).send({
-          message: 'Error retrieving Client with id ' + req.params.clientId
-        });
-      }
-    } else {
-      return res.send(data);
-    }
-  });
-};
-
-// Update a Client identifie by the id 
-exports.update = (req, res) => {
-
-  if (!req.body) {
-    return res.status(400).send({
-      message: 'Content cannot be empty!'
-    });
+    res.status(200).json(client);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching client', error });
   }
-
-  const client = new Client(req.body);
-
-  Client.updateById(req.params.clientId, client, (err, data) => {
-    if (err) {
-      if (err.kind === 'not_found') {
-        return res.status(404).send({
-          message: `Not found Client with id ${req.params.clientId}.`
-        });
-      } else {
-        return res.status(500).send({
-          message: 'Error updating Client with id ' + req.params.clientId
-        });
-      }
-    } else {
-      return res.send(data);
-    }
-  });
 };
 
-// Delete a Client with  id
-exports.delete = (req, res) => {
-  Client.remove(req.params.clientId, (err, data) => {
-    if (err) {
-      if (err.kind === 'not_found') {
-        return res.status(404).send({
-          message: `Not found Client with id ${req.params.clientId}.`
-        });
-      } else {
-        return res.status(500).send({
-          message: 'Could not delete Client with id ' + req.params.clientId
-        });
-      }
-    } else {
-      return res.send({ message: 'Client was deleted successfully!' });
+// Create a new client
+exports.createClient = async (req, res) => {
+  try {
+    const { email, first_name, last_name, password, phone, address, governorate, date_naissance, role, colisALivrer, adminId } = req.body;
+
+    // Validate if the admin exists
+    const admin = await Admin.findByPk(adminId);
+    if (!admin) {
+      return res.status(400).json({ message: 'Invalid adminId' });
     }
-  });
+
+    // Create a new client
+    const newClient = await Client.create({
+      email,
+      first_name,
+      last_name,
+      password,
+      phone,
+      address,
+      governorate,
+      date_naissance,
+      role,
+      colisALivrer,
+      adminId,
+    });
+
+    res.status(201).json({ message: 'Client created successfully', client: newClient });
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating client', error });
+  }
+};
+
+// Update an existing client
+exports.updateClient = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { email, first_name, last_name, password, phone, address, governorate, date_naissance, role, colisALivrer, adminId } = req.body;
+
+    const client = await Client.findByPk(id);
+
+    if (!client) {
+      return res.status(404).json({ message: 'Client not found' });
+    }
+
+    // Validate if the admin exists
+    if (adminId) {
+      const admin = await Admin.findByPk(adminId);
+      if (!admin) {
+        return res.status(400).json({ message: 'Invalid adminId' });
+      }
+    }
+
+    // Update the client details
+    client.email = email;
+    client.first_name = first_name;
+    client.last_name = last_name;
+    client.password = password;
+    client.phone = phone;
+    client.address = address;
+    client.governorate = governorate;
+    client.date_naissance = date_naissance;
+    client.role = role;
+    client.colisALivrer = colisALivrer;
+    if (adminId) client.adminId = adminId;
+
+    await client.save();
+
+    res.status(200).json({ message: 'Client updated successfully', client });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating client', error });
+  }
+};
+
+// Delete a client
+exports.deleteClient = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const client = await Client.findByPk(id);
+
+    if (!client) {
+      return res.status(404).json({ message: 'Client not found' });
+    }
+
+    await client.destroy();
+
+    res.status(200).json({ message: 'Client deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting client', error });
+  }
 };

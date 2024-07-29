@@ -1,145 +1,118 @@
-const User = require('../models/userModel');
+// controllers/userController.js
+const User  = require('../models/userModel'); // Adjust if needed based on how you import your models
 
-exports.create = (req, res) => {
-  if (!req.body) {
-    return res.status(400).send({
-      message: 'Content cannot be empty!'
-    });
+// Get all users
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await User.findAll();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching users', error });
   }
-
-  const user = {
-    email: req.body.email,
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    password: req.body.password,
-    phone: req.body.phone,
-    address: req.body.address,
-    governorate: req.body.governorate,
-    role: req.body.role, // Ensure the role is provided if necessary
-    date_naissance: req.body.date_naissance
-  };
-
-  User.create(user, (err, data) => {
-    if (err) {
-      return res.status(500).send({
-        message: err.message || 'Some error occurred while creating the User.'
-      });
-    } else {
-      return res.send(data);
-    }
-  });
 };
 
-exports.createLivreur = (req, res) => {
-  if (!req.body) {
-    return res.status(400).send({
-      message: 'Content cannot be empty!'
-    });
+// Get user by ID
+exports.getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching user', error });
   }
-
-  const user = {
-    email: req.body.email,
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    password: req.body.password,
-    phone: req.body.phone,
-    address: req.body.address,
-    governorate: req.body.governorate,
-    role: 'livreur',
-    date_naissance: req.body.date_naissance
-  };
-
-  User.create(user, (err, data) => {
-    if (err) {
-      return res.status(500).send({
-        message: err.message || 'Some error occurred while creating the Livreur.'
-      });
-    } else {
-      return res.send(data);
-    }
-  });
 };
 
-exports.findAllByRole = (req, res) => {
-  User.getByRole(req.params.role, (err, data) => {
-    if (err) {
-      return res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving users.'
-      });
-    } else {
-      return res.send(data);
-    }
-  });
-};
+// Get users by role
+exports.getUsersByRole = async (req, res) => {
+  try {
+    const { role } = req.params;
+    const users = await User.findAll({ where: { role } });
 
-exports.findAll = (req, res) => {
-  User.getAll((err, data) => {
-    if (err) {
-      return res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving users.'
-      });
-    } else {
-      return res.send(data);
+    if (users.length === 0) {
+      return res.status(404).json({ message: 'No users found with this role' });
     }
-  });
-};
 
-exports.findOne = (req, res) => {
-  User.findById(req.params.userId, (err, data) => {
-    if (err) {
-      if (err.kind === 'not_found') {
-        return res.status(404).send({
-          message: `Not found User with id ${req.params.userId}.`
-        });
-      } else {
-        return res.status(500).send({
-          message: 'Error retrieving User with id ' + req.params.userId
-        });
-      }
-    } else {
-      return res.send(data);
-    }
-  });
-};
-
-exports.update = (req, res) => {
-  if (!req.body) {
-    return res.status(400).send({
-      message: 'Content cannot be empty!'
-    });
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching users by role', error });
   }
-
-  User.updateById(req.params.userId, req.body, (err, data) => {
-    if (err) {
-      if (err.kind === 'not_found') {
-        return res.status(404).send({
-          message: `Not found User with id ${req.params.userId}.`
-        });
-      } else {
-        return res.status(500).send({
-          message: 'Error updating User with id ' + req.params.userId
-        });
-      }
-    } else {
-      return res.send(data);
-    }
-  });
 };
 
-exports.delete = (req, res) => {
-  User.remove(req.params.userId, (err, data) => {
-    if (err) {
-      if (err.kind === 'not_found') {
-        return res.status(404).send({
-          message: `Not found User with id ${req.params.userId}.`
-        });
-      } else {
-        return res.status(500).send({
-          message: 'Could not delete User with id ' + req.params.userId
-        });
-      }
-    } else {
-      return res.send({ message: 'User was deleted successfully!' });
+// Create a new user
+exports.createUser = async (req, res) => {
+  try {
+    const { email, first_name, last_name, password, phone, address, governorate, role, date_naissance } = req.body;
+
+    // Create a new user
+    const newUser = await User.create({
+      email,
+      first_name,
+      last_name,
+      password,
+      phone,
+      address,
+      governorate,
+      role,
+      date_naissance,
+    });
+
+    res.status(201).json({ message: 'User created successfully', user: newUser });
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating user', error });
+  }
+};
+
+// Update an existing user
+exports.updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { email, first_name, last_name, password, phone, address, governorate, role, date_naissance } = req.body;
+
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
-  });
+
+    // Update user details
+    user.email = email;
+    user.first_name = first_name;
+    user.last_name = last_name;
+    user.password = password;
+    user.phone = phone;
+    user.address = address;
+    user.governorate = governorate;
+    user.role = role;
+    user.date_naissance = date_naissance;
+
+    await user.save();
+
+    res.status(200).json({ message: 'User updated successfully', user });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating user', error });
+  }
+};
+
+// Delete a user
+exports.deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    await user.destroy();
+
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting user', error });
+  }
 };

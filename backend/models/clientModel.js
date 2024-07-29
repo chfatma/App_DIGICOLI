@@ -1,96 +1,69 @@
-const db = require('../config/db');
+// models/clientModel.js
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../config/database');
+const Admin = require('./adminModel'); // Adjust the path as necessary
 
+const Client = sequelize.define('Client', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  first_name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  last_name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  phone: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      is: /^[0-9]{10,15}$/, // Adjust regex according to your phone number format
+    },
+  },
+  address: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  governorate: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  date_naissance: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+  role: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  colisALivrer: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  adminId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Admin, // Reference to the Admin model
+      key: 'id',
+    },
+    allowNull: false,
+  },
+});
 
-const Client = function(client) {
-  this.email = client.email;
-  this.first_name = client.first_name;
-  this.last_name = client.last_name;
-  this.password = client.password;
-  this.phone = client.phone;
-  this.address = client.address;
-  this.governorate = client.governorate;
-  this.date_naissance = client.date_naissance;
-  this.role = client.role;
-  this.colisALivrer = client.colisALivrer;
-};
-
-// Get all 
-Client.getAll = result => {
-  db.query('SELECT * FROM clients', (err, res) => {
-    if (err) {
-      console.log('error: ', err);
-      result(null, err);
-      return;
-    }
-    result(null, res);
-  });
-};
-
-// create 
-Client.create = (newClient, result) => {
-  const query = `INSERT INTO clients (email, first_name, last_name, password, phone, address, governorate, date_naissance, role, colisALivrer) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-  const values = [newClient.email, newClient.first_name, newClient.last_name, newClient.password, newClient.phone, newClient.address, newClient.governorate, newClient.date_naissance, newClient.role, newClient.colisALivrer];
-  
-  db.query(query, values, (error, results) => {
-    if (error) {
-      console.log('error: ', error);
-      result(error, null);
-      return;
-    }
-    result(null, { id: results.insertId, ...newClient });
-  });
-};
-
-// find by id
-Client.findById = (clientId, result) => {
-  db.query('SELECT * FROM clients WHERE id = ?', [clientId], (err, res) => {
-    if (err) {
-      console.log('error: ', err);
-      result(err, null);
-      return;
-    }
-    if (res.length) {
-      result(null, res[0]);
-      return;
-    }
-    result({ kind: 'not_found' }, null);
-  });
-};
-
-// Update by id
-Client.updateById = (id, client, result) => {
-  db.query(
-    'UPDATE clients SET email = ?, first_name = ?, last_name = ?, password = ?, phone = ?, address = ?, governorate = ?, date_naissance = ?, role = ?, colisALivrer = ? WHERE id = ?',
-    [client.email, client.first_name, client.last_name, client.password, client.phone, client.address, client.governorate, client.date_naissance, client.role, client.colisALivrer, id],
-    (err, res) => {
-      if (err) {
-        console.log('error: ', err);
-        result(err, null);
-        return;
-      }
-      if (res.affectedRows == 0) {
-        result({ kind: 'not_found' }, null);
-        return;
-      }
-      result(null, { id: id, ...client });
-    }
-  );
-};
-
-// delete by id
-Client.remove = (id, result) => {
-  db.query('DELETE FROM clients WHERE id = ?', id, (err, res) => {
-    if (err) {
-      console.log('error: ', err);
-      result(err, null);
-      return;
-    }
-    if (res.affectedRows == 0) {
-      result({ kind: 'not_found' }, null);
-      return;
-    }
-    result(null, res);
-  });
-};
+// Define associations
+Client.belongsTo(Admin, { foreignKey: 'adminId' });
 
 module.exports = Client;
