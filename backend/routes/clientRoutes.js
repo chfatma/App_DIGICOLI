@@ -1,13 +1,21 @@
 const express = require('express');
-const clientController = require('../controllers/clientController'); // Ensure this path is correct
-
 const router = express.Router();
+const clientController = require('../controllers/ClientController');
 
-// Define routes with matching controller function names
-router.post('/post/add', clientController.createClient);  // Updated to match controller method name
-router.get('/all/', clientController.getAllClients);      // Updated to match controller method name
-router.get('/get/:id', clientController.getClientById);   // Updated to match controller method name
-router.put('/update/:id', clientController.updateClient); // Updated to match controller method name
-router.delete('/kill/:id', clientController.deleteClient); // Updated to match controller method name
+// Route to create a new client (adminId must be included in the request body)
+router.post('/', clientController.createClient);
+
+// Route to get all clients created by the specified admin (adminId must be included in the query string)
+router.get('/', clientController.getAllClients);
+
+// Route to get a client by ID and adminId (adminId must be included in the query string)
+router.get('/:id', clientController.getClientById);
+
+
+// Route to update a client by ID (adminId must be included in the request body)
+router.put('/:id', clientController.updateClient);
+
+// Route to delete a client by ID (adminId must be included in the query string)
+router.delete('/:id', clientController.deleteClient);
 
 module.exports = router;

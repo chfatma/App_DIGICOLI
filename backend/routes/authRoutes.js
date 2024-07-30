@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const authController = require('../controllers/authController');
+const { loginUser, logoutUser } = require('../controllers/authController'); // Update this path based on your authController file
 
-// Define the route for login
-router.post('/login', authController.login);
+// Login Route
+router.post('/login', loginUser);
+
+// Logout Route
+router.post('/logout', logoutUser);
 
 module.exports = router;

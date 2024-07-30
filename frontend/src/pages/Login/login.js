@@ -18,7 +18,7 @@ const Login = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/v1/api/auth/login', {
+      const response = await fetch('http://localhost:3000/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -26,42 +26,36 @@ const Login = () => {
         body: JSON.stringify({ email, password }),
       });
 
-        // Handle unexpected responses
-    const contentType = response.headers.get('Content-Type');
-    if (!contentType || !contentType.includes('application/json')) {
-      throw new Error('Unexpected response format');
-    }
-
-    const data = await response.json();
-    if (response.ok) {
-      // Store user data, including role
-      sessionStorage.setItem('user', JSON.stringify(data.user));
-      // Redirect based on role
-      switch (data.role) {
-        case 'admin':
-          navigate('/DashboardAdmin');
-          break;
-        case 'client':
-          navigate('/MenuClient');
-          break;
-        case 'super_admin':
-          navigate('/DashboardAdmin');
-          break;
-        case 'livreur':
-          navigate('/MenuLivreur');
-          break;
-        default:
-          navigate('/dashboard');
+      const data = await response.json();
+      if (response.ok) {
+        // Store user data, including role
+        sessionStorage.setItem('user', JSON.stringify(data.user));
+        // Redirect based on role
+        switch (data.role) {
+          case 'admin':
+            navigate('/DashboardAdmin');
+            break;
+          case 'client':
+            navigate('/MenuClient');
+            break;
+          case 'super_admin':
+            navigate('/DashboardAdmin');
+            break;
+          case 'livreur':
+            navigate('/MenuLivreur');
+            break;
+          default:
+            navigate('/dashboard');
+        }
+      } else {
+        console.error('Login failed:', data.message);
+        alert('Login failed. Please check your credentials and try again.');
       }
-    } else {
-      console.error('Login failed:', data.message);
-      alert('Login failed. Please check your credentials and try again.');
+    } catch (error) {
+      console.error('Error during login:', error);
+      alert('An unexpected error occurred. Please try again later.');
     }
-  } catch (error) {
-    console.error('Error during login:', error);
-    alert('An unexpected error occurred. Please try again later.');
-  }
-};
+  };
 
   const handleSignUp = async (event) => {
     event.preventDefault();

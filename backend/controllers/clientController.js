@@ -1,121 +1,113 @@
-// controllers/clientController.js
-const Client = require('../models/clientModel');
-const Admin = require('../models/adminModel'); // Adjust the path as necessary
-
-// Get all clients
-exports.getAllClients = async (req, res) => {
-  try {
-    const clients = await Client.findAll();
-    res.status(200).json(clients);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching clients', error });
-  }
-};
-
-// Get client by ID
-exports.getClientById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const client = await Client.findByPk(id);
-
-    if (!client) {
-      return res.status(404).json({ message: 'Client not found' });
-    }
-
-    res.status(200).json(client);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching client', error });
-  }
-};
+// controllers/ClientController.js
+const Client = require('../models/Client');
 
 // Create a new client
 exports.createClient = async (req, res) => {
   try {
-    const { email, first_name, last_name, password, phone, address, governorate, date_naissance, role, colisALivrer, adminId } = req.body;
-
-    // Validate if the admin exists
-    const admin = await Admin.findByPk(adminId);
-    if (!admin) {
-      return res.status(400).json({ message: 'Invalid adminId' });
+    const { adminId, email, nom, prenom, motdepasse, telephone, address, governorate, date_naissance, colisALivrer } = req.body;
+    
+    // Ensure adminId is provided
+    if (!adminId) {
+      return res.status(400).json({ message: 'adminId is required' });
     }
-
-    // Create a new client
+    
     const newClient = await Client.create({
+      adminId,
       email,
-      first_name,
-      last_name,
-      password,
-      phone,
+      nom,
+      prenom,
+      motdepasse,
+      telephone,
       address,
       governorate,
       date_naissance,
-      role,
       colisALivrer,
-      adminId,
     });
-
-    res.status(201).json({ message: 'Client created successfully', client: newClient });
+    res.status(201).json(newClient);
   } catch (error) {
-    res.status(500).json({ message: 'Error creating client', error });
+    res.status(500).json({ error: error.message });
   }
 };
 
-// Update an existing client
+// Get all clients created by a specific admin
+exports.getAllClients = async (req, res) => {
+  try {
+    const adminId = req.query.adminId;
+
+    if (!adminId) {
+      return res.status(400).json({ message: 'adminId is required' });
+    }
+
+    const clients = await Client.findAll({ where: { adminId } });
+    res.status(200).json(clients);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Get a client by ID and adminId
+exports.getClientById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { adminId } = req.query;
+
+    if (!adminId) {
+      return res.status(400).json({ message: 'adminId is required' });
+    }
+
+    const client = await Client.findOne({ where: { id, adminId } });
+
+    if (!client) {
+      return res.status(404).json({ message: 'Client not found or not authorized' });
+    }
+    res.status(200).json(client);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Update a client by ID
 exports.updateClient = async (req, res) => {
   try {
     const { id } = req.params;
-    const { email, first_name, last_name, password, phone, address, governorate, date_naissance, role, colisALivrer, adminId } = req.body;
+    const { adminId } = req.body;
 
-    const client = await Client.findByPk(id);
-
-    if (!client) {
-      return res.status(404).json({ message: 'Client not found' });
+    if (!adminId) {
+      return res.status(400).json({ message: 'adminId is required' });
     }
 
-    // Validate if the admin exists
-    if (adminId) {
-      const admin = await Admin.findByPk(adminId);
-      if (!admin) {
-        return res.status(400).json({ message: 'Invalid adminId' });
-      }
+    const [updated] = await Client.update(req.body, {
+      where: { id, adminId }
+    });
+
+    if (!updated) {
+      return res.status(404).json({ message: 'Client not found or not authorized' });
     }
-
-    // Update the client details
-    client.email = email;
-    client.first_name = first_name;
-    client.last_name = last_name;
-    client.password = password;
-    client.phone = phone;
-    client.address = address;
-    client.governorate = governorate;
-    client.date_naissance = date_naissance;
-    client.role = role;
-    client.colisALivrer = colisALivrer;
-    if (adminId) client.adminId = adminId;
-
-    await client.save();
-
-    res.status(200).json({ message: 'Client updated successfully', client });
+    res.status(200).json({ message: 'Client updated' });
   } catch (error) {
-    res.status(500).json({ message: 'Error updating client', error });
+    res.status(500).json({ error: error.message });
   }
 };
 
-// Delete a client
+// Delete a client by ID
 exports.deleteClient = async (req, res) => {
   try {
     const { id } = req.params;
+    const { adminId } = req.query;
 
-    const client = await Client.findByPk(id);
-
-    if (!client) {
-      return res.status(404).json({ message: 'Client not found' });
+    if (!adminId) {
+      return res.status(400).json({ message: 'adminId is required' });
     }
 
-    await client.destroy();
+    const deleted = await Client.destroy({
+      where: { id, adminId }
+    });
 
-    res.status(200).json({ message: 'Client deleted successfully' });
+    if (!deleted) {
+      return res.status(404).json({ message: 'Client not found or not authorized' });
+    }
+    res.status(200).json({ message: 'Client deleted' });
   } catch (error) {
-    res.status(500).json({ message: 'Error deleting client', error });
+    res.status(500).json({ error: error.message });
   }
 };

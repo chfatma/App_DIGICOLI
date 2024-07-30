@@ -1,35 +1,29 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../config/database');
+const sequelize = require('../config/db');
+const SuperAdmin = require('./SuperAdmin');
+const Admin = require('./Admin');
+const Client = require('./Client');
+const Livreur = require('./Livreur');
 
-const Admin = require('./adminModel');
-const Client = require('./clientModel');
-const Colis = require('./colisModel');
-const Pickup = require('./pickupModel');
-const User = require('./userModel');
+// Define relationships
+SuperAdmin.hasMany(Admin, { foreignKey: 'superadminId' });
+Admin.belongsTo(SuperAdmin, { foreignKey: 'superadminId' });
 
-// Define associations here
-Admin.hasMany(Colis, { foreignKey: 'adminId' }); // Assuming Colis has an adminId foreign key
-Colis.belongsTo(Admin, { foreignKey: 'adminId' });
-
-Admin.hasMany(Client, { foreignKey: 'adminId' }); // Assuming Client has an adminId foreign key
+// Associations
+Admin.hasMany(Client, { foreignKey: 'adminId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 Client.belongsTo(Admin, { foreignKey: 'adminId' });
 
-Admin.hasMany(Pickup, { foreignKey: 'adminId' }); // Assuming Pickup has an adminId foreign key
-Pickup.belongsTo(Admin, { foreignKey: 'adminId' });
+// Associations
+Admin.hasMany(Livreur, { foreignKey: 'adminId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Livreur.belongsTo(Admin, { foreignKey: 'adminId' });
 
-
-
-// Add more associations as needed
-
-sequelize.sync({ alter: true });
-
+sequelize.sync({ force: false }) // Use { force: true } to drop & recreate tables
+  .then(() => console.log('Tables have been synced'))
+  .catch(err => console.error('Error syncing tables: ' + err));
 
 module.exports = {
-    Admin,
-    Client,
-    Colis,
-    Pickup,
-    User,
-    sequelize,
-    Sequelize,
-  };
+  SuperAdmin,
+  Admin,
+  Client,
+  Livreur,
+  sequelize
+};
