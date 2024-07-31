@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const cors = require('cors');
 const superadminRoutes = require('./routes/superadminRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const clientRoutes = require('./routes/clientRoutes');
@@ -8,17 +9,20 @@ const authRoutes = require('./routes/authRoutes'); // Import authentication rout
 const sequelize = require('./models').sequelize;
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Middleware for parsing JSON
 app.use(express.json());
 
 // Session configuration
+// Middleware
+app.use(cors()); // Add this line to enable CORS for all routes
+app.use(express.json());
 app.use(session({
-  secret: 'your-secret-key', // Change this to a secure key in production
+  secret: 'your-secret-key',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false } // Set to true if using HTTPS
+  cookie: { secure: false } // Change to true if using HTTPS
 }));
 
 // Set up routes

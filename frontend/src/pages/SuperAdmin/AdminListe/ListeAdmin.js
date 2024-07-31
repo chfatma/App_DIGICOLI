@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import './ListeAdmin.css';
 
 const ListeAdmin = () => {
+  const [admins, setAdmins] = useState([]);
+  const [superadmins, setSuperadmins] = useState([]);
   const [formData, setFormData] = useState({
     nom: '',
     prenom: '',
@@ -9,83 +10,79 @@ const ListeAdmin = () => {
     telephone: '',
     email: '',
     adresse: '',
-    gouvernorat: ''
+    gouvernorat: '',
+    role: 'admin',
+    motdepasse: '',
+    superadminId: ''
   });
-  const [admins, setAdmins] = useState([]);
 
   useEffect(() => {
-    // Fetch admins from the API
-    fetch('http://localhost:3000/admins') // Adjust the endpoint if needed
-      .then(response => response.json())
-      .then(data => {
-        console.log('Fetched admins:', data); // Debug log to verify data
-        setAdmins(data);
-      })
-      .catch(error => console.error('Error fetching admins:', error));
+    const fetchSuperadmins = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/superadmins');
+        if (response.ok) {
+          const data = await response.json();
+          setSuperadmins(data);
+        } else {
+          console.error('Failed to fetch superadmins');
+        }
+      } catch (error) {
+        console.error('Error fetching superadmins:', error);
+      }
+    };
+
+    fetchSuperadmins();
   }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({
+      ...formData,
+      [name]: value
+    });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const password = formData.prenom + formData.telephone;
 
-    const userData = {
-      email: formData.email,
-      first_name: formData.prenom,
-      last_name: formData.nom,
-      password,
-      phone: formData.telephone,
-      address: formData.adresse,
-      governorate: formData.gouvernorat,
-      role: 'admin',
-      date_naissance: formData.dateDeNaissance,
-    };
+    const adminData = { ...formData, motdepasse: formData.nom + formData.telephone };
 
-    fetch('http://localhost:3000/admins', { // Adjust the endpoint if needed
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(userData)
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Admin added:', data);
-      setAdmins(prevAdmins => [...prevAdmins, data]); // Using functional update
-      setFormData({
-        nom: '',
-        prenom: '',
-        dateDeNaissance: '',
-        telephone: '',
-        email: '',
-        adresse: '',
-        gouvernorat: '',
+    try {
+      const response = await fetch('http://localhost:3001/api/admins', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(adminData),
       });
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-  };
 
-  const handleDelete = (id) => {
-    fetch(`http://localhost:3000/admins/${id}`, { // Adjust the endpoint if needed
-      method: 'DELETE'
-    })
-    .then(response => {
       if (response.ok) {
-        setAdmins(admins.filter(admin => admin.id !== id));
-        console.log('Admin deleted:', id);
+        const newAdmin = await response.json();
+        setAdmins([...admins, newAdmin]);
+        setFormData({
+          nom: '',
+          prenom: '',
+          dateDeNaissance: '',
+          telephone: '',
+          email: '',
+          adresse: '',
+          gouvernorat: '',
+          role: 'admin',
+          motdepasse: '',
+          superadminId: ''
+        });
       } else {
-        console.error('Error deleting admin:', response.statusText);
+        const errorData = await response.json();
+        console.error('Error from Backend:', errorData);
+        if (errorData.error && errorData.error.errors) {
+          errorData.error.errors.forEach(err => {
+            console.error(`Validation error: ${err.message}`);
+          });
+        }
       }
-    })
-    .catch(error => {
+    } catch (error) {
       console.error('Error:', error);
-    });
+    }
   };
 
   return (
@@ -94,132 +91,38 @@ const ListeAdmin = () => {
         <div className="form-title">Ajouter Admin</div>
         <form className="admin-form" onSubmit={handleSubmit}>
           <div className="grid-container">
+            {/* Other form fields */}
             <div className="form-group">
-              <label htmlFor="nom" className="form-label">Nom</label>
-              <input
-                id="nom"
-                type="text"
-                name="nom"
-                value={formData.nom}
+              <label htmlFor="superadminId" className="form-label">Superadmin</label>
+              <select
+                id="superadminId"
+                name="superadminId"
+                value={formData.superadminId}
                 onChange={handleChange}
                 className="form-input"
                 required
-              />
+              >
+                <option value="">Select Superadmin</option>
+                {superadmins.map(superadmin => (
+                  <option key={superadmin.id} value={superadmin.id}>
+                    {superadmin.name}
+                  </option>
+                ))}
+              </select>
             </div>
-            <div className="form-group">
-              <label htmlFor="prenom" className="form-label">Prénom</label>
-              <input
-                id="prenom"
-                type="text"
-                name="prenom"
-                value={formData.prenom}
-                onChange={handleChange}
-                className="form-input"
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="dateDeNaissance" className="form-label">Date de Naissance</label>
-              <input
-                id="dateDeNaissance"
-                type="date"
-                name="dateDeNaissance"
-                value={formData.dateDeNaissance}
-                onChange={handleChange}
-                className="form-input"
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="telephone" className="form-label">Téléphone</label>
-              <input
-                id="telephone"
-                type="text"
-                name="telephone"
-                value={formData.telephone}
-                onChange={handleChange}
-                className="form-input"
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="email" className="form-label">Email</label>
-              <input
-                id="email"
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="form-input"
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="adresse" className="form-label">Adresse</label>
-              <input
-                id="adresse"
-                type="text"
-                name="adresse"
-                value={formData.adresse}
-                onChange={handleChange}
-                className="form-input"
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="gouvernorat" className="form-label">Gouvernorat</label>
-              <input
-                id="gouvernorat"
-                type="text"
-                name="gouvernorat"
-                value={formData.gouvernorat}
-                onChange={handleChange}
-                className="form-input"
-                required
-              />
-            </div>
+            {/* Other form fields */}
           </div>
           <button type="submit" className="submit-button">Ajouter</button>
         </form>
       </div>
 
-      <div className="table-card">
-        <div className="table-title">Liste des Admins</div>
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>Nom</th>
-              <th>Prénom</th>
-              <th>Date de Naissance</th>
-              <th>Téléphone</th>
-              <th>Email</th>
-              <th>Adresse</th>
-              <th>Gouvernorat</th>
-              <th>Action</th> {/* New column for action buttons */}
-            </tr>
-          </thead>
-          <tbody>
-            {admins.map((admin) => (
-              <tr key={admin.id}>
-                <td>{admin.last_name}</td>
-                <td>{admin.first_name}</td>
-                <td>{admin.date_naissance}</td>
-                <td>{admin.phone}</td>
-                <td>{admin.email}</td>
-                <td>{admin.address}</td>
-                <td>{admin.governorate}</td>
-                <td>
-                  <button 
-                    className="delete-button"
-                    onClick={() => handleDelete(admin.id)}
-                  >
-                    <span role="img" aria-label="delete">🗑️</span>
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="admin-list">
+        {/* Display the list of admins */}
+        {admins.map(admin => (
+          <div key={admin.id} className="admin-item">
+            {admin.nom} {admin.prenom}
+          </div>
+        ))}
       </div>
     </div>
   );

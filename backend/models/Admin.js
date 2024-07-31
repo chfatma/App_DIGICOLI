@@ -23,19 +23,19 @@ const Admin = sequelize.define('Admin', {
   },
   telephone: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   address: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   governorate: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   date_naissance: {
     type: DataTypes.DATE,
-    allowNull: false,
+    allowNull: true,
   },
   role: {
     type: DataTypes.STRING,

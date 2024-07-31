@@ -42,7 +42,11 @@ const authenticateUser = (req, res, user, role) => {
     role: role,
   };
 
-  res.status(200).json({ message: 'Login successful', user: req.session.user });
+  // Send response with user data
+  res.status(200).json({
+    message: 'Login successful',
+    user: req.session.user,
+  });
 };
 
 // Logout function

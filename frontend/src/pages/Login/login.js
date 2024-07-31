@@ -1,14 +1,11 @@
-// src/components/Login/Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
   const navigate = useNavigate();
 
   const toggleForm = () => {
@@ -18,65 +15,49 @@ const Login = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/auth/login', {
+      const response = await fetch('http://localhost:3001/api/auth/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, motdepasse: password }), // Ensure field name matches backend
       });
-
       const data = await response.json();
+  
       if (response.ok) {
-        // Store user data, including role
-        sessionStorage.setItem('user', JSON.stringify(data.user));
-        // Redirect based on role
-        switch (data.role) {
-          case 'admin':
+        // Store user details in local storage
+        localStorage.setItem('userId', data.user.id);
+        localStorage.setItem('userRole', data.user.role);
+        localStorage.setItem('superadminId', data.user.superadminId || ''); // Store superadminId if available
+
+        onLogin(data.user.role); // Pass the user role to parent component
+        switch (data.user.role) {
+          case 'Superadmin':
             navigate('/DashboardAdmin');
             break;
-          case 'client':
-            navigate('/MenuClient');
+          case 'Admin':
+            navigate('/dashboard');
             break;
-          case 'super_admin':
-            navigate('/DashboardAdmin');
+          case 'Livreur':
+            navigate('/DashboardLivreur');
             break;
-          case 'livreur':
-            navigate('/MenuLivreur');
+          case 'Client':
+            navigate('/DashboardClient');
             break;
           default:
-            navigate('/dashboard');
+            alert('Unknown role');
         }
       } else {
-        console.error('Login failed:', data.message);
-        alert('Login failed. Please check your credentials and try again.');
+        alert(data.message);
       }
     } catch (error) {
-      console.error('Error during login:', error);
-      alert('An unexpected error occurred. Please try again later.');
+      alert('An error occurred during login. Please try again.');
     }
   };
-
+  
   const handleSignUp = async (event) => {
     event.preventDefault();
-    try {
-      const response = await fetch('http://localhost:3000/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password, firstName, lastName }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        alert('Registration successful! Please login.');
-        setIsSignUp(false);
-      } else {
-        alert('Registration failed. Please check your inputs.');
-      }
-    } catch (error) {
-      console.error('Error during sign-up:', error);
-    }
+    // Placeholder for sign-up action
+    alert('Registration successful (placeholder action)');
+    setIsSignUp(false);
   };
 
   return (
@@ -106,34 +87,7 @@ const Login = () => {
           ) : (
             <form className="form-renamed" onSubmit={handleSignUp}>
               <h2>Sign Up</h2>
-              <input
-                type="text"
-                placeholder="First Name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                required
-              />
-              <input
-                type="text"
-                placeholder="Last Name"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                required
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              {/* Include sign-up fields here */}
               <button type="submit">Sign Up</button>
             </form>
           )}
@@ -143,17 +97,8 @@ const Login = () => {
           <button onClick={toggleForm} className={isSignUp ? 'active-renamed' : ''}>Sign Up</button>
         </div>
       </div>
-      <FooterSection />
     </div>
   );
 };
-
-const FooterSection = () => {
-  return (
-    <div className="footerr">
-      <p>&copy; 2024 Digicoli. All rights reserved.</p>
-    </div>
-  );
-}
 
 export default Login;
