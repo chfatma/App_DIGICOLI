@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css'; 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
@@ -27,7 +27,24 @@ import EditClientAdmin from './pages/Admin/EditClientAdmin/EditClientAdmin';
 import SuiviColi from './pages/Clients/SuiviColis/SuiviColi';
 
 function App() {
-  const [userRole, setUserRole] = useState(null); // Initialize with null or a default role
+  const [userRole, setUserRole] = useState(null);
+
+  useEffect(() => {
+    // Retrieve values from local storage
+    const storedUserId = localStorage.getItem('userId');
+    const storedUserRole = localStorage.getItem('userRole');
+    const storedSuperadminId = localStorage.getItem('superadminId');
+    
+    // Log values to the console
+    console.log('Stored userId:', storedUserId);
+    console.log('Stored userRole:', storedUserRole);
+    console.log('Stored superadminId:', storedSuperadminId);
+
+    // Set user role if available
+    if (storedUserId && storedUserRole) {
+      setUserRole(storedUserRole);
+    }
+  }, []);
 
   // Function to set the user role based on login response
   const handleLogin = (role) => {
@@ -38,7 +55,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Login onLogin={handleLogin} />} />
-        
+
         {/* Interface of the common */}
         <Route path="/EditProfile" element={<ProtectedRoute component={EditProfile} userRole={userRole} />} />
         <Route path="/Evaluation" element={<ProtectedRoute component={Evaluation} userRole={userRole} />} />
@@ -76,7 +93,7 @@ function App() {
 }
 
 const ProtectedRoute = ({ component: Component, userRole }) => {
-  const isAuthenticated = !!userRole; // Check if userRole is set
+  const isAuthenticated = !!userRole;
 
   return isAuthenticated ? (
     <Layout userRole={userRole}>

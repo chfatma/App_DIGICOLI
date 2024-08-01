@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import './ListeClientsAdmin.css';
 import TousClientLivreurFilter from './ListeClientsAdminFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom'; // Import Link
 
 const ListeClientsAdmin = () => {
   const [formData, setFormData] = useState({
@@ -16,29 +15,12 @@ const ListeClientsAdmin = () => {
     address: '',
     governorate: '',
     role: 'client',
-    password: '', 
+    password: '',
     colisALivrer: ''
   });
 
   const [tableData, setTableData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-
-  useEffect(() => {
-    const fetchClients = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/clients');
-        const clients = response.data.map(client => ({
-          ...client,
-          date_naissance: client.date_naissance ? formatDate(client.date_naissance) : ''
-        }));
-        setTableData(clients);
-        setFilteredData(clients);
-      } catch (error) {
-        console.error('Error fetching clients:', error);
-      }
-    };
-    fetchClients();
-  }, []);
 
   const formatDate = (date) => {
     if (!date) return '';
@@ -60,39 +42,30 @@ const ListeClientsAdmin = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    const dataToSend = {
+    // Simulate adding a client
+    const newClient = {
       ...formData,
       date_naissance: formData.date_naissance ? formatDate(formData.date_naissance) : '',
     };
 
-    try {
-      await axios.post('http://localhost:3000/clients', dataToSend);
-      alert('Client ajouté avec succès!');
-      setFormData({
-        first_name: '',
-        last_name: '',
-        date_naissance: '',
-        phone: '',
-        email: '',
-        address: '',
-        governorate: '',
-        role: 'client',
-        password: '',
-        colisALivrer: ''
-      });
-      const response = await axios.get('http://localhost:3000/clients');
-      const clients = response.data.map(client => ({
-        ...client,
-        date_naissance: client.date_naissance ? formatDate(client.date_naissance) : ''
-      }));
-      setTableData(clients);
-      setFilteredData(clients);
-    } catch (error) {
-      console.error('Error adding client:', error);
-    }
+    setTableData(prevData => [...prevData, newClient]);
+    setFilteredData(prevData => [...prevData, newClient]);
+
+    alert('Client ajouté avec succès!');
+    setFormData({
+      first_name: '',
+      last_name: '',
+      date_naissance: '',
+      phone: '',
+      email: '',
+      address: '',
+      governorate: '',
+      role: 'client',
+      password: '',
+      colisALivrer: ''
+    });
   };
 
   const handleFilterChange = (selectedOption) => {
@@ -104,20 +77,10 @@ const ListeClientsAdmin = () => {
     }
   };
 
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`http://localhost:3000/clients/${id}`);
-      alert('Client supprimé avec succès!');
-      const response = await axios.get('http://localhost:3000/clients');
-      const clients = response.data.map(client => ({
-        ...client,
-        date_naissance: client.date_naissance ? formatDate(client.date_naissance) : ''
-      }));
-      setTableData(clients);
-      setFilteredData(clients);
-    } catch (error) {
-      console.error('Error deleting client:', error);
-    }
+  const handleDelete = (id) => {
+    setTableData(prevData => prevData.filter(item => item.id !== id));
+    setFilteredData(prevData => prevData.filter(item => item.id !== id));
+    alert('Client supprimé avec succès!');
   };
 
   return (
@@ -228,8 +191,8 @@ const ListeClientsAdmin = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredData.map((row) => (
-                <tr key={row.id}>
+              {filteredData.map((row, index) => (
+                <tr key={index}>
                   <td>{row.first_name && row.last_name ? `${row.first_name} ${row.last_name}` : '-'}</td>
                   <td>{row.date_naissance || '-'}</td>
                   <td>{row.phone || '-'}</td>
@@ -238,12 +201,12 @@ const ListeClientsAdmin = () => {
                   <td>{row.governorate || '-'}</td>
                   <td>{row.colisALivrer || '-'}</td>
                   <td>
-                    <Link to={`/edit-client-admin/${row.id}`}>
+                    <Link to={`/edit-client-admin/${index}`}>
                       <button className="icon-button">
                         <FontAwesomeIcon icon={faEdit} />
                       </button>
                     </Link>
-                    <button className="icon-button" onClick={() => handleDelete(row.id)}>
+                    <button className="icon-button" onClick={() => handleDelete(index)}>
                       <FontAwesomeIcon icon={faTrash} />
                     </button>
                   </td>

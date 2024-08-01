@@ -5,26 +5,30 @@ const ListeAdmin = () => {
   const [formData, setFormData] = useState({
     nom: '',
     prenom: '',
-    dateDeNaissance: '',
+    date_naissance: '',
     telephone: '',
     email: '',
-    adresse: '',
-    gouvernorat: '',
+    address: '',
+    governorate: '',
     role: 'admin',
     motdepasse: '',
-    superadminId: ''
   });
 
   const [admins, setAdmins] = useState([]);
   const [superadminId, setSuperadminId] = useState('');
 
   useEffect(() => {
+    const storedSuperadminId = localStorage.getItem('superadminId');
+    console.log('Retrieved superadminId from local storage:', storedSuperadminId);
+    setSuperadminId(storedSuperadminId);
+
     const fetchAdmins = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/admins');
+        const response = await fetch(`http://localhost:3001/api/admins/superadmin/${storedSuperadminId}`);
         if (response.ok) {
-          const data = await response.json();
-          setAdmins(data);
+          const adminsData = await response.json();
+          console.log('Fetched Admins:', adminsData);
+          setAdmins(adminsData);
         } else {
           console.error('Failed to fetch admins');
         }
@@ -33,10 +37,9 @@ const ListeAdmin = () => {
       }
     };
 
-    const storedSuperadminId = localStorage.getItem('superadminId') || '';
-    setSuperadminId(storedSuperadminId);
-
-    fetchAdmins();
+    if (storedSuperadminId) {
+      fetchAdmins();
+    }
   }, []);
 
   const handleChange = (e) => {
@@ -50,7 +53,11 @@ const ListeAdmin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    const adminData = { ...formData, motdepasse: formData.nom + formData.telephone, superadminId };
+    const adminData = {
+      ...formData,
+      motdepasse: formData.nom + formData.telephone,
+      superadminId,
+    };
   
     console.log('Data Sent to Backend:', adminData);
   
@@ -70,23 +77,17 @@ const ListeAdmin = () => {
         setFormData({
           nom: '',
           prenom: '',
-          dateDeNaissance: '',
+          date_naissance: '',
           telephone: '',
           email: '',
-          adresse: '',
-          gouvernorat: '',
+          address: '',
+          governorate: '',
           role: 'admin',
-          motdepasse: '',
-          superadminId: ''
+          motdepasse: ''
         });
       } else {
         const errorData = await response.json();
         console.error('Error from Backend:', errorData);
-        if (errorData.error && errorData.error.errors) {
-          errorData.error.errors.forEach(err => {
-            console.error(`Validation error: ${err.message}`);
-          });
-        }
       }
     } catch (error) {
       console.error('Error:', error);
@@ -100,7 +101,7 @@ const ListeAdmin = () => {
       });
 
       if (response.ok) {
-        setAdmins(admins.filter(admin => admin._id !== id));
+        setAdmins(admins.filter(admin => admin.id !== id));
       } else {
         console.error('Failed to delete admin');
       }
@@ -115,12 +116,14 @@ const ListeAdmin = () => {
         <div className="form-title">Ajouter Admin</div>
         <form className="admin-form" onSubmit={handleSubmit}>
           <div className="grid-container">
-            {['nom', 'prenom', 'dateDeNaissance', 'telephone', 'email', 'adresse', 'gouvernorat'].map(field => (
+            {['nom', 'prenom', 'date_naissance', 'telephone', 'email', 'address', 'governorate'].map(field => (
               <div className="form-group" key={field}>
-                <label htmlFor={field} className="form-label">{field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1')}</label>
+                <label htmlFor={field} className="form-label">
+                  {field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1')}
+                </label>
                 <input
                   id={field}
-                  type={field === 'dateDeNaissance' ? 'date' : 'text'}
+                  type={field === 'date_naissance' ? 'date' : 'text'}
                   name={field}
                   value={formData[field]}
                   onChange={handleChange}
@@ -129,17 +132,7 @@ const ListeAdmin = () => {
                 />
               </div>
             ))}
-            <div className="form-group">
-              <label htmlFor="role" className="form-label">Role</label>
-              <input
-                id="role"
-                type="text"
-                name="role"
-                value={formData.role}
-                readOnly
-                className="form-input"
-              />
-            </div>
+          
           </div>
           <button type="submit" className="submit-button">Ajouter</button>
         </form>
@@ -147,41 +140,43 @@ const ListeAdmin = () => {
 
       <div className="table-card">
         <div className="table-title">Liste des Admins</div>
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>Nom</th>
-              <th>Prénom</th>
-              <th>Date de Naissance</th>
-              <th>Téléphone</th>
-              <th>Email</th>
-              <th>Adresse</th>
-              <th>Gouvernorat</th>
-              <th>Action</th> {/* New column for action buttons */}
-            </tr>
-          </thead>
-          <tbody>
-            {admins.map((admin) => (
-              <tr key={admin.id}>
-                <td>{admin.nom}</td>
-                <td>{admin.prenom}</td>
-                <td>{admin.dateDeNaissance}</td>
-                <td>{admin.telephone}</td>
-                <td>{admin.email}</td>
-                <td>{admin.adresse}</td>
-                <td>{admin.gouvernorat}</td>
-                <td>
-                  <button 
-                    className="delete-button"
-                    onClick={() => handleDelete(admin.id)}
-                  >
-                    <span role="img" aria-label="delete">🗑️</span>
-                  </button>
-                </td>
+        <div className="table-container">
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Date de Naissance</th>
+                <th>Téléphone</th>
+                <th>Email</th>
+                <th>Adresse</th>
+                <th>Gouvernorat</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {admins.map((admin) => (
+                <tr key={admin.id}>
+                  <td>{admin.nom}</td>
+                  <td>{admin.prenom}</td>
+                  <td>{admin.date_naissance}</td>
+                  <td>{admin.telephone}</td>
+                  <td>{admin.email}</td>
+                  <td>{admin.address}</td>
+                  <td>{admin.governorate}</td>
+                  <td>
+                    <button 
+                      className="delete-button"
+                      onClick={() => handleDelete(admin.id)}
+                    >
+                      <span role="img" aria-label="delete">🗑️</span>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

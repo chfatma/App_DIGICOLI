@@ -10,6 +10,18 @@ exports.getAllAdmins = async (req, res) => {
   }
 };
 
+// Get all admins for a specific superadmin
+exports.getAdminsBySuperadmin = async (req, res) => {
+  try {
+    const { superadminId } = req.params;
+    const admins = await Admin.findAll({ where: { superadminId } });
+    res.json(admins);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching admins', error });
+  }
+};
+
+
 // Get an admin by ID
 exports.getAdminById = async (req, res) => {
   try {

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import './Navbar.css';
 
+
 const Navbar = () => {
   const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
   const popupRef = useRef(null);
@@ -34,6 +35,15 @@ const Navbar = () => {
     setIsProfilePopupOpen(false); 
   };
 
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' }); 
+      navigate('/Login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-search">
@@ -64,7 +74,7 @@ const Navbar = () => {
             </div>
             <div className="profile-actions">
               <button className="profile-button" onClick={handleEditProfile}>Modifier</button>
-              <button className="profile-button">Logout</button>
+              <button className="profile-button" onClick={handleLogout}>Logout</button>
             </div>
           </div>
         )}

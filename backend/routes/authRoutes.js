@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const   router = express.Router();
 const { loginUser, logoutUser } = require('../controllers/authController'); // Update this path based on your authController file
 
 // Login Route

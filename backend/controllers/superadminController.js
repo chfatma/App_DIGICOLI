@@ -40,3 +40,16 @@ exports.createAdmin = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
+
+// Get all admins for a specific superadmin
+exports.getAdminsBySuperadmin = async (req, res) => {
+  try {
+    const { superadminId } = req.params;
+    const admins = await Admin.findAll({ where: { superadminId } });
+    res.json(admins);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching admins', error });
+  }
+};
