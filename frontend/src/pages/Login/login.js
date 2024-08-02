@@ -26,13 +26,38 @@ const Login = ({ onLogin }) => {
         // Store user details in local storage
         localStorage.setItem('userId', data.user.id);
         localStorage.setItem('userRole', data.user.role);
-        localStorage.setItem('superadminId', data.user.superadminId || data.user.id); // Use superadminId if available, otherwise use userId
-
+        
+        // Store specific IDs for each role
+        if (data.user.role === 'Superadmin') {
+          localStorage.setItem('superadminId', data.user.superadminId);
+          localStorage.removeItem('adminId');
+          localStorage.removeItem('livreurId');
+          localStorage.removeItem('clientId');
+        } else if (data.user.role === 'Admin') {
+          localStorage.setItem('adminId', data.user.adminId);
+          localStorage.removeItem('superadminId');
+          localStorage.removeItem('livreurId');
+          localStorage.removeItem('clientId');
+        } else if (data.user.role === 'Livreur') {
+          localStorage.setItem('livreurId', data.user.livreurId);
+          localStorage.removeItem('superadminId');
+          localStorage.removeItem('adminId');
+          localStorage.removeItem('clientId');
+        } else if (data.user.role === 'Client') {
+          localStorage.setItem('clientId', data.user.clientId);
+          localStorage.removeItem('superadminId');
+          localStorage.removeItem('adminId');
+          localStorage.removeItem('livreurId');
+        }
+  
         // Verify stored values
         console.log('Stored userId:', localStorage.getItem('userId'));
         console.log('Stored userRole:', localStorage.getItem('userRole'));
         console.log('Stored superadminId:', localStorage.getItem('superadminId'));
-    
+        console.log('Stored adminId:', localStorage.getItem('adminId'));
+        console.log('Stored livreurId:', localStorage.getItem('livreurId'));
+        console.log('Stored clientId:', localStorage.getItem('clientId'));
+  
         onLogin(data.user.role); // Pass the user role to parent component
         switch (data.user.role) {
           case 'Superadmin':

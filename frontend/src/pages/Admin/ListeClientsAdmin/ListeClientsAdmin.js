@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 import './ListeClientsAdmin.css';
-import TousClientLivreurFilter from './ListeClientsAdminFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 const BASE_URL = 'http://localhost:3001/api/clients';
 
-const ListeClientsAdmin = ({ adminId }) => {
-  console.log('Admin ID:', adminId);
+const ListeClientsAdmin = () => {
+  const adminId = localStorage.getItem('adminId');
+
   const [formData, setFormData] = useState({
     nom: '',
     prenom: '',
@@ -33,25 +33,16 @@ const ListeClientsAdmin = ({ adminId }) => {
         setTableData(response.data);
         setFilteredData(response.data);
       } catch (error) {
-        console.error('Error fetching clients:', error.message);
+        console.error('Error fetching clients:', error);
       }
     };
 
     fetchClients();
   }, [adminId]);
 
-  const formatDate = (date) => {
-    if (!date) return '';
-    const d = new Date(date);
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevData => ({
+    setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -59,187 +50,210 @@ const ListeClientsAdmin = ({ adminId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const generatedPassword = `${formData.nom}${formData.telephone}`;
+    const updatedFormData = {
+      ...formData,
+      motdepasse: generatedPassword,
+    };
+
+    console.log('Submitting data:', updatedFormData);
+
     try {
-      const newClient = {
-        ...formData,
-        date_naissance: formData.date_naissance ? formatDate(formData.date_naissance) : '',
-      };
-
-      const response = await axios.post(BASE_URL, newClient);
-      const createdClient = response.data;
-      setTableData(prevData => [...prevData, createdClient]);
-      setFilteredData(prevData => [...prevData, createdClient]);
-
-      alert('Client ajouté avec succès!');
-      setFormData({
-        nom: '',
-        prenom: '',
-        date_naissance: '',
-        telephone: '',
-        email: '',
-        address: '',
-        governorate: '',
-        colisALivrer: '',
-        role: 'client',
-        adminId,
-      });
+      const response = await axios.post(BASE_URL, updatedFormData);
+      if (response.status === 201) {
+        setTableData([...tableData, response.data]);
+        setFilteredData([...filteredData, response.data]);
+        setFormData({
+          nom: '',
+          prenom: '',
+          date_naissance: '',
+          telephone: '',
+          email: '',
+          address: '',
+          governorate: '',
+          colisALivrer: '',
+          role: 'client',
+          adminId,
+        });
+      }
     } catch (error) {
-      alert(`Error creating client: ${error.message}`);
-    }
-  };
-
-  const handleFilterChange = (selectedOption) => {
-    if (selectedOption === 'Tout par défaut') {
-      setFilteredData(tableData);
-    } else {
-      const filtered = tableData.filter(item => item.governorate === selectedOption);
-      setFilteredData(filtered);
+      console.error('Error adding client:', error);
+      if (error.response) {
+        console.error('Error response data:', error.response.data);
+        console.error('Error response status:', error.response.status);
+        console.error('Error response headers:', error.response.headers);
+      }
     }
   };
 
   const handleDelete = async (id) => {
     try {
       await axios.delete(`${BASE_URL}/${id}`, { params: { adminId } });
-      setTableData(prevData => prevData.filter(item => item.id !== id));
-      setFilteredData(prevData => prevData.filter(item => item.id !== id));
-      alert('Client supprimé avec succès!');
+      setTableData(tableData.filter(client => client.id !== id));
+      setFilteredData(filteredData.filter(client => client.id !== id));
     } catch (error) {
-      alert(`Error deleting client: ${error.message}`);
+      console.error('Error deleting client:', error);
     }
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: '2-digit', month: '2-digit', day: '2-digit' };
+    return new Intl.DateTimeFormat('en-US', options).format(new Date(dateString));
+  };
+
   return (
-    <div className="tous-clients-livreur">
-      <h2 className="section-title">Ajouter Client</h2>
-      <div className="card-container">
-        <div className="tous-clients-livreur-container">
-          <form onSubmit={handleSubmit}>
-            <div className="input-row">
-              <div className="input-wrapper">
-                <label>Nom</label>
-                <input
-                  type="text"
-                  name="nom"
-                  value={formData.nom}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="input-wrapper">
-                <label>Prénom</label>
-                <input
-                  type="text"
-                  name="prenom"
-                  value={formData.prenom}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="input-wrapper">
-                <label>Date de Naissance</label>
-                <input
-                  type="date"
-                  name="date_naissance"
-                  value={formData.date_naissance}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="input-wrapper">
-                <label>Téléphone</label>
-                <input
-                  type="text"
-                  name="telephone"
-                  value={formData.telephone}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="input-wrapper">
-                <label>Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="input-row">
-              <div className="input-wrapper">
-                <label>Adresse</label>
-                <input
-                  type="text"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="input-wrapper">
-                <label>Colis à Livrer</label>
-                <input
-                  type="text"
-                  name="colisALivrer"
-                  value={formData.colisALivrer}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="input-wrapper">
-                <label>Gouvernorat</label>
-                <input
-                  type="text"
-                  name="governorate"
-                  value={formData.governorate}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="button-wrapper">
-              <button className="normal-button" type="submit">Ajouter</button>
-            </div>
-          </form>
-        </div>
-      </div>
+      <div className="client-list-admin">
+        {/* <h1>Admin ID: {adminId}</h1>*/}  
 
-      <TousClientLivreurFilter handleFilterChange={handleFilterChange} />
-      <div className="client-list">
-        <h2 className="section-title">Liste des Clients</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Nom</th>
-              <th>Prénom</th>
-              <th>Email</th>
-              <th>Téléphone</th>
-              <th>Adresse</th>
-              <th>Gouvernorat</th>
-              <th>Date de Naissance</th>
-              <th>Colis à Livrer</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredData.map(client => (
-              <tr key={client.id}>
-                <td>{client.nom}</td>
-                <td>{client.prenom}</td>
-                <td>{client.email}</td>
-                <td>{client.telephone}</td>
-                <td>{client.address}</td>
-                <td>{client.governorate}</td>
-                <td>{formatDate(client.date_naissance)}</td>
-                <td>{client.colisALivrer}</td>
-                <td>
-                  <Link to={`/clients/edit/${client.id}`}>
-                    <FontAwesomeIcon icon={faEdit} />
-                  </Link>
-                  <button onClick={() => handleDelete(client.id)}>
-                    <FontAwesomeIcon icon={faTrash} />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-};
+        <form onSubmit={handleSubmit} className="client-form">
+          <div className="form-row">
+            {/* First row of inputs */}
+            <div className="input-group">
+              <label htmlFor="nom">Nom:</label>
+              <input
+                type="text"
+                id="nom"
+                name="nom"
+                value={formData.nom}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="prenom">Prenom:</label>
+              <input
+                type="text"
+                id="prenom"
+                name="prenom"
+                value={formData.prenom}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="date_naissance">Date de Naissance:</label>
+              <input
+                type="date"
+                id="date_naissance"
+                name="date_naissance"
+                value={formData.date_naissance}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="telephone">Telephone:</label>
+              <input
+                type="tel"
+                id="telephone"
+                name="telephone"
+                value={formData.telephone}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
 
-export default ListeClientsAdmin;
+          <div className="second-row">
+            {/* Second row of inputs */}
+            <div className="input-group address-input">
+              <label htmlFor="address">Address:</label>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="input-group governorate-input">
+              <label htmlFor="governorate">Governorate:</label>
+              <input
+                type="text"
+                id="governorate"
+                name="governorate"
+                value={formData.governorate}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="input-group colis-input">
+              <label htmlFor="colisALivrer">Colis à Livrer:</label>
+              <input
+                type="text"
+                id="colisALivrer"
+                name="colisALivrer"
+                value={formData.colisALivrer}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-actions">
+            <button type="submit">Add Client</button>
+          </div>
+        </form>
+        <div className="table-card">
+  <div className="clients-table-wrapper">
+    <table className="clients-table">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Prenom</th>
+          <th>Date de Naissance</th>
+          <th>Telephone</th>
+          <th>Email</th>
+          <th>Address</th>
+          <th>Governorate</th>
+          <th>Colis à Livrer</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {filteredData.map(client => (
+          <tr key={client.id}>
+            <td>{client.nom}</td>
+            <td>{client.prenom}</td>
+            <td>{formatDate(client.date_naissance)}</td>
+            <td>{client.telephone}</td>
+            <td>{client.email}</td>
+            <td>{client.address}</td>
+            <td>{client.governorate}</td>
+            <td>{client.colisALivrer}</td>
+            <td>
+  <div className="button-container">
+    <Link to={`/edit-client/${client.id}`}>
+      <FontAwesomeIcon icon={faEdit} />
+    </Link>
+    <button onClick={() => handleDelete(client.id)}>
+      <FontAwesomeIcon icon={faTrash} />
+    </button>
+  </div>
+</td>
+
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+      </div>
+    );
+  };
+
+  export default ListeClientsAdmin;

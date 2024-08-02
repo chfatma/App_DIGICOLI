@@ -23,7 +23,7 @@ import QRCodeGenerator from './pages/Admin/QRCodeGenerator/QRCodeGenerator';
 import EditLivreurAdmin from './pages/Admin/EditLivreurAdmin/EditLivreurAdmin';
 import EditAdmin from './pages/SuperAdmin/EditAdmin/EditAdmin';
 import Calendrier from './pages/Calendrier/Calendrier';
-import EditClientAdmin from './pages/Admin/EditClientAdmin/EditClientAdmin';
+import EditClient from './pages/Admin/EditClientAdmin/EditClientAdmin';
 import SuiviColi from './pages/Clients/SuiviColis/SuiviColi';
 
 function App() {
@@ -71,7 +71,7 @@ function App() {
         {/* Interface of the Admin */}
         <Route path="/dashboard" element={<ProtectedRoute component={Dashboard} userRole={userRole} />} />
         <Route path="/edit-livreur/:id" element={<ProtectedRoute component={EditLivreurAdmin} userRole={userRole} />} />
-        <Route path="/edit-client-admin/:id" element={<ProtectedRoute component={EditClientAdmin} userRole={userRole} />} />
+        <Route path="/edit-client/:id" element={<ProtectedRoute component={EditClient} userRole={userRole} />} />   //hhhh
         <Route path="/Ramassage" element={<ProtectedRoute component={Ramassage} userRole={userRole} />} />
         <Route path="/QRCodeGenerator/:id" element={<ProtectedRoute component={QRCodeGenerator} userRole={userRole} />} />
         <Route path="/client" element={<ProtectedRoute component={Client} userRole={userRole} />} />

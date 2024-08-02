@@ -111,3 +111,27 @@ exports.deleteClient = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
+// Update a client by ID
+exports.updateClient = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { adminId } = req.body;
+
+    if (!adminId) {
+      return res.status(400).json({ message: 'adminId is required' });
+    }
+
+    const [updated] = await Client.update(req.body, {
+      where: { id, adminId }
+    });
+
+    if (!updated) {
+      return res.status(404).json({ message: 'Client not found or not authorized' });
+    }
+    res.status(200).json({ message: 'Client updated' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
