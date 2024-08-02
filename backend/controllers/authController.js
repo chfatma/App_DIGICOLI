@@ -41,6 +41,7 @@ const authenticateUser = (req, res, user, role) => {
     email: user.email,
     role: role,
     superadminId: role === 'Superadmin' ? user.id : '',
+
   };
 
   // Send response with user data

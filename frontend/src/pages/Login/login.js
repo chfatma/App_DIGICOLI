@@ -27,12 +27,12 @@ const Login = ({ onLogin }) => {
         localStorage.setItem('userId', data.user.id);
         localStorage.setItem('userRole', data.user.role);
         localStorage.setItem('superadminId', data.user.superadminId || data.user.id); // Use superadminId if available, otherwise use userId
-  
+
         // Verify stored values
         console.log('Stored userId:', localStorage.getItem('userId'));
         console.log('Stored userRole:', localStorage.getItem('userRole'));
         console.log('Stored superadminId:', localStorage.getItem('superadminId'));
-  
+    
         onLogin(data.user.role); // Pass the user role to parent component
         switch (data.user.role) {
           case 'Superadmin':

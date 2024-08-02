@@ -1,26 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ListeClientsAdmin.css';
 import TousClientLivreurFilter from './ListeClientsAdminFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom'; // Import Link
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-const ListeClientsAdmin = () => {
+const BASE_URL = 'http://localhost:3001/api/clients';
+
+const ListeClientsAdmin = ({ adminId }) => {
+  console.log('Admin ID:', adminId);
   const [formData, setFormData] = useState({
-    first_name: '',
-    last_name: '',
+    nom: '',
+    prenom: '',
     date_naissance: '',
-    phone: '',
+    telephone: '',
     email: '',
     address: '',
     governorate: '',
+    colisALivrer: '',
     role: 'client',
-    password: '',
-    colisALivrer: ''
+    adminId,
   });
 
   const [tableData, setTableData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+
+  useEffect(() => {
+    const fetchClients = async () => {
+      try {
+        const response = await axios.get(BASE_URL, { params: { adminId } });
+        setTableData(response.data);
+        setFilteredData(response.data);
+      } catch (error) {
+        console.error('Error fetching clients:', error.message);
+      }
+    };
+
+    fetchClients();
+  }, [adminId]);
 
   const formatDate = (date) => {
     if (!date) return '';
@@ -33,54 +51,61 @@ const ListeClientsAdmin = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevData => {
-      const updatedData = { ...prevData, [name]: value };
-      if (name === 'first_name' || name === 'phone') {
-        updatedData.password = `${updatedData.first_name}${updatedData.phone}`;
-      }
-      return updatedData;
-    });
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simulate adding a client
-    const newClient = {
-      ...formData,
-      date_naissance: formData.date_naissance ? formatDate(formData.date_naissance) : '',
-    };
+    try {
+      const newClient = {
+        ...formData,
+        date_naissance: formData.date_naissance ? formatDate(formData.date_naissance) : '',
+      };
 
-    setTableData(prevData => [...prevData, newClient]);
-    setFilteredData(prevData => [...prevData, newClient]);
+      const response = await axios.post(BASE_URL, newClient);
+      const createdClient = response.data;
+      setTableData(prevData => [...prevData, createdClient]);
+      setFilteredData(prevData => [...prevData, createdClient]);
 
-    alert('Client ajouté avec succès!');
-    setFormData({
-      first_name: '',
-      last_name: '',
-      date_naissance: '',
-      phone: '',
-      email: '',
-      address: '',
-      governorate: '',
-      role: 'client',
-      password: '',
-      colisALivrer: ''
-    });
+      alert('Client ajouté avec succès!');
+      setFormData({
+        nom: '',
+        prenom: '',
+        date_naissance: '',
+        telephone: '',
+        email: '',
+        address: '',
+        governorate: '',
+        colisALivrer: '',
+        role: 'client',
+        adminId,
+      });
+    } catch (error) {
+      alert(`Error creating client: ${error.message}`);
+    }
   };
 
   const handleFilterChange = (selectedOption) => {
     if (selectedOption === 'Tout par défaut') {
-      setFilteredData(tableData); 
+      setFilteredData(tableData);
     } else {
-      const filtered = tableData.filter((item) => item.governorate === selectedOption);
+      const filtered = tableData.filter(item => item.governorate === selectedOption);
       setFilteredData(filtered);
     }
   };
 
-  const handleDelete = (id) => {
-    setTableData(prevData => prevData.filter(item => item.id !== id));
-    setFilteredData(prevData => prevData.filter(item => item.id !== id));
-    alert('Client supprimé avec succès!');
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${BASE_URL}/${id}`, { params: { adminId } });
+      setTableData(prevData => prevData.filter(item => item.id !== id));
+      setFilteredData(prevData => prevData.filter(item => item.id !== id));
+      alert('Client supprimé avec succès!');
+    } catch (error) {
+      alert(`Error deleting client: ${error.message}`);
+    }
   };
 
   return (
@@ -94,8 +119,8 @@ const ListeClientsAdmin = () => {
                 <label>Nom</label>
                 <input
                   type="text"
-                  name="first_name"
-                  value={formData.first_name}
+                  name="nom"
+                  value={formData.nom}
                   onChange={handleChange}
                 />
               </div>
@@ -103,8 +128,8 @@ const ListeClientsAdmin = () => {
                 <label>Prénom</label>
                 <input
                   type="text"
-                  name="last_name"
-                  value={formData.last_name}
+                  name="prenom"
+                  value={formData.prenom}
                   onChange={handleChange}
                 />
               </div>
@@ -121,8 +146,8 @@ const ListeClientsAdmin = () => {
                 <label>Téléphone</label>
                 <input
                   type="text"
-                  name="phone"
-                  value={formData.phone}
+                  name="telephone"
+                  value={formData.telephone}
                   onChange={handleChange}
                 />
               </div>
@@ -172,49 +197,46 @@ const ListeClientsAdmin = () => {
         </div>
       </div>
 
-      <TousClientLivreurFilter onFilterChange={handleFilterChange} />
-      <h2 className="section-title">Liste des Clients</h2>
-      <div className="additional-card">
-        <h2 className="card-title">Clients</h2>
-        <div className="table-container">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Nom et prénom</th>
-                <th>Date de Naissance</th>
-                <th>Téléphone</th>
-                <th>Adresse</th>
-                <th>Email</th>
-                <th>Gouvernorat</th>
-                <th>Colis à Livrer</th>
-                <th>Action</th>
+      <TousClientLivreurFilter handleFilterChange={handleFilterChange} />
+      <div className="client-list">
+        <h2 className="section-title">Liste des Clients</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Prénom</th>
+              <th>Email</th>
+              <th>Téléphone</th>
+              <th>Adresse</th>
+              <th>Gouvernorat</th>
+              <th>Date de Naissance</th>
+              <th>Colis à Livrer</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredData.map(client => (
+              <tr key={client.id}>
+                <td>{client.nom}</td>
+                <td>{client.prenom}</td>
+                <td>{client.email}</td>
+                <td>{client.telephone}</td>
+                <td>{client.address}</td>
+                <td>{client.governorate}</td>
+                <td>{formatDate(client.date_naissance)}</td>
+                <td>{client.colisALivrer}</td>
+                <td>
+                  <Link to={`/clients/edit/${client.id}`}>
+                    <FontAwesomeIcon icon={faEdit} />
+                  </Link>
+                  <button onClick={() => handleDelete(client.id)}>
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {filteredData.map((row, index) => (
-                <tr key={index}>
-                  <td>{row.first_name && row.last_name ? `${row.first_name} ${row.last_name}` : '-'}</td>
-                  <td>{row.date_naissance || '-'}</td>
-                  <td>{row.phone || '-'}</td>
-                  <td>{row.address || '-'}</td>
-                  <td>{row.email || '-'}</td>
-                  <td>{row.governorate || '-'}</td>
-                  <td>{row.colisALivrer || '-'}</td>
-                  <td>
-                    <Link to={`/edit-client-admin/${index}`}>
-                      <button className="icon-button">
-                        <FontAwesomeIcon icon={faEdit} />
-                      </button>
-                    </Link>
-                    <button className="icon-button" onClick={() => handleDelete(index)}>
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
