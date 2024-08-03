@@ -16,15 +16,22 @@ const LivreurInterface = () => {
     telephone: '',
     email: '',
     adresse: '',
-    governorat: ''
+    governorate: ''
   });
 
   const navigate = useNavigate(); // Initialize useNavigate hook
 
+  // Get adminId from localStorage
+  const adminId = localStorage.getItem('adminId');
+
   useEffect(() => {
     const fetchLivreurs = async () => {
       try {
-        const response = await fetch('http://localhost:3000/users/role/livreur');
+        if (!adminId) {
+          console.error('Admin ID not found in localStorage');
+          return;
+        }
+        const response = await fetch(`http://localhost:3001/api/livreurs?adminId=${adminId}`);
         if (response.ok) {
           const data = await response.json();
           console.log('Fetched livreurs:', data);
@@ -41,10 +48,9 @@ const LivreurInterface = () => {
         console.error('Error fetching livreurs:', error);
       }
     };
-    
 
     fetchLivreurs();
-  }, []);
+  }, [adminId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -61,18 +67,20 @@ const LivreurInterface = () => {
 
     const newUser = {
       email: formData.email,
-      first_name: formData.prenom,
-      last_name: formData.nom,
-      password: defaultPassword, // Use default password
-      phone: formData.telephone,
-      address: formData.adresse,
-      governorate: formData.governorat,
-      date_naissance: formData.dateNaissance, // Use date_of_birth or similar key
-      role: 'livreur'
+      nom: formData.nom, // Use 'nom' for last name as per backend
+      prenom: formData.prenom, // Use 'prenom' for first name as per backend
+      motdepasse: defaultPassword, // Adjusted to match backend property
+      telephone: formData.telephone, // Adjusted to match backend property
+      address: formData.adresse, // Adjusted to match backend property
+      governorate: formData.governorat, // Keep as is if matches backend
+      date_naissance: formData.dateNaissance, // Use the same format for date
+      adminId // Include adminId in the request payload
     };
 
+    console.log('Submitting new user data:', newUser); // Log data being sent
+
     try {
-      const response = await fetch('http://localhost:3000/livreurs', {
+      const response = await fetch('http://localhost:3001/api/livreurs/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -103,7 +111,7 @@ const LivreurInterface = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/users/${id}`, {
+      const response = await fetch(`http://localhost:3001/api/livreurs/${id}?adminId=${adminId}`, {
         method: 'DELETE'
       });
 
@@ -247,9 +255,9 @@ const LivreurInterface = () => {
             <tbody>
               {filteredLivreurs.map((livreur) => (
                 <tr key={livreur.id}>
-                  <td>{livreur.first_name} {livreur.last_name}</td>
+                  <td>{livreur.prenom} {livreur.nom}</td>
                   <td>{livreur.date_naissance}</td>
-                  <td>{livreur.phone}</td>
+                  <td>{livreur.telephone}</td>
                   <td>{livreur.email}</td>
                   <td>{livreur.address}</td>
                   <td>{livreur.governorate}</td>

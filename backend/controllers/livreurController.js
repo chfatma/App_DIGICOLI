@@ -6,20 +6,23 @@ const Admin = require('../models/Admin'); // Assuming the Admin model is exporte
 exports.createLivreur = async (req, res) => {
   try {
     const { adminId } = req.body;
+
+    if (!adminId) {
+      return res.status(400).json({ message: 'Admin ID is required' });
+    }
+
     const admin = await Admin.findByPk(adminId);
 
     if (!admin) {
       return res.status(404).json({ message: 'Admin not found' });
     }
 
-    // Only allow creation if admin exists
     const livreur = await Livreur.create({ ...req.body, adminId });
     res.status(201).json(livreur);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
-
 // Get all livreurs created by the specified admin
 exports.getAllLivreurs = async (req, res) => {
   try {

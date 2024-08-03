@@ -3,6 +3,7 @@ const SuperAdmin = require('./SuperAdmin');
 const Admin = require('./Admin');
 const Client = require('./Client');
 const Livreur = require('./Livreur');
+const Colis = require('./colis');
 
 // Define relationships
 SuperAdmin.hasMany(Admin, { foreignKey: 'superadminId' });
@@ -16,6 +17,11 @@ Client.belongsTo(Admin, { foreignKey: 'adminId' });
 Admin.hasMany(Livreur, { foreignKey: 'adminId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 Livreur.belongsTo(Admin, { foreignKey: 'adminId' });
 
+// Colis associations
+Colis.belongsTo(Admin, { foreignKey: 'adminId' });
+Colis.belongsTo(Livreur, { foreignKey: 'livreurId' });
+Colis.belongsTo(Client, { foreignKey: 'clientId' });
+
 sequelize.sync({ force: false }) // Use { force: true } to drop & recreate tables
   .then(() => console.log('Tables have been synced'))
   .catch(err => console.error('Error syncing tables: ' + err));
@@ -25,5 +31,6 @@ module.exports = {
   Admin,
   Client,
   Livreur,
+  Colis,
   sequelize
 };

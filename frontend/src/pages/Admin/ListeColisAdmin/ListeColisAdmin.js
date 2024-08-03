@@ -18,7 +18,9 @@ const ListeColisAdmin = () => {
     depot: '',
     adresse: '',
     statut: 'En Attente',
+    livreurId: '' // Add livreurId to the state
   });
+  const [livreurData, setLivreurData] = useState([]); // State for livreurs
 
   const fetchColisData = async () => {
     try {
@@ -30,8 +32,18 @@ const ListeColisAdmin = () => {
     }
   };
 
+  const fetchLivreursData = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/api/livreurs');
+      setLivreurData(response.data);
+    } catch (error) {
+      console.error('Error fetching livreurs data:', error);
+    }
+  };
+
   useEffect(() => {
     fetchColisData();
+    fetchLivreursData(); // Fetch livreurs data when component mounts
   }, []);
 
   const handleFilterChange = (option, date) => {
@@ -75,6 +87,7 @@ const ListeColisAdmin = () => {
         depot: '',
         adresse: '',
         statut: 'En Attente',
+        livreurId: '', // Reset livreurId
       });
     } catch (error) {
       console.error('Error adding colis:', error);
@@ -180,6 +193,23 @@ const ListeColisAdmin = () => {
                 <option value="En Attente">En Attente</option>
                 <option value="En Cours">En Cours</option>
                 <option value="Livré">Livré</option>
+              </select>
+            </div>
+            <div className="add-colis-input-group">
+              <label htmlFor="livreurId">Livreur</label>
+              <select
+                id="livreurId"
+                name="livreurId"
+                value={newColis.livreurId}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Sélectionner un livreur</option>
+                {livreurData.map(livreur => (
+                  <option key={livreur.id} value={livreur.id}>
+                    {livreur.nom} {/* Adjust field based on your data structure */}
+                  </option>
+                ))}
               </select>
             </div>
           </div>

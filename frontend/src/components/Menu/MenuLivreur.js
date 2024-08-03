@@ -17,7 +17,7 @@ const MenuLivreur = () => {
       </div>
       <ul>
         <li className={active === '/DashboardLivreur' ? 'active' : ''}>
-          <Link to="/DashboardLivreur" onClick={() => handleClick('/livreurs')}>
+          <Link to="/DashboardLivreur" onClick={() => handleClick('/DashboardLivreur')}>
             <i className="fa fa-tachometer-alt"></i> Dashboard
           </Link>
         </li>
@@ -26,14 +26,9 @@ const MenuLivreur = () => {
             <i className="fa fa-box"></i> Listes des colis
           </Link>
         </li>
-        <li className={active === '/TousClientsLivreur' ? 'active' : ''}>
-          <Link to="/TousClientsLivreur" onClick={() => handleClick('/TousClientsLivreur')}>
-            <i className="fa fa-users"></i> Client
-          </Link>
-        </li>
       
         <li className={active === '/evaluation' ? 'active' : ''}>
-          <Link to="/evaluation" onClick={() => handleClick('/Evaluation')}>
+          <Link to="/evaluation" onClick={() => handleClick('/evaluation')}>
             <i className="fa fa-star"></i> Evaluation
           </Link>
         </li>
@@ -42,9 +37,14 @@ const MenuLivreur = () => {
             <i className="fa fa-comments"></i> Chat
           </Link>
         </li>
-        <li className={active === '/Emplacement' ? 'active' : ''}>
-          <Link to="/Emplacement" onClick={() => handleClick('/Emplacement')}>
+        <li className={active === '/GoogleMapComponent' ? 'active' : ''}>
+          <Link to="/GoogleMapComponent" onClick={() => handleClick('/GoogleMapComponent')}>
             <i className="fa fa-map-marker"></i> Emplacement
+          </Link>
+        </li>
+        <li className={location.pathname === '/SupportLivreur' ? 'active' : ''}>
+          <Link to="/SupportLivreur" onClick={() => handleClick('/SupportLivreur')}>
+            <i className="fa fa-life-ring"></i> Support
           </Link>
         </li>
       </ul>

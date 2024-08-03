@@ -25,6 +25,8 @@ import EditAdmin from './pages/SuperAdmin/EditAdmin/EditAdmin';
 import Calendrier from './pages/Calendrier/Calendrier';
 import EditClient from './pages/Admin/EditClientAdmin/EditClientAdmin';
 import SuiviColi from './pages/Clients/SuiviColis/SuiviColi';
+import GoogleMapComponent from './pages/Livreur/Emplacement/GoogleMapComponent';
+import SupportLivreur from './pages/Livreur/SupportLivreur/Support';
 
 function App() {
   const [userRole, setUserRole] = useState(null);
@@ -83,6 +85,10 @@ function App() {
         <Route path="/livreurs" element={<ProtectedRoute component={LivreurInterface} userRole={userRole} />} />
         <Route path="/TousClientsLivreur" element={<ProtectedRoute component={TousClientsLivreur} userRole={userRole} />} />
         <Route path="/livlistcoli" element={<ProtectedRoute component={ListDesColis} userRole={userRole} />} />
+        <Route path="/GoogleMapComponent" element={<ProtectedRoute component={GoogleMapComponent} userRole={userRole} />} /> {/* Add route for the map */}
+        <Route path="/SupportLivreur" element={<ProtectedRoute component={SupportLivreur} userRole={userRole} />} />
+
+
 
         {/* Interface of the Client */}
         <Route path="/DashboardClient" element={<ProtectedRoute component={DashboardClient} userRole={userRole} />} />

@@ -1,0 +1,26 @@
+.MapContainer {
+	margin-left: 500px;
+	height: 600px; /* Change the height to 600px */
+	width: 100%; /* Change the width to 80% */
+	border: 1px solid #ddd; /* Add a border */
+	border-radius: 8px; /* Add a border radius */
+  }
+  
+  /* You can also add other styles to customize the map container */
+  .leaflet-container {
+	margin-left: 30px;
+	height: 800px;
+	width: 100%;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	overflow: hidden;
+  }
+  
+  .leaflet-popup-content {
+	font-size: 14px;
+	font-weight: bold;
+	padding: 10px;
+	border-radius: 10px;
+	background-color: #fff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
