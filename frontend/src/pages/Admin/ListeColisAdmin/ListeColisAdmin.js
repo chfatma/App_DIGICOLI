@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import './ListeColisAdmin.css';
 import ListeColisAdminFilter from './ListeColisAdminFilter';
 import qrCodeIcon from '../../../assets/qr-code.png';
@@ -18,33 +17,61 @@ const ListeColisAdmin = () => {
     depot: '',
     adresse: '',
     statut: 'En Attente',
-    livreurId: '' // Add livreurId to the state
+    livreurId: ''
   });
-  const [livreurData, setLivreurData] = useState([]); // State for livreurs
+  const [livreurData, setLivreurData] = useState([]);
 
-  const fetchColisData = async () => {
-    try {
-      const response = await axios.get('http://localhost:3000/api/colis');
-      setColisData(response.data);
-      setFilteredData(response.data);
-    } catch (error) {
-      console.error('Error fetching colis data:', error);
-    }
-  };
-
-  const fetchLivreursData = async () => {
-    try {
-      const response = await axios.get('http://localhost:3000/api/livreurs');
-      setLivreurData(response.data);
-    } catch (error) {
-      console.error('Error fetching livreurs data:', error);
-    }
-  };
+  // Get adminId from localStorage
+  const adminId = localStorage.getItem('adminId');
 
   useEffect(() => {
-    fetchColisData();
-    fetchLivreursData(); // Fetch livreurs data when component mounts
-  }, []);
+    const fetchColis = async () => {
+      try {
+        const adminId = localStorage.getItem('adminId'); // Make sure this is correctly set
+        if (!adminId) {
+          console.error('Admin ID not found in localStorage');
+          return;
+        }
+        const response = await fetch(`http://localhost:3001/api/colis/admin/colis?adminId=${adminId}`);
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Colis Data:', data); // Debugging line
+          setColisData(data);
+          setFilteredData(data);
+        } else {
+          console.error('Failed to fetch colis data:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching colis data:', error);
+      }
+    };
+    
+    const fetchLivreurs = async () => {
+      try {
+        if (!adminId) {
+          console.error('Admin ID not found in localStorage');
+          return;
+        }
+        const response = await fetch(`http://localhost:3001/api/livreurs?adminId=${adminId}`);
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Fetched livreurs:', data);
+          const formattedData = data.map(livreur => ({
+            ...livreur,
+            date_naissance: new Date(livreur.date_naissance).toISOString().split('T')[0]
+          }));
+          setLivreurData(formattedData);
+        } else {
+          console.error('Failed to fetch livreurs:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching livreurs:', error);
+      }
+    };
+
+    fetchColis();
+    fetchLivreurs();
+  }, [adminId]);
 
   const handleFilterChange = (option, date) => {
     let filtered = colisData;
@@ -74,26 +101,53 @@ const ListeColisAdmin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+    console.log('Sending data to backend:', {
+      ...newColis,
+      adminId,
+    });
+  
     try {
-      await axios.post('http://localhost:3000/api/colis', newColis);
-      fetchColisData();
-      setNewColis({
-        code: '',
-        expediteur: '',
-        destinataire: '',
-        telephone: '',
-        montant: '',
-        depot: '',
-        adresse: '',
-        statut: 'En Attente',
-        livreurId: '', // Reset livreurId
+      const response = await fetch('http://localhost:3001/api/colis', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...newColis,
+          adminId,
+        }),
       });
+  
+      console.log('Response Status:', response.status);
+      const responseBody = await response.json();
+      console.log('Response Body:', responseBody);
+  
+      if (response.ok) {
+        setColisData(prevColisData => [
+          ...prevColisData,
+          responseBody
+        ]);
+  
+        setNewColis({
+          code: '',
+          expediteur: '',
+          destinataire: '',
+          telephone: '',
+          montant: '',
+          depot: '',
+          adresse: '',
+          statut: 'En Attente',
+          livreurId: '',
+        });
+      } else {
+        console.error('Failed to add new colis:', responseBody);
+      }
     } catch (error) {
-      console.error('Error adding colis:', error);
+      console.error('Error adding new colis:', error);
     }
   };
-
+  
   return (
     <div className="liste-colis-admin-container">
       <ListeColisAdminFilter onFilterChange={handleFilterChange} />
@@ -207,7 +261,7 @@ const ListeColisAdmin = () => {
                 <option value="">Sélectionner un livreur</option>
                 {livreurData.map(livreur => (
                   <option key={livreur.id} value={livreur.id}>
-                    {livreur.nom} {/* Adjust field based on your data structure */}
+                    {livreur.nom}
                   </option>
                 ))}
               </select>
@@ -249,11 +303,14 @@ const ListeColisAdmin = () => {
                   <td>{colis.adresse}</td>
                   <td>{colis.statut}</td>
                   <td>
-                    <img
+                   <img
                       src={qrCodeIcon}
                       alt="QR Code"
-                      onClick={() => handleQRCodeClick(colis)}
-                      style={{ cursor: 'pointer', width: '25px', height: '25px' }}
+                      className="qr-code-icon"
+                      onClick={() => handleQRCodeClick(colis)
+                        
+                      }
+                      style={ {cursor: 'pointer', width: '25px',height:'25px'}}
                     />
                   </td>
                 </tr>

@@ -13,14 +13,12 @@ Admin.belongsTo(SuperAdmin, { foreignKey: 'superadminId' });
 Admin.hasMany(Client, { foreignKey: 'adminId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 Client.belongsTo(Admin, { foreignKey: 'adminId' });
 
-// Associations
 Admin.hasMany(Livreur, { foreignKey: 'adminId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 Livreur.belongsTo(Admin, { foreignKey: 'adminId' });
 
 // Colis associations
 Colis.belongsTo(Admin, { foreignKey: 'adminId' });
 Colis.belongsTo(Livreur, { foreignKey: 'livreurId' });
-Colis.belongsTo(Client, { foreignKey: 'clientId' });
 
 sequelize.sync({ force: false }) // Use { force: true } to drop & recreate tables
   .then(() => console.log('Tables have been synced'))

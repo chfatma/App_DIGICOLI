@@ -1,189 +1,134 @@
-// src/components/EditLivreurAdmin.js
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import './EditLivreurAdmin.css';
+import { useParams } from 'react-router-dom';
+import './EditLivreurAdmin.css'; // Import the CSS file
 
 const EditLivreurAdmin = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [livreur, setLivreur] = useState(null);
-  const [formData, setFormData] = useState({
-    lastName: '',
-    firstName: '',
-    birthDate: '',
-    phone: '',
+  const { id } = useParams(); // Extract the ID from the URL parameters
+  const [livreur, setLivreur] = useState({
+    nom: '',
+    prenom: '',
+    date_naissance: '',
+    telephone: '',
     email: '',
     address: '',
-    governorate: ''
+    governorate: '',
   });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const adminId = localStorage.getItem('adminId');
 
   useEffect(() => {
     const fetchLivreur = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/users/${id}`);
-        if (response.ok) {
-          const data = await response.json();
-          setLivreur(data);
-
-          // Format the date correctly for the date input
-          const formattedDate = new Date(data.date_naissance).toISOString().split('T')[0];
-          
-          setFormData({
-            lastName: data.last_name,
-            firstName: data.first_name,
-            birthDate: formattedDate,
-            phone: data.phone,
-            email: data.email,
-            address: data.address,
-            governorate: data.governorate
-          });
-        } else {
-          console.error('Failed to fetch livreur:', response.statusText);
+        const response = await fetch(`http://localhost:3001/api/livreurs/${id}?adminId=${adminId}`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
+        const data = await response.json();
+        // Convert date string to date object
+        if (data.date_naissance) {
+          data.date_naissance = new Date(data.date_naissance).toISOString().split('T')[0];
+        }
+        setLivreur(data);
       } catch (error) {
-        console.error('Error fetching livreur:', error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
-    
+
     fetchLivreur();
-  }, [id]);
+  }, [id, adminId]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  
-    const updatedLivreur = {
-      last_name: formData.lastName,
-      first_name: formData.firstName,
-      date_naissance: formData.birthDate,
-      phone: formData.phone,
-      email: formData.email,
-      address: formData.address,
-      governorate: formData.governorate,
-      role: 'livreur'
-    };
-  
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
-      const response = await fetch(`http://localhost:3000/users/${id}`, {
+      // Convert date string to ISO format
+      const updatedLivreur = {
+        ...livreur,
+        date_naissance: new Date(livreur.date_naissance).toISOString(),
+      };
+      const response = await fetch(`http://localhost:3001/api/livreurs/${id}?adminId=${adminId}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedLivreur)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedLivreur),
       });
-  
-      if (response.ok) {
-        console.log('Livreur updated successfully');
-        navigate('/livreurs');
-      } else {
-        console.error('Failed to update livreur:', response.statusText);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
+      alert('Livreur updated successfully');
     } catch (error) {
-      console.error('Error:', error);
+      alert('Failed to update livreur: ' + error.message);
     }
   };
-  
+
+  if (loading) return <div className="loading">Loading...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
+
+  if (!livreur) return <div className="no-data">No data found</div>;
 
   return (
-    <div className="edit-livreur-container">
-      <h2 className="page-title">Edit Livreur</h2>
-      {livreur ? (
-        <form className="edit-livreur-form" onSubmit={handleSubmit}>
-          <div className="form-group-row">
-            <div className="form-group">
-              <label htmlFor="lastName">Nom</label>
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="firstName">Prénom</label>
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="birthDate">Date de Naissance</label>
-              <input
-                type="date"
-                id="birthDate"
-                name="birthDate"
-                value={formData.birthDate}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="phone">Téléphone</label>
-              <input
-                type="text"
-                id="phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-          </div>
-          <div className="form-group-row">
-            <div className="form-group form-group-wide">
-              <label htmlFor="address">Adresse</label>
-              <input
-                type="text"
-                id="address"
-                name="address"
-                value={formData.address}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="form-group form-group-narrow">
-              <label htmlFor="governorate">Governorat</label>
-              <input
-                type="text"
-                id="governorate"
-                name="governorate"
-                value={formData.governorate}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-          </div>
-          <div className="button-wrapper">
-            <button type="submit" className="submit-button">Save</button>
-          </div>
-        </form>
-      ) : (
-        <p>Loading...</p>
-      )}
+    <div className="card-container">
+      <h1>Edit Livreur</h1>
+      <form className="edit-form" onSubmit={handleSubmit}>
+        <label>
+          Nom:
+          <input
+            type="text"
+            value={livreur.nom}
+            onChange={(e) => setLivreur({ ...livreur, nom: e.target.value })}
+          />
+        </label>
+        <label>
+          Prénom:
+          <input
+            type="text"
+            value={livreur.prenom}
+            onChange={(e) => setLivreur({ ...livreur, prenom: e.target.value })}
+          />
+        </label>
+        <label>
+          Date de Naissance:
+          <input
+            type="date"
+            value={livreur.date_naissance}
+            onChange={(e) => setLivreur({ ...livreur, date_naissance: e.target.value })}
+          />
+        </label>
+        <label>
+          Téléphone:
+          <input
+            type="text"
+            value={livreur.telephone}
+            onChange={(e) => setLivreur({ ...livreur, telephone: e.target.value })}
+          />
+        </label>
+        <label>
+          Email:
+          <input
+            type="email"
+            value={livreur.email}
+            onChange={(e) => setLivreur({ ...livreur, email: e.target.value })}
+          />
+        </label>
+        <label>
+          Adresse:
+          <input
+            type="text"
+            value={livreur.address}
+            onChange={(e) => setLivreur({ ...livreur, address: e.target.value })}
+          />
+        </label>
+        <label>
+          Gouvernorat:
+          <input
+            type="text"
+            value={livreur.governorate}
+            onChange={(e) => setLivreur({ ...livreur, governorate: e.target.value })}
+          />
+        </label>
+        <button type="submit">Update Livreur</button>
+      </form>
     </div>
   );
 };

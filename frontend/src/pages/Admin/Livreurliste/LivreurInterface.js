@@ -40,7 +40,7 @@ const LivreurInterface = () => {
             ...livreur,
             date_naissance: new Date(livreur.date_naissance).toISOString().split('T')[0] // Ensure consistent format
           }));
-          setLivreurs(formattedData);
+         setLivreurs(formattedData);
         } else {
           console.error('Failed to fetch livreurs:', response.statusText);
         }
@@ -51,6 +51,8 @@ const LivreurInterface = () => {
 
     fetchLivreurs();
   }, [adminId]);
+
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -109,6 +111,8 @@ const LivreurInterface = () => {
     }
   };
 
+
+  
   const handleDelete = async (id) => {
     try {
       const response = await fetch(`http://localhost:3001/api/livreurs/${id}?adminId=${adminId}`, {
@@ -126,8 +130,8 @@ const LivreurInterface = () => {
     }
   };
 
-  const handleEdit = (id) => {
-    navigate(`/edit-livreur/${id}`); // Navigate to the edit page with the user id
+  const handleEdit = (livreurId) => {
+    navigate(`/edit-livreur/${livreurId}`);
   };
 
   const filteredLivreurs = livreurs.filter((livreur) => {
@@ -262,9 +266,14 @@ const LivreurInterface = () => {
                   <td>{livreur.address}</td>
                   <td>{livreur.governorate}</td>
                   <td>
-                    <button className="icon-button" onClick={() => handleDelete(livreur.id)}><MdDelete /></button>
-                    <button className="icon-button" onClick={() => handleEdit(livreur.id)}><MdEdit /></button>
-                  </td>
+                  <button onClick={() => handleEdit(livreur.id)}>
+  <MdEdit />
+</button>
+
+                <button onClick={() => handleDelete(livreur.id)}>
+                  <MdDelete />
+                </button>
+              </td>
                 </tr>
               ))}
             </tbody>

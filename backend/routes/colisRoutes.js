@@ -20,4 +20,7 @@ router.put('/:id', colisController.updateColis);
 // Delete a colis by ID
 router.delete('/:id', colisController.deleteColis);
 
+// Get all colis (optionally filtered by adminId)
+router.get('/admin/colis', colisController.getAllColisByadmin);
+
 module.exports = router;

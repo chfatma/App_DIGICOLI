@@ -20,7 +20,7 @@ import Paiement from './pages/Clients/Paiement/Paiement';
 import ListeColisClient from './pages/Clients/ListeColisClients/listecolisclient';
 import DashboardClient from './pages/Clients/DashboardClients/DashboardClient';
 import QRCodeGenerator from './pages/Admin/QRCodeGenerator/QRCodeGenerator';
-import EditLivreurAdmin from './pages/Admin/EditLivreurAdmin/EditLivreurAdmin';
+import EditLivreur from './pages/Admin/EditLivreurAdmin/EditLivreurAdmin';
 import EditAdmin from './pages/SuperAdmin/EditAdmin/EditAdmin';
 import Calendrier from './pages/Calendrier/Calendrier';
 import EditClient from './pages/Admin/EditClientAdmin/EditClientAdmin';
@@ -72,13 +72,15 @@ function App() {
 
         {/* Interface of the Admin */}
         <Route path="/dashboard" element={<ProtectedRoute component={Dashboard} userRole={userRole} />} />
-        <Route path="/edit-livreur/:id" element={<ProtectedRoute component={EditLivreurAdmin} userRole={userRole} />} />
-        <Route path="/edit-client/:id" element={<ProtectedRoute component={EditClient} userRole={userRole} />} />   //hhhh
+        <Route  path="/edit-livreur/:id" element={<ProtectedRoute component={EditLivreur} userRole={userRole} />} />
+        <Route path="/edit-client/:id" element={<ProtectedRoute component={EditClient} userRole={userRole} />} />  
         <Route path="/Ramassage" element={<ProtectedRoute component={Ramassage} userRole={userRole} />} />
         <Route path="/QRCodeGenerator/:id" element={<ProtectedRoute component={QRCodeGenerator} userRole={userRole} />} />
         <Route path="/client" element={<ProtectedRoute component={Client} userRole={userRole} />} />
         <Route path="/ListeClientsAdmin" element={<ProtectedRoute component={ListeClientsAdmin} userRole={userRole} />} />
         <Route path="/Adminlistcoli" element={<ProtectedRoute component={ListeColisAdmin} userRole={userRole} />} />
+
+
 
         {/* Interface of the livreur */}
         <Route path="/DashboardLivreur" element={<ProtectedRoute component={DashboardLivreur} userRole={userRole} />} />
