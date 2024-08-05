@@ -23,4 +23,8 @@ router.delete('/:id', colisController.deleteColis);
 // Get all colis (optionally filtered by adminId)
 router.get('/admin/colis', colisController.getAllColisByadmin);
 
+// Get total count of colis for a specific admin and depot
+router.get('/admin/depot/count', colisController.getColisCountByAdminIdAndDepot);
+
+
 module.exports = router;

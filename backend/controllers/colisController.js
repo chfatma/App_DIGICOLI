@@ -96,6 +96,9 @@ const getColisByLivreurId = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
+
 // Get all colis for a specific admin
 const getAllColisByadmin = async (req, res) => {
   const { adminId } = req.query; // Get adminId from query parameters
@@ -115,6 +118,29 @@ const getAllColisByadmin = async (req, res) => {
 };
 
 
+// Get total count of colis for a specific admin and depot
+const getColisCountByAdminIdAndDepot = async (req, res) => {
+  const { adminId, depot } = req.query; // Get adminId and depot from query parameters
+
+  try {
+    if (!adminId || !depot) {
+      return res.status(400).json({ error: 'Admin ID and depot are required' });
+    }
+
+    const count = await Colis.count({
+      where: { adminId, depot }
+    });
+
+    res.json({ count });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+
+
+
 module.exports = {
   getAllColis,
   getColisById,
@@ -123,5 +149,7 @@ module.exports = {
   deleteColis,
   getColisByLivreurId, 
   getAllColisByadmin,
+  getColisCountByAdminIdAndDepot,
+  
 };
 

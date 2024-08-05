@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css'; 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 import Layout from './components/Layout/Layout';
 import Login from './pages/Login/login';
 import Dashboard from './pages/Admin/DashboardAdmin/Dashboard';
@@ -27,6 +29,10 @@ import EditClient from './pages/Admin/EditClientAdmin/EditClientAdmin';
 import SuiviColi from './pages/Clients/SuiviColis/SuiviColi';
 import GoogleMapComponent from './pages/Livreur/Emplacement/GoogleMapComponent';
 import SupportLivreur from './pages/Livreur/SupportLivreur/Support';
+import EditColis from './pages/Admin/EditColis/EditColis';
+
+import Depot from './pages/Admin/Depot/Depot';
+
 
 function App() {
   const [userRole, setUserRole] = useState(null);
@@ -37,6 +43,7 @@ function App() {
     const storedUserRole = localStorage.getItem('userRole');
     const storedSuperadminId = localStorage.getItem('superadminId');
 
+    
     
     
     // Log values to the console
@@ -79,6 +86,10 @@ function App() {
         <Route path="/client" element={<ProtectedRoute component={Client} userRole={userRole} />} />
         <Route path="/ListeClientsAdmin" element={<ProtectedRoute component={ListeClientsAdmin} userRole={userRole} />} />
         <Route path="/Adminlistcoli" element={<ProtectedRoute component={ListeColisAdmin} userRole={userRole} />} />
+    
+        <Route path="/edit-colis/:id" element={<ProtectedRoute component={EditColis} userRole={userRole} />} />
+        <Route path="/Depot" element={<ProtectedRoute component={Depot} userRole={userRole} />} />
+
 
 
 

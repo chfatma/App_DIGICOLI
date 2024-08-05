@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import qrCodeIcon from '../../../assets/qr-code.png'; 
+
 import './ListeColisAdmin.css';
 import ListeColisAdminFilter from './ListeColisAdminFilter';
-import qrCodeIcon from '../../../assets/qr-code.png';
 
 const ListeColisAdmin = () => {
   const navigate = useNavigate();
@@ -20,52 +21,40 @@ const ListeColisAdmin = () => {
     livreurId: ''
   });
   const [livreurData, setLivreurData] = useState([]);
-
-  // Get adminId from localStorage
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const adminId = localStorage.getItem('adminId');
 
   useEffect(() => {
     const fetchColis = async () => {
+      setLoading(true);
       try {
-        const adminId = localStorage.getItem('adminId'); // Make sure this is correctly set
-        if (!adminId) {
-          console.error('Admin ID not found in localStorage');
-          return;
-        }
         const response = await fetch(`http://localhost:3001/api/colis/admin/colis?adminId=${adminId}`);
         if (response.ok) {
           const data = await response.json();
-          console.log('Colis Data:', data); // Debugging line
           setColisData(data);
           setFilteredData(data);
         } else {
-          console.error('Failed to fetch colis data:', response.statusText);
+          setError('Failed to fetch colis data.');
         }
       } catch (error) {
-        console.error('Error fetching colis data:', error);
+        setError('Error fetching colis data.');
+      } finally {
+        setLoading(false);
       }
     };
-    
+
     const fetchLivreurs = async () => {
       try {
-        if (!adminId) {
-          console.error('Admin ID not found in localStorage');
-          return;
-        }
         const response = await fetch(`http://localhost:3001/api/livreurs?adminId=${adminId}`);
         if (response.ok) {
           const data = await response.json();
-          console.log('Fetched livreurs:', data);
-          const formattedData = data.map(livreur => ({
-            ...livreur,
-            date_naissance: new Date(livreur.date_naissance).toISOString().split('T')[0]
-          }));
-          setLivreurData(formattedData);
+          setLivreurData(data);
         } else {
-          console.error('Failed to fetch livreurs:', response.statusText);
+          setError('Failed to fetch livreurs data.');
         }
       } catch (error) {
-        console.error('Error fetching livreurs:', error);
+        setError('Error fetching livreurs data.');
       }
     };
 
@@ -101,12 +90,7 @@ const ListeColisAdmin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    console.log('Sending data to backend:', {
-      ...newColis,
-      adminId,
-    });
-  
+
     try {
       const response = await fetch('http://localhost:3001/api/colis', {
         method: 'POST',
@@ -118,17 +102,10 @@ const ListeColisAdmin = () => {
           adminId,
         }),
       });
-  
-      console.log('Response Status:', response.status);
+
       const responseBody = await response.json();
-      console.log('Response Body:', responseBody);
-  
+
       if (response.ok) {
-        setColisData(prevColisData => [
-          ...prevColisData,
-          responseBody
-        ]);
-  
         setNewColis({
           code: '',
           expediteur: '',
@@ -138,104 +115,84 @@ const ListeColisAdmin = () => {
           depot: '',
           adresse: '',
           statut: 'En Attente',
-          livreurId: '',
+          livreurId: ''
         });
+        setFilteredData(prevData => [responseBody, ...prevData]);
       } else {
-        console.error('Failed to add new colis:', responseBody);
+        setError('Failed to add new colis.');
       }
     } catch (error) {
-      console.error('Error adding new colis:', error);
+      setError('Error adding new colis.');
     }
   };
-  
+
+  const handleEditClick = (id) => {
+    navigate(`/edit-colis/${id}`);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/colis/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        setFilteredData(prevData => prevData.filter(colis => colis.id !== id));
+      } else {
+        setError('Failed to delete colis.');
+      }
+    } catch (error) {
+      setError('Error deleting colis.');
+    }
+  };
+
+  // Helper function to get livreur's name by ID
+  const getLivreurName = (livreurId) => {
+    const livreur = livreurData.find(livreur => livreur.id === livreurId);
+    return livreur ? `${livreur.nom} ${livreur.prenom}` : 'N/A';
+  };
+
   return (
     <div className="liste-colis-admin-container">
+      {loading && <p>Loading...</p>}
+      {error && <p className="error-message">{error}</p>}
+
       <ListeColisAdminFilter onFilterChange={handleFilterChange} />
+
       <div className="add-colis-card">
         <div className="add-colis-card-header">
           <span className="add-colis-card-title">Ajouter Colis</span>
         </div>
         <form className="add-colis-form-container" onSubmit={handleSubmit}>
           <div className="add-colis-form-row">
-            <div className="add-colis-input-group">
-              <label htmlFor="code">Code</label>
-              <input
-                type="text"
-                id="code"
-                name="code"
-                value={newColis.code}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="add-colis-input-group">
-              <label htmlFor="expediteur">Expéditeur</label>
-              <input
-                type="text"
-                id="expediteur"
-                name="expediteur"
-                value={newColis.expediteur}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="add-colis-input-group">
-              <label htmlFor="destinataire">Destinataire</label>
-              <input
-                type="text"
-                id="destinataire"
-                name="destinataire"
-                value={newColis.destinataire}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="add-colis-input-group">
-              <label htmlFor="telephone">Téléphone</label>
-              <input
-                type="text"
-                id="telephone"
-                name="telephone"
-                value={newColis.telephone}
-                onChange={handleChange}
-                required
-              />
-            </div>
+            {['code', 'expediteur', 'destinataire', 'telephone'].map(field => (
+              <div className="add-colis-input-group" key={field}>
+                <label htmlFor={field}>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
+                <input
+                  type="text"
+                  id={field}
+                  name={field}
+                  value={newColis[field]}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            ))}
           </div>
           <div className="add-colis-form-row">
-            <div className="add-colis-input-group">
-              <label htmlFor="montant">Montant</label>
-              <input
-                type="text"
-                id="montant"
-                name="montant"
-                value={newColis.montant}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="add-colis-input-group">
-              <label htmlFor="depot">Dépôt</label>
-              <input
-                type="text"
-                id="depot"
-                name="depot"
-                value={newColis.depot}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="add-colis-input-group">
-              <label htmlFor="adresse">Adresse</label>
-              <input
-                type="text"
-                id="adresse"
-                name="adresse"
-                value={newColis.adresse}
-                onChange={handleChange}
-                required
-              />
-            </div>
+            {['montant', 'depot', 'adresse'].map(field => (
+              <div className="add-colis-input-group" key={field}>
+                <label htmlFor={field}>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
+                <input
+                  type="text"
+                  id={field}
+                  name={field}
+                  value={newColis[field]}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            ))}
             <div className="add-colis-input-group">
               <label htmlFor="statut">Statut</label>
               <select
@@ -243,40 +200,37 @@ const ListeColisAdmin = () => {
                 name="statut"
                 value={newColis.statut}
                 onChange={handleChange}
+                required
               >
                 <option value="En Attente">En Attente</option>
-                <option value="En Cours">En Cours</option>
+                <option value="En Livraison">En Livraison</option>
                 <option value="Livré">Livré</option>
               </select>
             </div>
-            <div className="add-colis-input-group">
-              <label htmlFor="livreurId">Livreur</label>
-              <select
-                id="livreurId"
-                name="livreurId"
-                value={newColis.livreurId}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Sélectionner un livreur</option>
-                {livreurData.map(livreur => (
-                  <option key={livreur.id} value={livreur.id}>
-                    {livreur.nom}
-                  </option>
-                ))}
-              </select>
-            </div>
           </div>
-          <div className="add-colis-button-container">
-            <button type="submit">Ajouter</button>
+          <div className="add-colis-input-group">
+            <label htmlFor="livreurId">Livreur</label>
+            <select
+              id="livreurId"
+              name="livreurId"
+              value={newColis.livreurId}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Sélectionner un livreur</option>
+              {livreurData.map(livreur => (
+                <option key={livreur.id} value={livreur.id}>
+                  {livreur.nom} {livreur.prenom}
+                </option>
+              ))}
+            </select>
           </div>
+          <button type="submit" className="add-colis-submit-btn">Ajouter Colis</button>
         </form>
       </div>
-      <div className="colis-list-card">
-        <div className="colis-list-card-header">
-          <span className="colis-list-card-title">Liste des Colis</span>
-        </div>
-        <div className="colis-table-container">
+
+      <div className="colis-list">
+        {filteredData.length > 0 ? (
           <table className="colis-table">
             <thead>
               <tr>
@@ -285,10 +239,11 @@ const ListeColisAdmin = () => {
                 <th>Destinataire</th>
                 <th>Téléphone</th>
                 <th>Montant</th>
-                <th>Dépôt</th>
+                <th>Depot</th>
                 <th>Adresse</th>
+                <th>Livreur</th> 
                 <th>Statut</th>
-                <th>QR Code</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -301,23 +256,34 @@ const ListeColisAdmin = () => {
                   <td>{colis.montant}</td>
                   <td>{colis.depot}</td>
                   <td>{colis.adresse}</td>
+                  <td>{getLivreurName(colis.livreurId)}</td> 
                   <td>{colis.statut}</td>
                   <td>
-                   <img
+                    <img
                       src={qrCodeIcon}
                       alt="QR Code"
                       className="qr-code-icon"
-                      onClick={() => handleQRCodeClick(colis)
-                        
-                      }
-                      style={ {cursor: 'pointer', width: '25px',height:'25px'}}
+                      onClick={() => handleQRCodeClick(colis)}
+                      style={{ cursor: 'pointer', width: '15px', height: '15px' }}
+                    />
+                    <i
+                      className="fa fa-edit icon-button"
+                      onClick={() => handleEditClick(colis.id)}
+                      style={{ cursor: 'pointer', width: '27px', height: '27px', marginLeft: '10px' }}
+                    />
+                    <i
+                      className="fa fa-trash icon-button"
+                      onClick={() => handleDelete(colis.id)}
+                      style={{ cursor: 'pointer', width: '27px', height: '27px', marginLeft: '10px' }}
                     />
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </div>
+        ) : (
+          <p>Aucun colis trouvé.</p>
+        )}
       </div>
     </div>
   );

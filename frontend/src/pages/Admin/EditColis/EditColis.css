@@ -1,0 +1,51 @@
+.edit-colis-container {
+    padding: 20px;
+  }
+  
+  .error-message {
+    color: red;
+  }
+  
+  .edit-colis-card {
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .edit-colis-card-header {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .edit-colis-form-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .edit-colis-input-group {
+    margin-bottom: 10px;
+  }
+  
+  .edit-colis-input-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .edit-colis-input-group input,
+  .edit-colis-input-group select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  
+  .edit-colis-submit-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .edit-colis-submit-btn:hover {
+    background-color: #0056b3;
+  }
+                                                                                                                                                          

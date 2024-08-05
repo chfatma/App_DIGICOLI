@@ -1,0 +1,64 @@
+.depot-container {
+    padding: 30px;
+    background: #ecf3fd;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .depot-heading {
+    font-size: 2rem;
+    color: #343a40;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .depot-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .state-card {
+    background: #ffffff;
+    border: 1px solid #ced4da;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  
+  .state-card:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+  }
+  
+  .state-title {
+    font-size: 1.5rem;
+    color: #495057;
+    margin-bottom: 15px;
+  }
+  
+  .state-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #adb5bd;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .state-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+  }
+  

@@ -56,8 +56,8 @@ const MenuAdmin = () => {
             <i className="fa fa-calendar"></i> Calendrier
           </Link>
         </li>
-        <li className={location.pathname === '/QRCodeGenerator' ? 'active' : ''}>
-          <Link to="/QRCodeGenerator">
+        <li className={location.pathname === '/Depot' ? 'active' : ''}>
+          <Link to="/Depot">
             <i className="fa fa-building"></i> Dépôts
           </Link>
         </li>

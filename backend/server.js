@@ -7,6 +7,7 @@ const clientRoutes = require('./routes/clientRoutes');
 const livreurRoutes = require('./routes/livreurRoutes');
 const authRoutes = require('./routes/authRoutes'); // Import authentication routes
 const colisRoutes = require('./routes/colisRoutes'); // Import colis routes
+const pickupRoutes = require('./routes/pickupRoutes');
 const sequelize = require('./models').sequelize;
 
 
@@ -31,10 +32,10 @@ app.use('/api/superadmins', superadminRoutes);
 app.use('/api/admins', adminRoutes);
 app.use('/api/clients', clientRoutes);
 app.use('/api/livreurs', livreurRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/colis', colisRoutes); // Add this line to include colis routes
+app.use('/api/auth', authRoutes); 
+app.use('/api/colis', colisRoutes); 
+app.use('/api/pickups', pickupRoutes);
 
-app.use('/api/colis', colisRoutes);
 
 // Start the server and sync the database
 app.listen(PORT, () => {
