@@ -35,12 +35,13 @@ const QRCodeGenerator = () => {
 
   return (
     <div className="qr-code-generator-container">
+      
       <div className="qr-code-generator">
-        <h1>QR Code Generator</h1>
+   
         <div className="qr-code">
           <QRCode value={qrValue} />
         </div>
-        <button onClick={downloadQRCode} className="download-btn">Download QR Code</button>
+        <button onClick={downloadQRCode} className="download-btn">Télécharger QR Code</button>
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ const ListeClientsAdminFilter = ({ onFilterChange }) => {
     setIsOpen(false);
     onFilterChange(option);
   };
-
+  
   return (
     <div className={`filter-card ${isOpen ? 'open' : ''}`}>
       <div className="filter-content" onClick={handleToggleOptions}>

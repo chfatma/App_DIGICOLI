@@ -18,9 +18,10 @@ const EditColis = () => {
     montant: '',
     depot: '',
     adresse: '',
-    statut: 'En Attente',
+    statut: '', 
     livreurId: '',
   });
+
   const [livreurData, setLivreurData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -62,6 +63,7 @@ const EditColis = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Submitting data:', formData); // Debugging
 
     try {
       const response = await axios.put(`${BASE_URL}/${id}`, formData);
@@ -171,9 +173,10 @@ const EditColis = () => {
                 onChange={handleChange}
                 required
               >
-                <option value="En Attente">En Attente</option>
-                <option value="En Livraison">En Livraison</option>
-                <option value="Livré">Livré</option>
+                <option value="">Sélectionner un statut</option>
+                <option value="en attente">En Attente</option>
+                <option value="en cours">En Livraison</option>
+                <option value="livrais">livrais</option>
               </select>
             </div>
             <div className="input-group">

@@ -1,0 +1,107 @@
+
+.payment-container {
+    margin-top: 600px;
+    padding-top: 60px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #f5f6f7;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Title styling */
+.payment-title {
+    margin-bottom: 30px;
+    text-align: center;
+    color: #2c3e50;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* Form styling */
+.payment-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Options container styling */
+.payment-options {
+    margin-bottom: 20px;
+}
+
+/* Individual option styling */
+.payment-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Increased margin for spacing between options */
+    padding: 20px;
+    margin-right: 50px;
+    border-radius: 15px;
+    border: 1px solid #dcdcdc;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    background-color: #ffffff;
+}
+
+/* Active option styling */
+.payment-option.active {
+    background-color: #e1f5fe;
+    border-color: #00bcd4;
+    box-shadow: 0 4px 8px rgba(0, 188, 212, 0.2);
+}
+
+/* Radio button styling */
+.payment-option input[type="radio"] {
+    margin-right: 15px;
+    accent-color: #00bcd4;
+}
+
+/* Label styling */
+.payment-option label {
+    font-size: 18px;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+/* Button styling */
+.submit-button {
+    background-color: #00bcd4;
+    border: none;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    display: block;
+    margin: 20px auto;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    font-weight: 600;
+}
+
+.submit-button:hover {
+    background-color: #00a4c4;
+    box-shadow: 0 6px 12px rgba(0, 188, 212, 0.3);
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .payment-container {
+        padding: 20px;
+    }
+
+    .payment-title {
+        font-size: 28px;
+    }
+
+    .payment-option {
+        padding: 15px;
+    }
+
+    .submit-button {
+        padding: 12px 24px;
+        font-size: 16px;
+    }
+}

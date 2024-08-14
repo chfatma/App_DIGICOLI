@@ -75,7 +75,7 @@ const Login = ({ onLogin }) => {
             navigate('/DashboardLivreur');
             break;
           case 'Client':
-            navigate('/DashboardClient');
+            navigate('/SuiviColi');
             break;
           default:
             alert('Unknown role');
@@ -127,10 +127,7 @@ const Login = ({ onLogin }) => {
             </form>
           )}
         </div>
-        <div className="form-toggle-renamed">
-          <button onClick={toggleForm} className={!isSignUp ? 'active-renamed' : ''}>Sign In</button>
-          <button onClick={toggleForm} className={isSignUp ? 'active-renamed' : ''}>Sign Up</button>
-        </div>
+       
       </div>
     </div>
   );

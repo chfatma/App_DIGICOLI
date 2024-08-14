@@ -9,9 +9,9 @@ const Paiement = () => {
   const handlePaymentMethodChange = (method) => {
     setPaymentMethod(method);
     if (method === 'cash') {
-      navigate('/PaiementCash');
+      navigate('/PaimentCash');
     } else if (method === 'card') {
-      navigate('/PaiementCarte');
+      navigate('/PaimentCarte');
     }
   };
 
@@ -33,7 +33,7 @@ const Paiement = () => {
             <p>Paiement en ligne par votre carte</p>
           </div>
           Paiement par Carte
-          <i className="fas fa-chevron-right arrow-icon"></i> {/* Arrow icon added */}
+          <i className="fas fa-chevron-right arrow-icon"></i> 
         </button>
       </div>
       <footer className="payment-footer">

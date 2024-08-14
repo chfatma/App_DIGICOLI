@@ -31,12 +31,15 @@
   background-color: #007bff;
   color: #ffffff;
   border-radius: 50%;
-  width: 35px;
-  height: 35px;
+  width: 50px; /* Increased size of the circle */
+  height: 50px; /* Increased size of the circle */
   display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 8px;
+  background-color: #F26622;
+  font-size: 24px; /* Increased font size for the icon */
+  border: 2px solid #F26622; /* Optional border to enhance appearance */
 }
 
 .card-title-custom {
@@ -50,7 +53,7 @@
 }
 
 .title-text-custom {
-  margin-left: 4px;
+  margin-left: 8px; /* Adjusted for better spacing */
 }
 
 .gouvernement-dropdown-custom {

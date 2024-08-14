@@ -18,7 +18,7 @@ const ListeColisAdmin = () => {
     depot: '',
     adresse: '',
     suiviEmplacement:'',
-    statut: 'En Attente',
+    statut: '',
     livreurId: ''
   });
   const [livreurData, setLivreurData] = useState([]);
@@ -210,9 +210,9 @@ const getLivreurName = (livreurId) => {
                 onChange={handleChange}
                 required
               >
-                <option value="En Attente">En Attente</option>
-                {/*        <option value="En Livraison">En Livraison</option>
-                <option value="Livré">Livré</option>*/}
+               <option value="en attente">En Attente</option>
+                <option value="en cours">En Livraison</option>
+                <option value="livrais">livrais</option>
               </select>
             </div>
           </div>

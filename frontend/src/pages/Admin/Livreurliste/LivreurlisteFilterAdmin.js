@@ -6,9 +6,11 @@ const LivreurListe = ({ selectedGouvernement, setSelectedGouvernement, setSelect
   const [selectedDate, setSelectedDateInternal] = useState('');
   const [selectedGouvernementInternal, setSelectedGouvernementInternal] = useState('Tout');
 
-  const gouvernements = [ "Tunis", "Sfax", "Sousse", "Monastir", "Kairouan", "Bizerte", "Nabeul", "Kasserine",
+  const gouvernements = [
+    "Tunis", "Sfax", "Sousse", "Monastir", "Kairouan", "Bizerte", "Nabeul", "Kasserine",
     "Sidi Bouzid", "Gabès", "Mednine", "Tozeur", "Jendouba", "Le Kef", "Zaghouan", "Siliana",
-    "Mahdia", "La Manouba", "Ariana", "Ben Arous", "Tataouine", "Gafsa", "Medenine", "Sidi Bou Said", "Kebili","Tout"];
+    "Mahdia", "La Manouba", "Ariana", "Ben Arous", "Tataouine", "Gafsa", "Medenine", "Sidi Bou Said", "Kebili", "Tout"
+  ];
 
   useEffect(() => {
     setSelectedGouvernement('Tout');
@@ -50,7 +52,7 @@ const LivreurListe = ({ selectedGouvernement, setSelectedGouvernement, setSelect
         <div className="small-button-custom gouvernement-card-custom">
           <div className="card-title-custom" onClick={toggleDropdown}>
             <div className="icon-circle-custom">
-              <i className="fa fa-map-pin"></i>
+              <i className="fa fa-globe"></i> {/* Changed icon to fa-globe */}
             </div>
             <span className="title-text-custom">Gouvernement</span>
             <i className={`fa ${showDropdown ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
