@@ -12,12 +12,17 @@ const DashboardLivreur = () => {
 
   return (
     <div className="dashboard-livreur">
-      <h2>Dashboard</h2>
-      <div className="filter-card">
-        <div className="icon-circle">
-          <FaFilter />
+      <div className="dashboard-header">
+        <h1 className="dashboard-title">Tableau de bord</h1>
+        <div className="filter-card-container">
+          <div className="filter-card">
+            <div className="filter-icon">
+              <i className="fa fa-filter"></i>
+            </div>
+            <p className="filter-text">Filter</p>
+          </div>
+       
         </div>
-        <p>Filter</p>
       </div>
       {stats.map((stat, index) => (
         <div key={index} className="card">

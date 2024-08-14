@@ -1,51 +1,81 @@
+.edit-colis{
+  background-color: #ecf3fd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  align-items: left;
+  margin-top: -40px;
+  padding: 40px;
+  min-height: 100vh; 
+  overflow: auto;
+}
+
 .edit-colis-container {
-    padding: 20px;
-  }
-  
-  .error-message {
-    color: red;
-  }
-  
-  .edit-colis-card {
-    max-width: 600px;
-    margin: auto;
-  }
-  
-  .edit-colis-card-header {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .edit-colis-form-container {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .edit-colis-input-group {
-    margin-bottom: 10px;
-  }
-  
-  .edit-colis-input-group label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .edit-colis-input-group input,
-  .edit-colis-input-group select {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-  }
-  
-  .edit-colis-submit-btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .edit-colis-submit-btn:hover {
-    background-color: #0056b3;
-  }
-                                                                                                                                                          
+  width: 100%;
+  max-width: 1200px;
+  min-height: 400px;
+  padding: 30px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.error-message {
+  color: red;
+}
+
+.edit-colis-card {
+  max-width: 1100px; 
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.edit-colis-card-header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.edit-colis-form-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); 
+  gap: 10px;
+}
+
+.edit-colis-input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-colis-input-group label {
+  margin-bottom: 5px;
+}
+
+.edit-colis-input-group input,
+.edit-colis-input-group select {
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.edit-colis-submit-btn {
+  grid-column:  1; 
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px; 
+  border: none;
+  border-radius: 4px; 
+  cursor: pointer;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 16px; 
+}
+
+.edit-colis-submit-btn:hover {
+  background-color: #0056b3;
+}

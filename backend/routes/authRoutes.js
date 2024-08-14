@@ -1,11 +1,16 @@
 const express = require('express');
 const   router = express.Router();
-const { loginUser, logoutUser } = require('../controllers/authController'); // Update this path based on your authController file
+const { loginUser, logoutUser,  updateUserProfile } = require('../controllers/authController');
 
-// Login Route
+
 router.post('/login', loginUser);
 
-// Logout Route
+
 router.post('/logout', logoutUser);
+
+
+router.put('/profile', updateUserProfile);
+
+
 
 module.exports = router;

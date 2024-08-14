@@ -2,7 +2,7 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: auto; /* Enable scrolling */
+  overflow: auto;
 }
 
 .livreur-page {
@@ -27,7 +27,7 @@ html, body {
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.143);
-  width: 100%; /* Adjust to fit within the container */
+  width: 100%; /* Adjust to fit within the containser */
   margin: 20px auto; /* Center the card horizontally */
   overflow: hidden; /* Hide overflow content */
 }
@@ -35,7 +35,7 @@ html, body {
 .livreur-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: -10px;
   padding-bottom: 5px; /* Add padding to the bottom */
 }
 
@@ -46,8 +46,8 @@ html, body {
 }
 
 .form-group {
+  width: max-content;
   flex: 1;
-  min-width: 0; /* Allow flex items to shrink */
 }
 
 .form-group label {
@@ -65,6 +65,7 @@ html, body {
 
 .form-group:not(:last-child) {
   margin-bottom: 10px; /* Space between inputs */
+  margin-right: 35px;
 }
 
 .form-group.governorat {
@@ -77,17 +78,20 @@ html, body {
   margin-top: -40px;
 }
 
-.add-button {
-  background-color: #f26722c8;
-  color: white;
-  padding: 15px 20px;
-  border: none;
-  border-radius: 8px;
-  margin-top: -600px; /* Adjust margin */
-  margin-left: 550px;
+.button-containerliv {
+  text-align: center;
 }
 
-.add-button:hover {
+.button-containerliv button {
+  background-color: #f267229f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button-containerliv button:hover {
   background-color: #F26622;
 }
 
@@ -99,6 +103,7 @@ html, body {
 }
 
 .livreurs-table {
+  color: rgba(0, 0, 0, 0.589);
   width: 100%;
   border-collapse: collapse;
   margin: 0; /* Ensure no extra margin */
@@ -111,27 +116,70 @@ html, body {
 }
 
 .livreurs-table th {
-  background-color: #f4f4f4; /* Light background for headers */
-  color: #333; /* Darker text for contrast */
+  background-color: #fff; /* Light background for headers */
+  color: rgba(0, 0, 0, 0.742); /* Darker text for contrast */
 }
 
 .livreurs-table tbody tr:nth-child(even) {
-  background-color: #f9f9f9; /* Alternate row background */
+  background-color: #fff; /* Alternate row background */
 }
 
 .livreurs-table tbody tr:nth-child(odd) {
-  background-color: #fff; /* Default row background */
+  background-color: white; /* Default row background */
 }
 
 .icon-button {
-  background-color: black;
+  background-color: rgb(175, 72, 72);
   border: none;
   cursor: pointer;
   padding: 5px;
   margin: 0 5px;
+  margin-left: 10px;
 }
 
 .icon-button:hover {
   background-color: #f26722cb;
   border-radius: 50%;
+}
+
+.add-livreurs-card-header,
+.add-livreurs-card-header {
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.add-livreurs-card-title,
+.add-livreurs-card-title {
+  font-size: 20px; 
+  font-weight: bold;
+  color: #193A69; 
+}
+
+.delete-button-liv {
+  color: #193A69;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.delete-button-liv:hover {
+  background-color: #f26722dd; /* Darker red on hover */
+}
+
+.edit-button-liv {
+  color: #193A69;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.edit-button-liv:hover {
+  background-color: #f26722dd; /* Darker red on hover */
 }

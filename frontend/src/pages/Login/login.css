@@ -106,7 +106,7 @@ body, html {
   background-color: #193A69; /* Hover background color */
 }
 
-.footerr {
+.footer-renamed {
   margin-top: auto; /* Push the footer to the bottom */
   font-size: 14px;
   color: #193A69;

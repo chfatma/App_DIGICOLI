@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LivreurInterface.css';
 import { MdEdit, MdDelete } from 'react-icons/md';
-import LivreurListe from './LivreurlisteFilterAdmin'; // Ensure this path is correct
+import LivreurListe from './LivreurlisteFilterAdmin'; 
 
 const LivreurInterface = () => {
   const [livreurs, setLivreurs] = useState([]);
   const [selectedGouvernement, setSelectedGouvernement] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
-
   const [formData, setFormData] = useState({
     nom: '',
     prenom: '',
@@ -20,6 +19,13 @@ const LivreurInterface = () => {
   });
 
   const navigate = useNavigate(); // Initialize useNavigate hook
+
+  // List of Tunisian governorates
+  const governorates = [
+    "Tunis", "Sfax", "Sousse", "Monastir", "Kairouan", "Bizerte", "Nabeul", "Kasserine",
+    "Sidi Bouzid", "Gabès", "Mednine", "Tozeur", "Jendouba", "Le Kef", "Zaghouan", "Siliana",
+    "Mahdia", "La Manouba", "Ariana", "Ben Arous", "Tataouine", "Gafsa", "Medenine", "Sidi Bou Said", "Kebili"
+  ];
 
   // Get adminId from localStorage
   const adminId = localStorage.getItem('adminId');
@@ -40,7 +46,7 @@ const LivreurInterface = () => {
             ...livreur,
             date_naissance: new Date(livreur.date_naissance).toISOString().split('T')[0] // Ensure consistent format
           }));
-         setLivreurs(formattedData);
+          setLivreurs(formattedData);
         } else {
           console.error('Failed to fetch livreurs:', response.statusText);
         }
@@ -51,8 +57,6 @@ const LivreurInterface = () => {
 
     fetchLivreurs();
   }, [adminId]);
-
-  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -65,21 +69,21 @@ const LivreurInterface = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const defaultPassword = `${formData.prenom}${formData.telephone}`; // Concatenate first name and phone number
+    const defaultPassword = `${formData.prenom}${formData.telephone}`; 
 
     const newUser = {
       email: formData.email,
-      nom: formData.nom, // Use 'nom' for last name as per backend
-      prenom: formData.prenom, // Use 'prenom' for first name as per backend
-      motdepasse: defaultPassword, // Adjusted to match backend property
-      telephone: formData.telephone, // Adjusted to match backend property
-      address: formData.adresse, // Adjusted to match backend property
-      governorate: formData.governorat, // Keep as is if matches backend
-      date_naissance: formData.dateNaissance, // Use the same format for date
-      adminId // Include adminId in the request payload
+      nom: formData.nom, 
+      prenom: formData.prenom,
+      motdepasse: defaultPassword, 
+      telephone: formData.telephone, 
+      address: formData.adresse, 
+      governorate: formData.governorate, 
+      date_naissance: formData.dateNaissance,
+      adminId 
     };
 
-    console.log('Submitting new user data:', newUser); // Log data being sent
+    console.log('Submitting new user data:', newUser); // Log data 
 
     try {
       const response = await fetch('http://localhost:3001/api/livreurs/create', {
@@ -101,7 +105,7 @@ const LivreurInterface = () => {
           telephone: '',
           email: '',
           adresse: '',
-          governorat: ''
+          governorate: ''
         });
       } else {
         console.error('Failed to add user:', response.statusText);
@@ -111,8 +115,6 @@ const LivreurInterface = () => {
     }
   };
 
-
-  
   const handleDelete = async (id) => {
     try {
       const response = await fetch(`http://localhost:3001/api/livreurs/${id}?adminId=${adminId}`, {
@@ -135,7 +137,7 @@ const LivreurInterface = () => {
   };
 
   const filteredLivreurs = livreurs.filter((livreur) => {
-    if (selectedGouvernement !== 'Tout' && livreur.governorat !== selectedGouvernement) {
+    if (selectedGouvernement !== 'Tout' && livreur.governorate !== selectedGouvernement) {
       return false;
     }
     if (selectedDate && livreur.date_naissance !== selectedDate) {
@@ -146,15 +148,20 @@ const LivreurInterface = () => {
 
   return (
     <div className="livreur-page">
+      <div className="dashboard-header">
+        <h1 className="dashboard-title">Livreurs</h1>
+      </div>
       <LivreurListe
         selectedGouvernement={selectedGouvernement}
         setSelectedGouvernement={setSelectedGouvernement}
         setSelectedDate={setSelectedDate}
       />
-      <div className="title">Ajouter livreur</div>
       <div className="cards">
-        <form className="livreur-form" onSubmit={handleSubmit}>
-          <div className="form-row">
+        <div className="add-livreurs-card-header">
+          <span className="add-livreurs-card-title">Ajouter Livreurs</span>
+        </div>
+        <form className="livreur-form"  onSubmit={handleSubmit}>
+          <div className="form-row" >
             <div className="form-group">
               <label htmlFor="nom">Nom</label>
               <input
@@ -212,7 +219,7 @@ const LivreurInterface = () => {
             </div>
           </div>
           <div className="form-row">
-            <div className="form-group adresse">
+            <div className="form-group">
               <label htmlFor="adresse">Adresse</label>
               <input
                 type="text"
@@ -223,20 +230,24 @@ const LivreurInterface = () => {
                 required
               />
             </div>
-            <div className="form-group governorat">
-              <label htmlFor="governorat">Governorat</label>
-              <input
-                type="text"
-                id="governorat"
-                name="governorat"
-                value={formData.governorat}
+            <div className="form-group">
+              <label htmlFor="governorate">Governorat</label>
+              <select
+                id="governorate"
+                name="governorate"
+                value={formData.governorate}
                 onChange={handleInputChange}
                 required
-              />
+              >
+                <option value="">Sélectionner un gouvernorat</option>
+                {governorates.map(governorate => (
+                  <option key={governorate} value={governorate}>{governorate}</option>
+                ))}
+              </select>
             </div>
           </div>
-          <div className="button-container">
-            <button type="submit" className="add-button">Ajouter</button>
+          <div className="button-containerliv">
+            <button type="submit" >Ajouter Livreur</button>
           </div>
         </form>
       </div>
@@ -266,14 +277,17 @@ const LivreurInterface = () => {
                   <td>{livreur.address}</td>
                   <td>{livreur.governorate}</td>
                   <td>
-                  <button onClick={() => handleEdit(livreur.id)}>
-  <MdEdit />
-</button>
-
-                <button onClick={() => handleDelete(livreur.id)}>
-                  <MdDelete />
-                </button>
-              </td>
+                    <button 
+                     className="edit-button-liv"
+                    onClick={() => handleEdit(livreur.id)}>
+                      <MdEdit />
+                    </button>
+                    <button
+                     className="delete-button-liv"
+                    onClick={() => handleDelete(livreur.id)}>
+                      <MdDelete />
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

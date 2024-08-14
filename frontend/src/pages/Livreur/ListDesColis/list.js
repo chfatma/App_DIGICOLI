@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { MdEdit, MdDelete } from 'react-icons/md';
 import './ListDesColis.css';
 import ListDesColisFilter from './ListDesColisFilter';
 
@@ -131,7 +132,10 @@ const ListDesColis = () => {
                     </select>
                   </td>
                   <td>
-                    <button onClick={() => handleUpdate(colis.id, colis)}>Update</button>
+                    <button className="edit-button-coliliv"
+                      onClick={() => handleUpdate(colis.id, colis)}>
+                        <MdEdit />
+                      </button>
                   </td>
                 </tr>
               ))}

@@ -50,12 +50,21 @@ const Navbar = () => {
     try {
       await fetch('/api/auth/logout', { method: 'POST' }); 
       localStorage.clear(); // Clear all local storage on logout
-      navigate('/Login');
+  
+      // Replace the current entry in the history stack with the login page
+      navigate('/', { replace: true });
+  
+      // Clear history stack to prevent navigation back to the previous page
+      window.history.pushState(null, '', '/');
+      window.addEventListener('popstate', () => {
+        window.history.pushState(null, '', '/');
+      });
     } catch (error) {
       console.error('Logout failed:', error);
     }
   };
-
+  
+  
   return (
     <nav className="navbar">
       <div className="navbar-search">
@@ -85,9 +94,11 @@ const Navbar = () => {
               <p>Email: {userEmail}</p>
             </div>
             <div className="profile-actions">
-             
-             {/*  <Link to={`/edit/${userRole}/${userId}`}>Edit</Link>*/}
-              <button className="profile-button" onClick={handleLogout}>Logout</button>
+            <Link to="/edit-profile">
+                <button className="buttonnn">Edit Profile</button>
+              </Link>
+           
+              <button className="buttonnn" onClick={handleLogout}>Logout</button>
             </div>
           </div>
         )}

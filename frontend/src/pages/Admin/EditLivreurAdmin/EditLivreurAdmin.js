@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import './EditLivreurAdmin.css'; // Import the CSS file
+import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
+import './EditLivreurAdmin.css';
+
+const BASE_URL = 'http://localhost:3001/api/livreurs';
 
 const EditLivreurAdmin = () => {
-  const { id } = useParams(); // Extract the ID from the URL parameters
-  const [livreur, setLivreur] = useState({
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const adminId = localStorage.getItem('adminId');
+
+  const [formData, setFormData] = useState({
     nom: '',
     prenom: '',
     date_naissance: '',
@@ -12,123 +18,140 @@ const EditLivreurAdmin = () => {
     email: '',
     address: '',
     governorate: '',
+    adminId,
   });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const adminId = localStorage.getItem('adminId');
 
   useEffect(() => {
     const fetchLivreur = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/api/livreurs/${id}?adminId=${adminId}`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        // Convert date string to date object
-        if (data.date_naissance) {
-          data.date_naissance = new Date(data.date_naissance).toISOString().split('T')[0];
-        }
-        setLivreur(data);
+        const response = await axios.get(`${BASE_URL}/${id}`, { params: { adminId } });
+        const livreurData = response.data;
+        // Format the date to YYYY-MM-DD
+        const formattedDate = new Date(livreurData.date_naissance).toISOString().split('T')[0];
+        setFormData({
+          ...livreurData,
+          date_naissance: formattedDate,
+        });
       } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+        console.error('Error fetching livreur:', error);
       }
     };
 
     fetchLivreur();
   }, [id, adminId]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
-      // Convert date string to ISO format
-      const updatedLivreur = {
-        ...livreur,
-        date_naissance: new Date(livreur.date_naissance).toISOString(),
-      };
-      const response = await fetch(`http://localhost:3001/api/livreurs/${id}?adminId=${adminId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedLivreur),
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+      const response = await axios.put(`${BASE_URL}/${id}`, formData);
+      if (response.status === 200) {
+        navigate('/livreurs'); 
       }
-      alert('Livreur updated successfully');
     } catch (error) {
-      alert('Failed to update livreur: ' + error.message);
+      console.error('Error updating livreur:', error);
     }
   };
 
-  if (loading) return <div className="loading">Loading...</div>;
-  if (error) return <div className="error">Error: {error}</div>;
-
-  if (!livreur) return <div className="no-data">No data found</div>;
-
   return (
-    <div className="card-container">
-      <h1>Edit Livreur</h1>
-      <form className="edit-form" onSubmit={handleSubmit}>
-        <label>
-          Nom:
-          <input
-            type="text"
-            value={livreur.nom}
-            onChange={(e) => setLivreur({ ...livreur, nom: e.target.value })}
-          />
-        </label>
-        <label>
-          Prénom:
-          <input
-            type="text"
-            value={livreur.prenom}
-            onChange={(e) => setLivreur({ ...livreur, prenom: e.target.value })}
-          />
-        </label>
-        <label>
-          Date de Naissance:
-          <input
-            type="date"
-            value={livreur.date_naissance}
-            onChange={(e) => setLivreur({ ...livreur, date_naissance: e.target.value })}
-          />
-        </label>
-        <label>
-          Téléphone:
-          <input
-            type="text"
-            value={livreur.telephone}
-            onChange={(e) => setLivreur({ ...livreur, telephone: e.target.value })}
-          />
-        </label>
-        <label>
-          Email:
-          <input
-            type="email"
-            value={livreur.email}
-            onChange={(e) => setLivreur({ ...livreur, email: e.target.value })}
-          />
-        </label>
-        <label>
-          Adresse:
-          <input
-            type="text"
-            value={livreur.address}
-            onChange={(e) => setLivreur({ ...livreur, address: e.target.value })}
-          />
-        </label>
-        <label>
-          Gouvernorat:
-          <input
-            type="text"
-            value={livreur.governorate}
-            onChange={(e) => setLivreur({ ...livreur, governorate: e.target.value })}
-          />
-        </label>
-        <button type="submit">Update Livreur</button>
-      </form>
+    <div className="edit-livreur">
+      <div className="edit-livreur-container">
+        <div className="section-title">Edit Livreur</div>
+        <form onSubmit={handleSubmit}>
+          <div className="form-row">
+            <div className="input-group">
+              <label htmlFor="nom">Nom:</label>
+              <input
+                type="text"
+                id="nom"
+                name="nom"
+                value={formData.nom}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="prenom">Prénom:</label>
+              <input
+                type="text"
+                id="prenom"
+                name="prenom"
+                value={formData.prenom}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="date_naissance">Date de Naissance:</label>
+              <input
+                type="date"
+                id="date_naissance"
+                name="date_naissance"
+                value={formData.date_naissance}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="telephone">Téléphone:</label>
+              <input
+                type="text"
+                id="telephone"
+                name="telephone"
+                value={formData.telephone}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="input-group">
+              <label htmlFor="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="address">Adresse:</label>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="governorate">Gouvernorat:</label>
+              <input
+                type="text"
+                id="governorate"
+                name="governorate"
+                value={formData.governorate}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+          <div className="form-actions">
+            <button type="submit">Save</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

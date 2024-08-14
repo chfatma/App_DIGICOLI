@@ -2,7 +2,7 @@ const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize('digicoli', 'root', '', {
   host: 'localhost',
-  dialect: 'mysql', // Change this to your preferred database dialect (e.g., postgres, sqlite, etc.)
+  dialect: 'mysql', 
 });
 
 sequelize.authenticate()

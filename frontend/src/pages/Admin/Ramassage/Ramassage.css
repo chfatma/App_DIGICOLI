@@ -1,41 +1,47 @@
-
 .ramassage-container {
-  padding: 20px;
-  background-color: #ecf3fd;
-  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin-top: 40px;
+  padding: 40px;
+  min-height: 100vh; 
+  overflow: auto;
 }
 
 h2 {
-  color: #2e3b4e;
-  margin-left: 30px;
+  font-size: 20px; 
+  font-weight: bold;
+  color: #193A69; 
+  padding: 10px;
+  border-radius: 4px;
   margin-bottom: 20px;
 }
 
-.cards-container {
-  display: flex;
-  margin-left: 30px;
-  justify-content: left; /* Center the cards horizontally */
-  margin-bottom: 20px;
+.titlerama {
+  margin-top: 60px;
+  font-size: 1.5em;
+  color: #193A69;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .form-card {
+  margin-top: 100px;
   background-color: #ffffff;
   border-radius: 8px;
   padding: 20px;
+  width: 100%; 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 1100px;  /* Fixed width for the first card */
-  height: auto;  /* Auto height */
+  height: auto;
 }
 
-.table-card {
-  background-color: #ffffff;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 600px;
-  height: auto;
-  max-height: 240px; /* Maximum height before scrolling */
+/* Updated .table-card with scrollbar */
+.rama-table {
+  max-height: 60px; /* Set the desired height */
   overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: auto; /* Enable horizontal scrolling if needed */
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
 .form-card form {
@@ -69,29 +75,73 @@ select {
   margin-top: 5px;
 }
 
-button {
-  background-color: #f45c42;
-  color: #ffffff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  align-self: center;
-
+.button-containerrama {
+  text-align: center;
 }
 
+.button-containerrama button {
+  background-color: #f267229f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
+.button-containerrama button:hover {
+  background-color: #F26622;
+}
 
-.table-card table {
+.rama-table {
+  color: rgba(0, 0, 0, 0.589);
   width: 100%;
   border-collapse: collapse;
+  margin: 0;
 }
 
-.table-card th,
-.table-card td {
+.rama-table th, .rama-table td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 10px;
   text-align: left;
-  color: #2e3b4e;
 }
 
+.rama-table th {
+  background-color: #fff;
+  color: rgba(0, 0, 0, 0.742);
+}
+
+.rama-table tbody tr:nth-child(even) {
+  background-color: #fff;
+}
+
+.rama-table tbody tr:nth-child(odd) {
+  background-color: white;
+}
+
+.delete-button-rama {
+  color: #193A69;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.delete-button-rama:hover {
+  background-color: #f26722dd;
+}
+
+.edit-button-rama {
+  color: #193A69;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.edit-button-rama:hover {
+  background-color: #f26722dd;
+}

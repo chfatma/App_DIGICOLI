@@ -15,37 +15,13 @@
   font-size: 28px;
   font-weight: bold;
   color: #193A69;
-  padding: 40px;
+  padding: 20px;
   margin-top: 0px; /* Adjust this value to change the space from the top */
 }
 
 .filter-card-container {
   margin-top: 5px; /* Adjust this value to change the space between the title and the filter card */
   
-}
-
-.filter-card {
-  display: flex;
-  align-items: center;
-  background-color: #ffffff;
-  color: #5e3f34;
-  padding: 5px 10px;
-  border-radius: 8px;
-  box-shadow: #000000;
-}
-
-.filter-icon {
-  margin-right: 10px;
-}
-
-.filter-icon i {
-  font-size: 18px;
-  color: #193A69;
-}
-
-.filter-text {
-  font-size: 16px;
-  color: #193A69;
 }
 
 .dashboard-cards {
@@ -119,11 +95,10 @@
 }
 
 .dashboard-large-cards {
-  padding: 40px;
+  padding: 20px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  margin-top: 80px; /* Space between the small cards and the large cards */
+  margin-top: 20px; 
 }
 
 .dashboard-large-card {
@@ -133,5 +108,5 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
-  height: 300px; /* Adjust height as needed */
+  height: max-content ;
 }

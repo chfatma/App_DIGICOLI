@@ -1,14 +1,14 @@
 import React from 'react';
 import './Dashboard.css';
 import Chart1 from '../DoughnutChart/Doughnut Chart1/DoughnutChart11';
-import Chart2 from '../DoughnutChart/Doughnut Chart2/DoughnutChart22';
+import Chart2 from '../DoughnutChart/Doughnut Chart3/DoughnutChart33';
 
  
 const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <div className="dashboard-header">
-        <h1 className="dashboard-title">Dashboard</h1>
+        <h1 className="dashboard-title">Tableau de bord</h1>
         <div className="filter-card-container">
           <div className="filter-card">
             <div className="filter-icon">
@@ -71,12 +71,10 @@ const Dashboard = () => {
       <div className="dashboard-large-cards">
         <div className="dashboard-large-card">
          
-        <h3>Chart 1</h3>
-  <Chart1 /> {/* Intégration du composant Chart1 */}
+  <Chart1 /> {}
 </div>
 <div className="dashboard-large-card">
 
-  <h3>Chart 2</h3>
   <Chart2 />
     </div>
   </div>

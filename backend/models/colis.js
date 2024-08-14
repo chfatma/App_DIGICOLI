@@ -1,4 +1,3 @@
-// models/colis.js
 
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
@@ -42,8 +41,8 @@ const Colis = sequelize.define('Colis', {
     allowNull: false,
   },
   suiviEmplacement: {
-    type: DataTypes.STRING,  // Or DataTypes.TEXT if the data might be long
-    allowNull: true, // Set to true to allow NULL values, or false if it’s mandatory
+    type: DataTypes.STRING,  
+    allowNull: true, 
   },
   adminId: {
     type: DataTypes.INTEGER,

@@ -56,7 +56,7 @@ const Admin = sequelize.define('Admin', {
 SuperAdmin.hasMany(Admin, { foreignKey: 'superadminId' });
 Admin.belongsTo(SuperAdmin, { foreignKey: 'superadminId' });
 
-// Associations
+
 Admin.hasMany(Client, { foreignKey: 'adminId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 Client.belongsTo(Admin, { foreignKey: 'adminId' });
 

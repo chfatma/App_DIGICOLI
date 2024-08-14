@@ -13,32 +13,12 @@ const MenuAdmin = () => {
       <ul>
         <li className={location.pathname === '/dashboard' ? 'active' : ''}>
           <Link to="/dashboard">
-            <i className="fa fa-tachometer-alt"></i> Dashboard
-          </Link>
-        </li>
-        <li className={location.pathname === '/Adminlistcoli' ? 'active' : ''}>
-          <Link to="/Adminlistcoli">
-            <i className="fa fa-box"></i> Listes des colis
+            <i className="fa fa-tachometer-alt"></i> Tableau de Bord
           </Link>
         </li>
         <li className={location.pathname === '/ListeClientsAdmin' ? 'active' : ''}>
           <Link to="/ListeClientsAdmin">
-            <i className="fa fa-users"></i> Client
-          </Link>
-        </li>
-        <li className={location.pathname === '/statistiques' ? 'active' : ''}>
-          <Link to="/statistiques">
-            <i className="fa fa-chart-bar"></i> Statistiques
-          </Link>
-        </li>
-        <li className={location.pathname === '/evaluation' ? 'active' : ''}>
-          <Link to="/evaluation">
-            <i className="fa fa-star"></i> Evaluation
-          </Link>
-        </li>
-        <li className={location.pathname === '/creation-rapide' ? 'active' : ''}>
-          <Link to="/creation-rapide">
-            <i className="fa fa-plus-circle"></i> Création rapide
+            <i className="fa fa-users"></i> Clients
           </Link>
         </li>
         <li className={location.pathname === '/livreurs' ? 'active' : ''}>
@@ -49,6 +29,31 @@ const MenuAdmin = () => {
         <li className={location.pathname === '/Ramassage' ? 'active' : ''}>
           <Link to="/Ramassage">
             <i className="fa fa-arrows-alt"></i> Ramassage
+          </Link>
+        </li>
+        <li className={location.pathname === '/Adminlistcoli' ? 'active' : ''}>
+          <Link to="/Adminlistcoli">
+            <i className="fa fa-box"></i> Liste des Colis
+          </Link>
+        </li>
+        <li className={location.pathname === '/SuiviColi' ? 'active' : ''}>
+          <Link to="/SuiviColi">
+            <i className="fa fa-truck"></i> Suivi des Colis
+          </Link>
+        </li>
+        <li className={location.pathname === '/StatistiquesAdmin' ? 'active' : ''}>
+          <Link to="/StatistiquesAdmin">
+            <i className="fa fa-chart-bar"></i> Statistiques
+          </Link>
+        </li>
+        <li className={location.pathname === '/evaluation' ? 'active' : ''}>
+          <Link to="/evaluation">
+            <i className="fa fa-star"></i> Évaluation
+          </Link>
+        </li>
+        <li className={location.pathname === '/creation-rapide' ? 'active' : ''}>
+          <Link to="/creation-rapide">
+            <i className="fa fa-plus-circle"></i> Création Rapide
           </Link>
         </li>
         <li className={location.pathname === '/Calendrier' ? 'active' : ''}>
@@ -63,17 +68,12 @@ const MenuAdmin = () => {
         </li>
         <li className={location.pathname === '/chat' ? 'active' : ''}>
           <Link to="/chat">
-            <i className="fa fa-comments"></i> Chat
+            <i className="fa fa-comments"></i> Discussions
           </Link>
         </li>
-        <li className={location.pathname === '/support' ? 'active' : ''}>
-          <Link to="/support">
+        <li className={location.pathname === '/SupportAdmin' ? 'active' : ''}>
+          <Link to="/SupportAdmin">
             <i className="fa fa-life-ring"></i> Support
-          </Link>
-        </li>
-        <li className={location.pathname === '/suivi-colis' ? 'active' : ''}>
-          <Link to="/suivi-colis">
-            <i className="fa fa-truck"></i> Suivi Colis
           </Link>
         </li>
       </ul>

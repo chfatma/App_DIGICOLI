@@ -92,8 +92,8 @@ const Evaluation = () => {
             })}
           </div>
         </div>
-        <button type="submit" className="submit-button">
-          {userEvaluation ? 'Update' : 'Submit'}
+        <button type="submit" className="submit-buttonr">
+          {userEvaluation ? 'Update' : 'Envoyer'}
         </button>
       </form>
       <h2 className="previous-evaluations-title">Previous Evaluations</h2>

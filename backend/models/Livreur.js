@@ -1,7 +1,7 @@
-// models/Livreur.js
+
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
-const Admin = require('./Admin'); // Assuming the Admin model is exported from this file
+const Admin = require('./Admin'); 
 
 const Livreur = sequelize.define('Livreur', {
   email: {

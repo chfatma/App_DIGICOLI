@@ -1,6 +1,6 @@
-// controllers/livreurController.js
+
 const Livreur = require('../models/Livreur');
-const Admin = require('../models/Admin'); // Assuming the Admin model is exported from this file
+const Admin = require('../models/Admin'); 
 
 // Create a new livreur
 exports.createLivreur = async (req, res) => {
@@ -23,7 +23,7 @@ exports.createLivreur = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-// Get all livreurs created by the specified admin
+
 
 // Get a livreur by ID
 exports.getLivreurById = async (req, res) => {

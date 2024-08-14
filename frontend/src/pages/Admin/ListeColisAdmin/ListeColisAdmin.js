@@ -71,7 +71,7 @@ const ListeColisAdmin = () => {
     }
 
     if (date) {
-      // Apply date filtering if necessary
+    
     }
 
     setFilteredData(filtered);
@@ -148,9 +148,9 @@ const ListeColisAdmin = () => {
     }
   };
 
-// Helper function to get livreur's name by ID
+
 const getLivreurName = (livreurId) => {
-  // Ensure that livreurId is a number if id in livreurData is a number
+ 
   console.log('Looking for Livreur with ID:', livreurId);
 
   const livreur = livreurData.find(livreur => livreur.id === Number(livreurId));
@@ -233,14 +233,18 @@ const getLivreurName = (livreurId) => {
               ))}
             </select>
           </div>
-          <button type="submit" className="add-colis-submit-btn">Ajouter Colis</button>
+          <div className="button-containercol">
+          <button type="submit" >Ajouter Colis</button>
+          </div>
         </form>
       </div>
 
+      <div className="titlecol">Liste des Colis</div>
       <div className="colis-list">
-        {filteredData.length > 0 ? (
-          <table className="colis-table">
-            <thead>
+        <div className="colis-table-container">
+          {filteredData.length > 0 ? (
+            <table className="colis-table">
+             <thead>
               <tr>
                 <th>Code</th>
                 <th>Expéditeur</th>
@@ -294,6 +298,7 @@ const getLivreurName = (livreurId) => {
         ) : (
           <p>Aucun colis trouvé.</p>
         )}
+      </div>
       </div>
     </div>
   );

@@ -4,19 +4,19 @@ exports.createEvaluation = async (req, res) => {
   const { comment, rating, evaluatorId, evaluatorRole } = req.body;
 
   try {
-    // Check if an evaluation by the same evaluator exists
+
     let evaluation = await Evaluation.findOne({
       where: { evaluatorId, evaluatorRole }
     });
 
     if (evaluation) {
-      // Update existing evaluation
+     
       evaluation.comment = comment;
       evaluation.rating = rating;
       await evaluation.save();
       res.status(200).json(evaluation);
     } else {
-      // Create new evaluation
+   
       evaluation = await Evaluation.create({ comment, rating, evaluatorId, evaluatorRole });
       res.status(201).json(evaluation);
     }

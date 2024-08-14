@@ -1,4 +1,4 @@
-// controllers/ClientController.js
+
 const Client = require('../models/Client');
 
 // Create a new client
@@ -6,7 +6,7 @@ exports.createClient = async (req, res) => {
   try {
     const { adminId, email, nom, prenom, motdepasse, telephone, address, governorate, date_naissance, colisALivrer } = req.body;
     
-    // Ensure adminId is provided
+    
     if (!adminId) {
       return res.status(400).json({ message: 'adminId is required' });
     }

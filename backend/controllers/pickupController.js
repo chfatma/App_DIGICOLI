@@ -1,4 +1,4 @@
-const Pickup = require('../models/pickup');
+const Pickup = require('../models/pickups');
 const Admin = require('../models/Admin');
 const Client = require('../models/Client');
 const Livreur = require('../models/Livreur');
@@ -101,7 +101,7 @@ const deletePickup = async (req, res) => {
 
 // Get pickups by adminId
 const getPickupsByAdminId = async (req, res) => {
-  const { adminId } = req.query; // Get adminId from query parameters
+  const { adminId } = req.query; 
   try {
     if (!adminId) {
       return res.status(400).json({ error: 'Admin ID is required' });

@@ -1,12 +1,12 @@
 // src/components/EditSuperAdmin.js
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './EditAdmin.css';
+import './EditAdmin.css'; // Ensure this path is correct and styling is applied
 
 const EditSuperAdmin = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [SuperAdmin, setSuperAdmin] = useState(null);
+  const [superAdmin, setSuperAdmin] = useState(null);
   const [formData, setFormData] = useState({
     lastName: '',
     firstName: '',
@@ -71,7 +71,7 @@ const EditSuperAdmin = () => {
     };
   
     try {
-      const response = await fetch(`http://localhost:3000/users/${id}`, {
+      const response = await fetch(`http://localhost:3000/users/${id}`, { // Ensure this URL is correct
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -81,7 +81,7 @@ const EditSuperAdmin = () => {
   
       if (response.ok) {
         console.log('SuperAdmin updated successfully');
-        navigate('/superAdmins');
+        navigate('/superAdmins'); // Ensure this route is correct
       } else {
         console.error('Failed to update superAdmin:', response.statusText);
       }
@@ -89,12 +89,11 @@ const EditSuperAdmin = () => {
       console.error('Error:', error);
     }
   };
-  
 
   return (
     <div className="edit-superAdmin-container">
-      <h2 className="page-title">Edit client</h2>
-      {SuperAdmin ? (
+      <h2 className="page-title">Edit SuperAdmin</h2>
+      {superAdmin ? (
         <form className="edit-superAdmin-form" onSubmit={handleSubmit}>
           <div className="form-group-row">
             <div className="form-group">
@@ -106,6 +105,7 @@ const EditSuperAdmin = () => {
                 value={formData.lastName}
                 onChange={handleInputChange}
                 required
+                placeholder="Enter last name"
               />
             </div>
             <div className="form-group">
@@ -117,6 +117,7 @@ const EditSuperAdmin = () => {
                 value={formData.firstName}
                 onChange={handleInputChange}
                 required
+                placeholder="Enter first name"
               />
             </div>
             <div className="form-group">
@@ -139,6 +140,7 @@ const EditSuperAdmin = () => {
                 value={formData.phone}
                 onChange={handleInputChange}
                 required
+                placeholder="Enter phone number"
               />
             </div>
             <div className="form-group">
@@ -150,6 +152,7 @@ const EditSuperAdmin = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 required
+                placeholder="Enter email"
               />
             </div>
           </div>
@@ -163,6 +166,7 @@ const EditSuperAdmin = () => {
                 value={formData.address}
                 onChange={handleInputChange}
                 required
+                placeholder="Enter address"
               />
             </div>
             <div className="form-group form-group-narrow">
@@ -174,6 +178,7 @@ const EditSuperAdmin = () => {
                 value={formData.governorate}
                 onChange={handleInputChange}
                 required
+                placeholder="Enter governorate"
               />
             </div>
           </div>

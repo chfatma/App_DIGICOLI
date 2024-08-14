@@ -1,79 +1,92 @@
-/* src/components/EditClientAdmin.css */
-.edit-client-admin {
-    padding: 40px;
-    background-color: #ecf3fd;
-  }
-  
-  .section-title {
-    font-size: 1.5em;
-    margin-bottom: 20px;
-    text-align: left;
-    color: #193A69;
-    font-weight: bold;
-  }
-  
-  .card-container {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .edit-client-admin-container {
-    width: 100%;
-    padding: 30px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .input-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-  }
-  
-  .input-wrapper {
-    flex: 1;
-    margin-right: 45px;
-  }
-  
-  .input-wrapper:last-child {
-    margin-right: 0;
-  }
-  
-  .input-wrapper label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 1.1rem;
-    font-weight: bold;
-  }
-  
-  .input-wrapper input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 1rem;
-  }
-  
-  .button-wrapper {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-  }
-  
-  .normal-button {
-    padding: 12px 40px;
-    background-color: #f26722c8;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .normal-button:hover {
-    background-color: #F26622;
-  }
-  
+.edit-client {
+  background-color: #ecf3fd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  align-items: left;
+  margin-top: -40px;
+  padding: 40px;
+  min-height: 100vh; 
+  overflow: auto;
+}
+
+.edit-client-container {
+  width: 100%;
+  max-width: 1200px;
+  min-height: 400px;
+  padding: 30px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.section-title {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  text-align: left;
+  color: #193A69;
+  font-weight: bold;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.input-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.second-row {
+  display: flex;
+  gap: 10px;
+}
+
+.input-group.address-input,
+.input-group.governorate-input,
+.input-group.colis-input {
+  flex: 1;
+}
+
+.input-group.address-input,
+.input-group.governorate-input {
+  min-width: 150px;
+}
+
+.form-actions {
+  text-align: center;
+}
+
+.form-actions button {
+  background-color: #f267229f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form-actions button:hover {
+  background-color: #F26622;
+}

@@ -4,13 +4,13 @@ const Admin = require('./Admin');
 const Client = require('./Client');
 const Livreur = require('./Livreur');
 const Colis = require('./colis');
-const Pickup = require('./Pickup');
+const Pickup = require('./pickups');
 
-// Define relationships
+//  Relationships
 SuperAdmin.hasMany(Admin, { foreignKey: 'superadminId' });
 Admin.belongsTo(SuperAdmin, { foreignKey: 'superadminId' });
 
-// Associations
+
 Admin.hasMany(Client, { foreignKey: 'adminId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 Client.belongsTo(Admin, { foreignKey: 'adminId' });
 
@@ -23,13 +23,13 @@ Colis.belongsTo(Livreur, { foreignKey: 'livreurId' });
 
 //pickups
 
-Admin.hasMany(Pickup, { foreignKey: 'adminId', onDelete: 'CASCADE', onUpdate: 'CASCADE' }); // Admin has many pickups
+Admin.hasMany(Pickup, { foreignKey: 'adminId', onDelete: 'CASCADE', onUpdate: 'CASCADE' }); 
 Pickup.belongsTo(Admin, { foreignKey: 'adminId' });
 
-Client.hasMany(Pickup, { foreignKey: 'clientId', onDelete: 'CASCADE', onUpdate: 'CASCADE' }); // Client has many pickups
+Client.hasMany(Pickup, { foreignKey: 'clientId', onDelete: 'CASCADE', onUpdate: 'CASCADE' }); 
 Pickup.belongsTo(Client, { foreignKey: 'clientId' });
 
-Livreur.hasMany(Pickup, { foreignKey: 'livreurId', onDelete: 'CASCADE', onUpdate: 'CASCADE' }); // Livreur has many pickups
+Livreur.hasMany(Pickup, { foreignKey: 'livreurId', onDelete: 'CASCADE', onUpdate: 'CASCADE' }); 
 Pickup.belongsTo(Livreur, { foreignKey: 'livreurId' });
 
 

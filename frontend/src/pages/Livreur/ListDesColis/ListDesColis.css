@@ -85,3 +85,18 @@
   border-color: #193A69; /* Highlight border on focus */
   outline: none;
 }
+
+.edit-button-coliliv {
+  color: #193A69;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.edit-button-coliliv:hover {
+  background-color: #f26722dd; /* Darker red on hover */
+}
+

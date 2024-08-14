@@ -1,0 +1,80 @@
+.edit-client {
+  background-color: #ecf3fd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: -40px;
+  padding: 40px;
+  min-height: 100vh; 
+  overflow: auto;
+}
+
+.edit-client-container {
+  width: 100%;
+  max-width: 700px; /* Adjust width to match the ProfileEdit design */
+  padding: 30px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.section-title {
+  font-size: 24px; /* Adjust font size to match the ProfileEdit design */
+  margin-bottom: 20px;
+  text-align: center;
+  color: #193A69;
+  font-weight: bold;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.input-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.second-row {
+  display: flex;
+  gap: 10px;
+}
+
+.form-actions {
+  text-align: center;
+}
+
+.form-actions button {
+  background-color: #F26622;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.form-actions button:hover {
+  background-color: #d44d1b;
+}

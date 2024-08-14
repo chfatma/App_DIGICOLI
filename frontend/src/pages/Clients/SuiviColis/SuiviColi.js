@@ -12,13 +12,13 @@ function ClientPage() {
       try {
         const response = await fetch('http://localhost:3001/api/livreurs');
         if (!response.ok) {
-          throw new Error(`Failed to fetch livreur data: ${response.status} ${response.statusText}`);
+          throw new Error(`Échec de la récupération des données du livreur : ${response.status} ${response.statusText}`);
         }
         const data = await response.json();
-        console.log('Fetched livreur data:', data);
+        console.log('Données du livreur récupérées :', data);
         setLivreurData(data);
       } catch (error) {
-        console.error('Error fetching livreur data:', error);
+        console.error('Erreur lors de la récupération des données du livreur :', error);
         setLivreurData([]);
         setError(error.message);
       }
@@ -31,42 +31,46 @@ function ClientPage() {
     try {
       const response = await fetch(`http://localhost:3001/api/colis/code/${codeId}`);
       if (!response.ok) {
-        throw new Error(`Failed to fetch colis: ${response.status} ${response.statusText}`);
+        throw new Error(`Échec de la récupération du colis : ${response.status} ${response.statusText}`);
       }
       const data = await response.json();
       setColisData(data);
       setError('');
     } catch (error) {
-      console.error('Error fetching colis:', error);
+      console.error('Erreur lors de la récupération du colis :', error);
       setColisData(null);
-      setError('Error fetching colis. Please check the code and try again.');
+      setError('Erreur lors de la récupération du colis. Veuillez vérifier le code et réessayer.');
     }
   };
 
   const getLivreurName = (livreurId) => {
-    console.log('Looking for Livreur with ID:', livreurId);
+    console.log('Recherche du livreur avec l\'ID :', livreurId);
     const livreur = livreurData.find(livreur => livreur.id === Number(livreurId));
-    console.log('Found Livreur:', livreur);
+    console.log('Livreur trouvé :', livreur);
     return livreur ? `${livreur.nom} ${livreur.prenom}` : 'N/A';
   };
 
   return (
     <div className="container">
-      <h2>Suivi de votre colis</h2>
+      <div className="add-suivi-card-header">
+        <span className="add-suivi-card-title">Suivi de votre colis</span>
+      </div>
       <form>
-        <label>Code ID de la colis :</label>
+        <label>Code ID du colis :</label>
         <input 
           type="text" 
           value={codeId} 
           onChange={e => setCodeId(e.target.value)} 
           placeholder="Entrez le code du colis"
         />
+        <div className="buttonREch">
         <button 
           type="button" 
           onClick={handleSearch}
         >
           Rechercher
         </button>
+        </div>
       </form>
       {error && <div className="error-message">{error}</div>}
       {colisData && (
@@ -75,43 +79,43 @@ function ClientPage() {
           <table>
             <tbody>
               <tr>
-                <td><strong>Code:</strong></td>
+                <td><strong>Code :</strong></td>
                 <td>{colisData.code}</td>
               </tr>
               <tr>
-                <td><strong>Expéditeur:</strong></td>
-                <td>{colisData.expediteur}</td>
-              </tr>
-              <tr>
-                <td><strong>Destinataire:</strong></td>
-                <td>{colisData.destinataire}</td>
-              </tr>
-              <tr>
-                <td><strong>Téléphone:</strong></td>
-                <td>{colisData.telephone}</td>
-              </tr>
-              <tr>
-                <td><strong>Montant:</strong></td>
-                <td>{colisData.montant}</td>
-              </tr>
-              <tr>
-                <td><strong>Depot:</strong></td>
-                <td>{colisData.depot}</td>
-              </tr>
-              <tr>
-                <td><strong>Adresse:</strong></td>
-                <td>{colisData.adresse}</td>
-              </tr>
-              <tr>
-                <td><strong>Suivi Emplacement:</strong></td>
+                <td><strong>Suivi de l'emplacement :</strong></td>
                 <td>{colisData.suiviEmplacement}</td>
               </tr>
               <tr>
-                <td><strong>Livreur:</strong></td>
+                <td><strong>Expéditeur :</strong></td>
+                <td>{colisData.expediteur}</td>
+              </tr>
+              <tr>
+                <td><strong>Destinataire :</strong></td>
+                <td>{colisData.destinataire}</td>
+              </tr>
+              <tr>
+                <td><strong>Téléphone :</strong></td>
+                <td>{colisData.telephone}</td>
+              </tr>
+              <tr>
+                <td><strong>Montant :</strong></td>
+                <td>{colisData.montant}</td>
+              </tr>
+              <tr>
+                <td><strong>Dépôt :</strong></td>
+                <td>{colisData.depot}</td>
+              </tr>
+              <tr>
+                <td><strong>Adresse :</strong></td>
+                <td>{colisData.adresse}</td>
+              </tr>
+              <tr>
+                <td><strong>Livreur :</strong></td>
                 <td>{getLivreurName(colisData.livreurId)}</td>
               </tr>
               <tr>
-                <td><strong>Statut:</strong></td>
+                <td><strong>Statut :</strong></td>
                 <td>{colisData.statut}</td>
               </tr>
             </tbody>

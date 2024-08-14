@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './ListeAdmin.css';
+import { MdEdit, MdDelete } from 'react-icons/md';
 
 const ListeAdmin = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +17,10 @@ const ListeAdmin = () => {
 
   const [admins, setAdmins] = useState([]);
   const [superadminId, setSuperadminId] = useState('');
+  const [editMode, setEditMode] = useState(false);
+  const [editId, setEditId] = useState(null);
+
+  const governorates = ['Tunis', 'Sousse', 'Sfax', 'Ariana', 'Ben Arous', 'Bizerte', 'Gabès', 'Gafsa', 'Kairouan', 'Kasserine', 'Kébili', 'Le Kef', 'Mahdia', 'La Manouba', 'Médenine', 'Monastir', 'Nabeul', 'Sidi Bouzid', 'Siliana', 'Tataouine', 'Tozeur', 'Zaghouan'];
 
   useEffect(() => {
     const storedSuperadminId = localStorage.getItem('superadminId');
@@ -62,8 +67,8 @@ const ListeAdmin = () => {
     console.log('Data Sent to Backend:', adminData);
   
     try {
-      const response = await fetch('http://localhost:3001/api/admins', {
-        method: 'POST',
+      const response = await fetch(editMode ? `http://localhost:3001/api/admins/${editId}` : 'http://localhost:3001/api/admins', {
+        method: editMode ? 'PUT' : 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -72,8 +77,14 @@ const ListeAdmin = () => {
   
       if (response.ok) {
         const newAdmin = await response.json();
-        console.log('New Admin Added:', newAdmin);
-        setAdmins([...admins, newAdmin]);
+        console.log('Admin saved:', newAdmin);
+
+        if (editMode) {
+          setAdmins(admins.map(admin => (admin.id === editId ? newAdmin : admin)));
+        } else {
+          setAdmins([...admins, newAdmin]);
+        }
+
         setFormData({
           nom: '',
           prenom: '',
@@ -85,6 +96,8 @@ const ListeAdmin = () => {
           role: 'admin',
           motdepasse: ''
         });
+        setEditMode(false);
+        setEditId(null);
       } else {
         const errorData = await response.json();
         console.error('Error from Backend:', errorData);
@@ -110,15 +123,34 @@ const ListeAdmin = () => {
     }
   };
 
+  const handleEdit = (admin) => {
+    setFormData({
+      nom: admin.nom,
+      prenom: admin.prenom,
+      date_naissance: admin.date_naissance,
+      telephone: admin.telephone,
+      email: admin.email,
+      address: admin.address,
+      governorate: admin.governorate,
+      role: admin.role,
+      motdepasse: '' // Assume password is not editable or handled separately
+    });
+    setEditMode(true);
+    setEditId(admin.id);
+  };
+
   return (
     <div className="admin-container">
-      <div className="form-card">
-        <div className="form-title">Ajouter Admin</div>
+      <div className="dashboard-header">
+        <h1 className="dashboard-title">Administrateurs</h1>
+      </div>
+      <div className="form-cardSA">
+        <div className="form-titleSA">{editMode ? 'Edit Admin' : 'Ajouter Admin'}</div>
         <form className="admin-form" onSubmit={handleSubmit}>
           <div className="grid-container">
-            {['nom', 'prenom', 'date_naissance', 'telephone', 'email', 'address', 'governorate'].map(field => (
-              <div className="form-group" key={field}>
-                <label htmlFor={field} className="form-label">
+            {['nom', 'prenom', 'date_naissance', 'telephone', 'email', 'address'].map(field => (
+              <div className="form-groupSA" key={field}>
+                <label htmlFor={field} >
                   {field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1')}
                 </label>
                 <input
@@ -132,14 +164,29 @@ const ListeAdmin = () => {
                 />
               </div>
             ))}
-          
+            <div className="form-groupSA">
+              <label htmlFor="governorate" >Gouvernorat</label>
+              <select
+                id="governorate"
+                name="governorate"
+                value={formData.governorate}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Sélectionnez un gouvernorat</option>
+                {governorates.map((gov, index) => (
+                  <option key={index} value={gov}>{gov}</option>
+                ))}
+              </select>
+            </div>
           </div>
-          <button type="submit" className="submit-button">Ajouter</button>
+          <div className="button-containerSA">
+            <button type="submit" >{editMode ? 'Update' : 'Ajouter'}</button>
+          </div>
         </form>
       </div>
-
+      <div className="table-title">Liste des Admins</div>
       <div className="table-card">
-        <div className="table-title">Liste des Admins</div>
         <div className="table-container">
           <table className="admin-table">
             <thead>
@@ -151,7 +198,7 @@ const ListeAdmin = () => {
                 <th>Email</th>
                 <th>Adresse</th>
                 <th>Gouvernorat</th>
-                <th>Action</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -166,10 +213,16 @@ const ListeAdmin = () => {
                   <td>{admin.governorate}</td>
                   <td>
                     <button 
-                      className="delete-button"
+                      className="edit-buttonSA"
+                      onClick={() => handleEdit(admin)}
+                    >
+                      <MdEdit size={20} />
+                    </button>
+                    <button 
+                      className="delete-buttonSA"
                       onClick={() => handleDelete(admin.id)}
                     >
-                      <span role="img" aria-label="delete">🗑️</span>
+                      <MdDelete size={20} />
                     </button>
                   </td>
                 </tr>

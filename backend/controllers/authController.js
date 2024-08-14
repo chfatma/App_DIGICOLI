@@ -3,7 +3,7 @@ const Livreur = require('../models/Livreur');
 const Superadmin = require('../models/SuperAdmin');
 const Admin = require('../models/Admin');
 
-// Unified login function
+
 exports.loginUser = async (req, res) => {
   const { email, motdepasse } = req.body;
 
@@ -14,7 +14,7 @@ exports.loginUser = async (req, res) => {
   }
 
   try {
-    // Check credentials for each model
+
     let user = await Client.findOne({ where: { email, motdepasse } });
     if (user) return authenticateUser(req, res, user, 'Client');
 
@@ -33,7 +33,7 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-// Helper function to handle user authentication
+
 const authenticateUser = (req, res, user, role) => {
   // Store user in session
   req.session.user = {
@@ -47,14 +47,14 @@ const authenticateUser = (req, res, user, role) => {
     clientId: role === 'Client' ? user.id : null,
   };
 
-  // Send response with user data
+
   res.status(200).json({
     message: 'Login successful',
     user: req.session.user,
   });
 };
 
-// Logout function
+
 exports.logoutUser = (req, res) => {
   req.session.destroy(err => {
     if (err) {
@@ -62,4 +62,61 @@ exports.logoutUser = (req, res) => {
     }
     res.status(200).json({ message: 'Logout successful' });
   });
+};
+
+
+
+
+
+
+
+exports.updateUserProfile = async (req, res) => {
+  const { id, nom, email, motdepasse, role } = req.body;
+
+  if (!id || !role) {
+    return res.status(400).json({ message: 'ID, email, and role are required' });
+  }
+
+  // Define valid roles
+  const validRoles = ['admin', 'livreur', 'client', 'superadmin'];
+
+  if (!validRoles.includes(role.toLowerCase())) {
+    return res.status(400).json({ message: 'Invalid role' });
+  }
+
+  try {
+    let user;
+
+    switch (role.toLowerCase()) { 
+      case 'admin':
+        user = await Admin.findByPk(id);
+        break;
+      case 'livreur': 
+        user = await Livreur.findByPk(id);
+        break;
+      case 'client':
+        user = await Client.findByPk(id);
+        break;
+      case 'superadmin':
+        user = await Superadmin.findByPk(id);
+        break;
+      default:
+        return res.status(400).json({ message: 'Invalid role' });
+    }
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    user.nom = nom || user.nom;
+    user.email = email || user.email;
+    if (motdepasse) user.motdepasse = motdepasse;
+
+    await user.save();
+
+    res.status(200).json({ message: 'Profile updated successfully', user });
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
 };

@@ -6,7 +6,9 @@ const LivreurListe = ({ selectedGouvernement, setSelectedGouvernement, setSelect
   const [selectedDate, setSelectedDateInternal] = useState('');
   const [selectedGouvernementInternal, setSelectedGouvernementInternal] = useState('Tout');
 
-  const gouvernements = ["Sousse", "Tunisie", "Tout"];
+  const gouvernements = [ "Tunis", "Sfax", "Sousse", "Monastir", "Kairouan", "Bizerte", "Nabeul", "Kasserine",
+    "Sidi Bouzid", "Gabès", "Mednine", "Tozeur", "Jendouba", "Le Kef", "Zaghouan", "Siliana",
+    "Mahdia", "La Manouba", "Ariana", "Ben Arous", "Tataouine", "Gafsa", "Medenine", "Sidi Bou Said", "Kebili","Tout"];
 
   useEffect(() => {
     setSelectedGouvernement('Tout');

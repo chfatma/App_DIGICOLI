@@ -1,107 +1,73 @@
-/* src/components/EditLivreurAdmin.css */
-
-/* Container for the card */
-.card-container {
-  max-width: 700px;
-  margin: 30px auto;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(to bottom right, #f9f9f9, #ffffff);
+.edit-livreur {
+  background-color: #ecf3fd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 40px;
+  min-height: 100vh;
+  overflow: auto;
 }
 
-/* Heading Style */
-.card-container h1 {
-  font-size: 26px;
+.edit-livreur-container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 30px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.section-title {
+  font-size: 1.5em;
   margin-bottom: 20px;
+  text-align: left;
+  color: #193A69;
+  font-weight: bold;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  flex: 1;
+  min-width: 150px;
+}
+
+.input-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
   color: #333;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.form-actions {
   text-align: center;
 }
 
-/* Form Styling */
-.edit-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.edit-form label {
-  display: flex;
-  flex-direction: column;
-  font-size: 16px;
-  color: #555;
-}
-
-.edit-form input {
-  padding: 12px;
-  margin-top: 8px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  width: 100%;
-  font-size: 16px;
-  transition: border-color 0.3s;
-}
-
-.edit-form input:focus {
-  border-color: #007bff;
-  outline: none;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-}
-
-.edit-form button {
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
+.form-actions button {
   background-color: #007bff;
   color: white;
-  font-size: 16px;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
-  align-self: center;
 }
 
-.edit-form button:hover {
+.form-actions button:hover {
   background-color: #0056b3;
-  transform: scale(1.05);
-}
-
-.edit-form button:active {
-  background-color: #004494;
-  transform: scale(1);
-}
-
-/* Loading, Error, and No Data Messages */
-.loading, .error, .no-data {
-  text-align: center;
-  font-size: 18px;
-  color: #333;
-  margin-top: 20px;
-}
-
-.loading {
-  color: #007bff;
-}
-
-.error {
-  color: #dc3545;
-}
-
-.no-data {
-  color: #6c757d;
-}
-
-/* Responsive Design */
-@media (max-width: 600px) {
-  .card-container {
-    padding: 15px;
-    margin: 15px;
-  }
-  
-  .edit-form input {
-    font-size: 14px;
-  }
-
-  .edit-form button {
-    font-size: 14px;
-  }
 }

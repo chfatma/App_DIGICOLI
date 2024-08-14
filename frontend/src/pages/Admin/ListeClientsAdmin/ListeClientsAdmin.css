@@ -1,21 +1,47 @@
-.client-list-admin {
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  margin-left: 20px;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: auto; 
 }
 
-h1 {
-  text-align: center;
-  color: #333;
+.client-container {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin-top: -40px;
+  padding: 40px;
+  min-height: 100vh; 
+  overflow: auto;
+}
+
+.add-client-card-header,
+.add-client-card-header{
+  padding: 10px;
+  border-radius: 4px;
   margin-bottom: 20px;
 }
 
+.add-client-card-title, 
+.add-client-card-title {
+  font-size: 20px; 
+  font-weight: bold;
+  color: #193A69; 
+}
+
+.client-list-admin {
+  border-radius: 10px;
+  padding: 20px;
+  width: 100%; /* Adjust to fit within the container */
+  margin: 10px auto; /* Center the card horizontally */
+  overflow: hidden; /* Hide overflow content */
+}
+
 .client-form {
-  background-color: #f9f9f9;
+  background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  margin-bottom: 30px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -54,22 +80,10 @@ h1 {
   gap: 10px; /* Adjusted gap for second row of inputs */
 }
 
-.input-group.address-input,
-.input-group.governorate-input,
+.input-group.address-input, 
+.input-group.governorate-input, 
 .input-group.colis-input {
   flex: 1;
-}
-
-.input-group.address-input {
-  min-width: 150px;
-}
-
-.input-group.governorate-input {
-  min-width: 150px;
-}
-
-.input-group.colis-input {
-  min-width: 150px;
 }
 
 .form-actions {
@@ -77,7 +91,7 @@ h1 {
 }
 
 .form-actions button {
-  background-color: #4CAF50;
+  background-color: #f267229f;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -86,106 +100,176 @@ h1 {
 }
 
 .form-actions button:hover {
-  background-color: #45a049;
-}
-
-.table-card {
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin: 0 auto;
-  max-width: 100%;
+  background-color: #F26622;
 }
 
 .clients-table-wrapper {
-  max-height: calc(3 * 48px); /* Adjust based on row height (48px is an example) */
-  overflow-y: auto; /* Show vertical scrollbar if content exceeds max-height */
+  max-height: 360px; /* Adjust based on the desired height */
+  overflow-y: auto;
+  border-collapse: collapse;
 }
 
 .clients-table {
+  color: rgba(0, 0, 0, 0.589);
   width: 100%;
   border-collapse: collapse;
+  margin: 0; /* Ensure no extra margin */
 }
 
 .clients-table th,
 .clients-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
+  padding: 10px;
   text-align: left;
+  border-bottom: 1px solid #ddd;
+  border: 1px solid #ddd;
 }
 
 .clients-table th {
   background-color: #f2f2f2;
-  color: #333;
+  font-weight: bold;
 }
 
 .clients-table tr:nth-child(even) {
-  background-color: #f9f9f9;
+  background-color: #fff;
 }
 
 .clients-table tr:hover {
-  background-color: #ddd;
+  background-color: #f9f9f9;
 }
 
-.clients-table td button {
+.clients-table td button, 
+.clients-table td a {
   background: none;
   border: none;
   cursor: pointer;
-  color: #f44336;
   font-size: 16px;
+}
+
+
+
+
+.clients-table td button {
+  color: #f44336;
 }
 
 .clients-table td a {
   color: #2196F3;
   text-decoration: none;
-  font-size: 16px;
-  margin-right: 10px;
 }
 
-/* Additional styles for table */
-.clients-table td {
-  word-break: break-word; /* Ensure text breaks correctly */
-  overflow-wrap: break-word; /* Break long words */
-  white-space: normal; /* Allow text to wrap */
-  text-overflow: ellipsis; /* Show ellipsis when text overflows */
-  max-width: 200px; /* Adjust as needed */
-  box-sizing: border-box; /* Include padding in width calculation */
+.add-clients-card-header, 
+.add-clients-card-title {
+  padding: 10px;
+  border-radius: 4px; /* Optional: Rounded corners */
+  margin-bottom: 20px; /* Space between sections */
 }
 
-.clients-table th {
-  white-space: nowrap; /* Prevent header text from wrapping */
+.add-clients-card-title {
+  margin-left: 20px;
+  font-size: 1.5em;
+  color: #193A69;
+  margin-bottom: 10px; /* Adjust margin */
+  font-weight: bold;
 }
 
-.clients-table td {
-  position: relative;
-  word-break: break-word; /* Ensure text breaks correctly */
-  overflow-wrap: break-word; /* Break long words */
-  white-space: normal; /* Allow text to wrap */
-  text-overflow: ellipsis; /* Show ellipsis when text overflows */
-  max-width: 200px; /* Adjust as needed */
-  box-sizing: border-box; /* Include padding in width calculation */
+.search-input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.pagination li {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.pagination li a {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  color: #333;
+  text-decoration: none;
+}
+
+.pagination li.active a {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
 }
 
 .button-container {
-  float: left; /* Float the container to the left */
+  display: flex;
+  gap: 10px;
 }
 
-.clients-table td button,
-.clients-table td a {
+.button-container a, 
+.button-container button {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 16px;
-  float: left; /* Float buttons to the left */
-  margin-right: 10px; /* Space between buttons */
+  font-size: 20px;
+  color: #007bff;
+  transition: color 0.3s;
 }
 
-.clients-table td button {
-  color: #f44336;
+.button-container a:hover, 
+.button-container button:hover {
+  color: #0056b3;
 }
 
-.clients-table td a {
-  color: #2196F3;
-  text-decoration: none;
+.table-card {
+  background-color: white;
+  flex-grow: 1; /* Allow the card to grow within the flex container */
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.143);
+  width: 100%; /* Adjust to fit within the container */
+  margin: 20px auto; /* Center the card horizontally */
+  overflow: hidden; /* Hide overflow content */
+  min-height: 400px; /* Set a minimum height for the card */
+  max-height: 800px; /* Set a maximum height to control the size */
+  height: auto; /* Allow the height to adjust based on content */
+}
+
+.parent-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* Ensure children can stretch */
+}
+
+h1 {
+  margin-bottom: -60px; /* Add space below the title */
+}
+
+/* Assuming this is in your CSS file (e.g., EditClientAdmin.css) */
+
+.button-container {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+}
+
+.edit-button-liv, .delete-button-liv {
+  background: none; /* Remove default button background */
+  border: none; /* Remove default button border */
+  cursor: pointer; /* Change cursor to pointer */
+ 
+}
+
+.edit-button-liv svg, .delete-button-liv svg {
+  color: #193A69; /* Set icon color to blue */
+}
+
+.edit-button-liv:hover svg, .delete-button-liv:hover svg {
+  color: #193A69; /* Change color on hover if desired */
 }

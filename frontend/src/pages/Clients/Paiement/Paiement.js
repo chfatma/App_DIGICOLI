@@ -1,89 +1,44 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Paiement.css';
 
 const Paiement = () => {
-  const [paymentMethod, setPaymentMethod] = useState('card');
+  const navigate = useNavigate();
+  const [paymentMethod, setPaymentMethod] = useState(null);
 
   const handlePaymentMethodChange = (method) => {
     setPaymentMethod(method);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-   
-    alert(`Payment method selected: ${paymentMethod}`);
+    if (method === 'cash') {
+      navigate('/PaiementCash');
+    } else if (method === 'card') {
+      navigate('/PaiementCarte');
+    }
   };
 
   return (
     <div className="payment-container">
-      <h2 className="payment-title">Select Payment Method</h2>
-      <form onSubmit={handleSubmit} className="payment-form">
-        <div className="payment-options">
-          <div
-            className={`payment-option ${paymentMethod === 'card' ? 'active' : ''}`}
-            onClick={() => handlePaymentMethodChange('card')}
-          >
-            <input
-              type="radio"
-              id="card"
-              name="paymentMethod"
-              checked={paymentMethod === 'card'}
-              onChange={() => handlePaymentMethodChange('card')}
-            />
-            <label htmlFor="card">Pay by Card</label>
+      <h2 className="payment-title">Choisissez votre méthode de paiement</h2>
+      <div className="payment-options">
+        <button className="payment-option cash-option" onClick={() => handlePaymentMethodChange('cash')}>
+          <i className="fas fa-dollar-sign"></i>
+          <div className="payment-description1">
+            <p>Cash on delivery</p>
+            <p>Vous payez lors de la livraison de votre commande</p>
           </div>
-          {paymentMethod === 'card' && (
-            <div className="card-details">
-              <label htmlFor="cardNumber">Card Number</label>
-              <input
-                type="text"
-                id="cardNumber"
-                name="cardNumber"
-                placeholder="• • • •  • • • •  • • • •  • • • •"
-                required
-              />
-              <div className="card-expiry-cvv">
-                <div className="card-expiry">
-                  <label htmlFor="expiryDate">Expiry Date</label>
-                  <input
-                    type="text"
-                    id="expiryDate"
-                    name="expiryDate"
-                    placeholder="MM/YY"
-                    required
-                  />
-                </div>
-                <div className="card-cvv">
-                  <label htmlFor="cvv">CVV</label>
-                  <input
-                    type="text"
-                    id="cvv"
-                    name="cvv"
-                    placeholder="• • •"
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-
-          <div
-            className={`payment-option ${paymentMethod === 'payOnPlace' ? 'active' : ''}`}
-            onClick={() => handlePaymentMethodChange('payOnPlace')}
-          >
-            <input
-              type="radio"
-              id="payOnPlace"
-              name="paymentMethod"
-              checked={paymentMethod === 'payOnPlace'}
-              onChange={() => handlePaymentMethodChange('payOnPlace')}
-            />
-            <label htmlFor="payOnPlace">Pay on Place (Cash on Delivery)</label>
+          Paiement comptant à la livraison
+        </button>
+        <button className="payment-option card-option" onClick={() => handlePaymentMethodChange('card')}>
+          <i className="fas fa-credit-card"></i>
+          <div className="payment-description2">
+            <p>Paiement en ligne par votre carte</p>
           </div>
-        </div>
-
-        <button type="submit" className="submit-button">Confirm Payment</button>
-      </form>
+          Paiement par Carte
+          <i className="fas fa-chevron-right arrow-icon"></i> {/* Arrow icon added */}
+        </button>
+      </div>
+      <footer className="payment-footer">
+        © 1996-2024, DigiColi, Inc. ou ses affiliés
+      </footer>
     </div>
   );
 };

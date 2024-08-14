@@ -28,7 +28,7 @@ const getColisById = async (req, res) => {
 // Get colis by code
 const getColisByCode = async (req, res) => {
   const { code } = req.params;
-  console.log('Looking for colis with code:', code); // Add this line
+  console.log('Looking for colis with code:', code); 
   try {
     const colis = await Colis.findOne({ where: { code } });
     if (colis) {
@@ -102,7 +102,7 @@ const getColisByLivreurId = async (req, res) => {
 
 // Get all colis for a specific admin
 const getAllColisByadmin = async (req, res) => {
-  const { adminId } = req.query; // Get adminId from query parameters
+  const { adminId } = req.query;
   try {
     if (!adminId) {
       return res.status(400).json({ error: 'Admin ID is required' });
@@ -121,7 +121,7 @@ const getAllColisByadmin = async (req, res) => {
 
 // Get total count of colis for a specific admin and depot
 const getColisCountByAdminIdAndDepot = async (req, res) => {
-  const { adminId, depot } = req.query; // Get adminId and depot from query parameters
+  const { adminId, depot } = req.query; 
 
   try {
     if (!adminId || !depot) {

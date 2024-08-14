@@ -1,7 +1,7 @@
 .navbar {
   top: 0;
-  left: 220px; /* Adjust to the width of the menu */
-  z-index: 900; /* Ensure navbar is below the menu */
+  left: 220px; 
+  z-index: 900;
   background-color: #ecf3fd;
   color: #000000;
   width: auto; /* Full width minus the menu width */
@@ -40,7 +40,7 @@
   font-size: 16px;
   outline: none;
   width: 100%; /* Take full width */
-  max-width: 600px; /* But no more than 600px */
+  max-width: 600px; 
 }
 
 .search-button {
@@ -48,7 +48,7 @@
   border: none;
   color: #193A69;
   padding: 10px;
-  border-radius: 50%; /* Round shape for button */
+  border-radius: 50%; 
   cursor: pointer;
   margin-left: 10px;
   margin-top: -10px;
@@ -65,7 +65,7 @@
 .navbar-items {
   display: flex;
   align-items: center;
-  margin-left: auto; /* Pushes items to the right */
+  margin-left: auto; 
 }
 
 .navbar-button {
@@ -90,32 +90,32 @@
 
 .profile-popup {
   position: absolute;
-  top: 60px; /* Adjust based on navbar height */
+  top: 60px; 
   right: 20px;
-  background-color: rgba(236, 243, 253, 0.9); /* Semi-transparent background */
+  background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   padding: 20px;
-  z-index: 1000; /* Ensure it is on top of other elements */
+  z-index: 1000; 
   width: 250px;
   display: flex;
-  flex-direction: column; /* Stack items vertically */
+  flex-direction: column; 
   align-items: center;
 }
 
 .profile-header {
   display: flex;
-  flex-direction: column; /* Stack items vertically */
+  flex-direction: column; 
   align-items: center;
   margin-bottom: 15px;
 }
 
 .profile-image {
-  width: 80px; /* Larger profile image */
+  width: 80px; 
   height: 80px;
   border-radius: 50%;
-  border: 2px solid #193A69; /* Optional: adds a border to the image */
+  border: 2px solid #193A69;
   margin-bottom: 10px;
 }
 
@@ -131,13 +131,6 @@
   color: #555;
 }
 
-.profile-actions {
-  display: flex;
-  flex-direction: row; /* Align buttons side by side */
-  gap: 10px; /* Space between buttons */
-  width: 100%; /* Ensure buttons take full width of popup */
-}
-
 .profile-button {
   background-color: #F26622;
   border: none;
@@ -147,9 +140,27 @@
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s ease;
-  flex: 1; /* Make buttons take equal width */
+  flex: 1; 
 }
 
-.profile-button:hover {
+.profile-actions.profile-button:hover {
   background-color: #d44d1b;
+  
+}
+
+.buttonnn {
+  color: #fff;
+  padding: 10px;
+  margin-top: 10px;
+  margin-left: 10px;
+  border: none;
+  background-color: #193A69;
+  cursor: pointer;
+  border-radius: 4px;
+  
+  
+}
+
+.buttonnn:hover {
+  background-color: #F26622;
 }

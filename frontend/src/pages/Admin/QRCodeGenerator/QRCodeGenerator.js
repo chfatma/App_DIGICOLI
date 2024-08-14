@@ -11,7 +11,7 @@ const QRCodeGenerator = () => {
     return <p>No data available</p>;
   }
 
-  // Format the colis data to be more readable
+
   const qrValue = JSON.stringify(colis, null, 2);
 
   const downloadQRCode = () => {
