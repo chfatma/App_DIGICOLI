@@ -8,6 +8,8 @@ const livreurRoutes = require('./routes/livreurRoutes');
 const authRoutes = require('./routes/authRoutes'); // Import authentication routes
 const colisRoutes = require('./routes/colisRoutes'); // Import colis routes
 const pickupRoutes = require('./routes/pickupRoutes');
+const evaluationRoutes = require('./routes/evaluationRoutes');
+const userRoutes = require('./routes/userRoutes');
 const sequelize = require('./models').sequelize;
 
 
@@ -35,6 +37,8 @@ app.use('/api/livreurs', livreurRoutes);
 app.use('/api/auth', authRoutes); 
 app.use('/api/colis', colisRoutes); 
 app.use('/api/pickups', pickupRoutes);
+app.use('/api/evaluations', evaluationRoutes);
+app.use('/api/users', userRoutes); 
 
 
 // Start the server and sync the database

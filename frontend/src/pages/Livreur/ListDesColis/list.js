@@ -1,41 +1,83 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ListDesColis.css';
 import ListDesColisFilter from './ListDesColisFilter';
 
 const ListDesColis = () => {
-  const fakeColisData = [
-    { id: 1, code: 'C001', expediteur: 'Alice', destinataire: 'Bob', telephone: '1234567890', montant: '100', depot: 'Depot A', adresse: 'Adresse A', statut: 'En cours' },
-    { id: 2, code: 'C002', expediteur: 'Charlie', destinataire: 'David', telephone: '0987654321', montant: '200', depot: 'Depot B', adresse: 'Adresse B', statut: 'Terminé' },
-    
-  ];
+  const [colisData, setColisData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
-  const [colisData, setColisData] = useState(fakeColisData);
-  const [filteredData, setFilteredData] = useState(fakeColisData); 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const livreurId = localStorage.getItem('livreurId');
+        if (!livreurId) {
+          console.error('Livreur ID not found in local storage');
+          return;
+        }
 
-  const handleStatusChange = (e, id) => {
-    const { value } = e.target;
-    const updatedColisData = colisData.map(colis => {
-      if (colis.id === id) {
-        return { ...colis, statut: value };
+        const response = await fetch(`http://localhost:3001/api/colis/livreur/${livreurId}`);
+        if (response.ok) {
+          const data = await response.json();
+          setColisData(data);
+          setFilteredData(data);
+        } else {
+          console.error('Failed to fetch colis data:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching colis data:', error);
       }
-      return colis;
-    });
-    setColisData(updatedColisData);
-  };
+    };
+
+    fetchData();
+  }, []);
 
   const handleFilterChange = (option, date) => {
-    let filtered = fakeColisData;
+    let filtered = colisData;
 
     if (option !== 'Tout') {
-      filtered = fakeColisData.filter(colis => colis.statut === option);
+      filtered = colisData.filter(colis => colis.statut === option);
     }
 
     if (date) {
-      // ask about it 
-    
+      // Implement date filtering if needed
     }
 
     setFilteredData(filtered);
+  };
+
+  const handleUpdate = async (id, updatedColis) => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/colis/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedColis),
+      });
+
+      if (response.ok) {
+        const updatedData = await response.json();
+        setFilteredData(prevState =>
+          prevState.map(colis => (colis.id === id ? updatedData : colis))
+        );
+      } else {
+        console.error('Failed to update colis:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error updating colis:', error);
+    }
+  };
+
+  const handleStatutChange = (id, newStatut) => {
+    const colisToUpdate = filteredData.find(colis => colis.id === id);
+    const updatedColis = { ...colisToUpdate, statut: newStatut };
+    handleUpdate(id, updatedColis);
+  };
+
+  const handleSuiviChange = (id, newSuivi) => {
+    const colisToUpdate = filteredData.find(colis => colis.id === id);
+    const updatedColis = { ...colisToUpdate, suiviEmplacement: newSuivi };
+    handleUpdate(id, updatedColis);
   };
 
   return (
@@ -56,7 +98,9 @@ const ListDesColis = () => {
                 <th>Montant</th>
                 <th>Dépôt</th>
                 <th>Adresse</th>
+                <th>Suivi Emplacement</th> 
                 <th>Statut</th>
+                <th>Actions</th> 
               </tr>
             </thead>
             <tbody>
@@ -70,16 +114,24 @@ const ListDesColis = () => {
                   <td>{colis.depot}</td>
                   <td>{colis.adresse}</td>
                   <td>
+                    <input
+                      type="text"
+                      value={colis.suiviEmplacement}
+                      onChange={(e) => handleSuiviChange(colis.id, e.target.value)}
+                    />
+                  </td>
+                  <td>
                     <select
                       value={colis.statut}
-                      onChange={(e) => handleStatusChange(e, colis.id)}
+                      onChange={(e) => handleStatutChange(colis.id, e.target.value)}
                     >
-                      <option value="En cours">En cours</option>
-                      <option value="Terminé">Terminé</option>
-                      <option value="Livre">Livre</option>
-                      <option value="En Attente">En Attente</option>
-                      <option value="Annuler">Annuler</option>
+                      <option value="livrais">Livrais</option>
+                      <option value="en attente">En attente</option>
+                      <option value="en cours">En cours</option>
                     </select>
+                  </td>
+                  <td>
+                    <button onClick={() => handleUpdate(colis.id, colis)}>Update</button>
                   </td>
                 </tr>
               ))}

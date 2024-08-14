@@ -140,12 +140,13 @@
 .colis-table {
   width: 100%;
   border-collapse: collapse;
+  width: 1000px;
 }
 
 .colis-table th,
 .colis-table td {
   border-bottom: 1px solid #193a694e; /* Only bottom border for cells */
-  padding: 15px; /* Adjust padding as needed */
+  padding: 5px; /* Adjust padding as needed */
   text-align: center;
 }
 

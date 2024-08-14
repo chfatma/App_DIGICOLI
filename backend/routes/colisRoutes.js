@@ -26,5 +26,8 @@ router.get('/admin/colis', colisController.getAllColisByadmin);
 // Get total count of colis for a specific admin and depot
 router.get('/admin/depot/count', colisController.getColisCountByAdminIdAndDepot);
 
+// Get colis by code
+router.get('/code/:code', colisController.getColisByCode); 
+
 
 module.exports = router;

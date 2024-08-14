@@ -1,92 +1,94 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import './EditProfile.css';
 
 const EditProfile = () => {
-  const [formData, setFormData] = useState({
-    firstName: 'Amira',
-    lastName: 'Doe',
-    email: 'amira@example.com',
-    phone: '123-456-7890',
-    address: '123 Street Name',
-  });
+  const { role, id } = useParams();  // eslint-disable-line no-unused-vars
+  const [userDetails, setUserDetails] = useState(null);
+  const [nom, setNom] = useState('');
+  const [email, setEmail] = useState('');
+  const [motdepasse, setMotdepasse] = useState('');
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await fetch(`http://localhost:3001/api/auth/profile/${id}`, {
+          method: 'GET',
+          credentials: 'include',
+        });
+        const data = await response.json();
+        if (response.ok) {
+          setUserDetails(data);
+          setNom(data.nom);
+          setEmail(data.email);
+        } else {
+          alert(data.message);
+        }
+      } catch (error) {
+        alert('An error occurred while fetching profile details.');
+      }
+    };
+
+    fetchUserDetails();
+  }, [id]);
+
+  const handleUpdate = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch(`http://localhost:3001/api/auth/profile/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ nom, email, motdepasse }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert('Profile updated successfully.');
+        navigate('/Dashboard');
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      alert('An error occurred while updating profile details.');
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    alert('Profile updated successfully!');
-  };
+  if (userDetails === null) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="edit-profile">
       <h2>Edit Profile</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="firstName">First Name</label>
-            <input
-              type="text"
-              id="firstName"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-              placeholder="Enter your first name"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="lastName">Last Name</label>
-            <input
-              type="text"
-              id="lastName"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              placeholder="Enter your last name"
-            />
-          </div>
-        </div>
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Enter your email"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="phone">Phone</label>
-            <input
-              type="text"
-              id="phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder="Enter your phone number"
-            />
-          </div>
-        </div>
-        <div className="form-row">
-          <div className="form-group full-width">
-            <label htmlFor="address">Address</label>
-            <input
-              type="text"
-              id="address"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              placeholder="Enter your address"
-            />
-          </div>
-        </div>
-        <button type="submit" className="submit-button">Update Profile</button>
+      <form onSubmit={handleUpdate}>
+        <label>
+          Name:
+          <input
+            type="text"
+            value={nom}
+            onChange={(e) => setNom(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Email:
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Password:
+          <input
+            type="password"
+            value={motdepasse}
+            onChange={(e) => setMotdepasse(e.target.value)}
+          />
+        </label>
+        <button type="submit">Update</button>
       </form>
     </div>
   );

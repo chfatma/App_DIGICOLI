@@ -16,6 +16,11 @@ const MenuSuperAdmin = () => {
           </Link>
         </li>
         <li>
+          <Link to="/Statistics">
+            <i className="fa fa-tachometer-alt"></i> StatisticsRate
+          </Link>
+        </li>
+        <li>
           <Link to="/statistiques">
             <i className="fa fa-chart-bar"></i> Statistiques
           </Link>

@@ -30,6 +30,8 @@ import SuiviColi from './pages/Clients/SuiviColis/SuiviColi';
 import GoogleMapComponent from './pages/Livreur/Emplacement/GoogleMapComponent';
 import SupportLivreur from './pages/Livreur/SupportLivreur/Support';
 import EditColis from './pages/Admin/EditColis/EditColis';
+import Statistics from './pages/SuperAdmin/RatingStatistics/Statistics';
+
 
 import Depot from './pages/Admin/Depot/Depot';
 
@@ -63,19 +65,25 @@ function App() {
   };
 
   return (
-    <Router>
+    <Router>    
       <Routes>
         <Route path="/" element={<Login onLogin={handleLogin} />} />
 
         {/* Interface of the common */}
-        <Route path="/EditProfile" element={<ProtectedRoute component={EditProfile} userRole={userRole} />} />
+        <Route path="/EditProfile/:id" element={<ProtectedRoute component={EditProfile} userRole={userRole} />} />
         <Route path="/Evaluation" element={<ProtectedRoute component={Evaluation} userRole={userRole} />} />
         <Route path="/Calendrier" element={<ProtectedRoute component={Calendrier} userRole={userRole} />} />
+       
+
+
+
+
 
         {/* Interface of the Super Admin */}
         <Route path="/DashboardAdmin" element={<ProtectedRoute component={DashboardAdmin} userRole={userRole} />} />
         <Route path="/edit-admin/:id" element={<ProtectedRoute component={EditAdmin} userRole={userRole} />} />
         <Route path="/ListeAdmin" element={<ProtectedRoute component={ListeAdmin} userRole={userRole} />} />
+        <Route path="/Statistics" element={<ProtectedRoute component={Statistics} userRole={userRole} />} />
 
         {/* Interface of the Admin */}
         <Route path="/dashboard" element={<ProtectedRoute component={Dashboard} userRole={userRole} />} />

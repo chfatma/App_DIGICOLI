@@ -7,66 +7,81 @@
 
 .colis-card {
   width: 100%;
+  height: 700px; /* Fixed height for the card */
   margin-top: 20px;
-  background-color: #ffffff;
-  border: 1px solid #fff;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.486);
+  background-color: #f9f9f9;
+  border-radius: 10px; /* Rounded corners for a smoother look */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Softer shadow for a subtle effect */
   transition: all 0.3s ease;
 }
 
 .colis-card .card-header {
-  background-color: #fff;
-  padding: 10px;
-  border-bottom: 1px solid #fff;
+  background-color: #193A69;
+  padding: 20px;
+  border-bottom: 2px solid #193A69; /* More prominent line under header */
+  border-radius: 10px 10px 0 0; /* Rounded top corners */
+  color: #fff; /* White text for the header */
 }
 
 .colis-card .card-header .card-title {
-  font-size: 1.5em;
+  font-size: 2em; /* Larger title */
   font-weight: bold;
-  color: #193A69;
-  margin-bottom: 1px;
+  color: #ffffff;
+  margin-bottom: 0;
+  text-align: center; /* Center the title */
 }
 
 .table-container {
   overflow-x: auto;
-  max-height: 350px; /* Maximum height for the table container */
-  padding: 10px;
+  max-height: 500px; /* Fixed max-height for the table container */
+  padding: 20px;
 }
 
 .colis-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0 15px; /* Space between rows */
 }
 
 .colis-table th,
 .colis-table td {
-  border-bottom: 1px solid #193a694e; /* Only bottom border for cells */
-  padding: 15px; /* Adjust padding as needed */
+  padding: 20px; /* Increase padding for a more spacious feel */
   text-align: center;
+  font-size: 1.1em; /* Slightly larger font size */
 }
 
 .colis-table th {
-  background-color: #fff;
+  background-color: #f0f8ff;
   font-weight: bold;
   padding: 20px;
-  color: black;
+  color: #193A69;
+  border-bottom: 2px solid #193A69; /* Line under the table header */
 }
 
-.colis-table tbody tr{
-  background-color: #fff;
+.colis-table tbody tr {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0; /* Line between rows */
 }
 
 .colis-table tbody tr:hover {
-  background-color: #fff;
+  background-color: #eaf2f8; /* Softer hover effect */
 }
 
-.colis-table select {
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  color: black;
+.colis-table select,
+.colis-table input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc; /* Border around inputs for clarity */
+  border-radius: 5px; /* Rounded corners for inputs */
+  background-color: #ffffff;
+  color: #333;
   width: 100%;
-  max-width: 150px; /* Adjust max-width as needed */
+  max-width: 150px; /* Increased max-width for better visibility */
+  font-size: 1em; /* Standard font size */
+  text-align: center;
+}
+
+.colis-table select:focus,
+.colis-table input[type="text"]:focus {
+  border-color: #193A69; /* Highlight border on focus */
+  outline: none;
 }

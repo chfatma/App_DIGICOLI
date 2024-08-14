@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate, Link } from 'react-router-dom'; 
 import './Navbar.css';
-
 
 const Navbar = () => {
   const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  const [userRole, setUserRole] = useState('');
+  const [userId, setUserId] = useState('');
   const popupRef = useRef(null);
   const navigate = useNavigate();
 
@@ -30,14 +33,23 @@ const Navbar = () => {
     };
   }, [isProfilePopupOpen]);
 
-  const handleEditProfile = () => {
-    navigate('/EditProfile');
-    setIsProfilePopupOpen(false); 
-  };
+  useEffect(() => {
+    // Fetch user data from local storage
+    const storedName = localStorage.getItem('userNom');
+    const storedEmail = localStorage.getItem('userEmail');
+    const storedRole = localStorage.getItem('userRole');
+    const storedId = localStorage.getItem('userId');
+
+    setUserName(storedName || ''); // Default to empty string if not found
+    setUserEmail(storedEmail || '');
+    setUserRole(storedRole || '');
+    setUserId(storedId || '');
+  }, []);
 
   const handleLogout = async () => {
     try {
       await fetch('/api/auth/logout', { method: 'POST' }); 
+      localStorage.clear(); // Clear all local storage on logout
       navigate('/Login');
     } catch (error) {
       console.error('Logout failed:', error);
@@ -60,7 +72,7 @@ const Navbar = () => {
           <i className="fa fa-comments"></i>
         </button>
         <div className="navbar-greeting">
-          | Bonjour : Amira
+          | Bonjour : {userName}
         </div>
         <button className="navbar-button" onClick={toggleProfilePopup}>
           <i className="fa fa-user-circle"></i>
@@ -69,11 +81,12 @@ const Navbar = () => {
           <div className="profile-popup" ref={popupRef}>
             <div className="profile-header">
               <img src="path/to/profile-image.jpg" alt="Profile" className="profile-image" />
-              <h3>Nom Prénom</h3>
-              <p>Email: amira@example.com</p>
+              <h3>{userName}</h3>
+              <p>Email: {userEmail}</p>
             </div>
             <div className="profile-actions">
-              <button className="profile-button" onClick={handleEditProfile}>Modifier</button>
+             
+             {/*  <Link to={`/edit/${userRole}/${userId}`}>Edit</Link>*/}
               <button className="profile-button" onClick={handleLogout}>Logout</button>
             </div>
           </div>

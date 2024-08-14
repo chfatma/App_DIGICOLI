@@ -27,6 +27,11 @@ const Login = ({ onLogin }) => {
         localStorage.setItem('userId', data.user.id);
         localStorage.setItem('userRole', data.user.role);
         
+        localStorage.setItem('userNom', data.user.nom);  // Add this line
+        localStorage.setItem('userEmail', data.user.email); // Add this line
+
+
+
         // Store specific IDs for each role
         if (data.user.role === 'Superadmin') {
           localStorage.setItem('superadminId', data.user.superadminId);

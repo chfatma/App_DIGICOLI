@@ -28,6 +28,7 @@ const getColisById = async (req, res) => {
 // Get colis by code
 const getColisByCode = async (req, res) => {
   const { code } = req.params;
+  console.log('Looking for colis with code:', code); // Add this line
   try {
     const colis = await Colis.findOne({ where: { code } });
     if (colis) {
@@ -42,9 +43,9 @@ const getColisByCode = async (req, res) => {
 
 // Create a new colis
 const createColis = async (req, res) => {
-  const { code, expediteur, destinataire, telephone, montant, depot, adresse, statut, adminId, livreurId } = req.body;
+  const { code, expediteur, destinataire, telephone, montant, depot, adresse,  suiviEmplacement, statut, adminId, livreurId } = req.body;
   try {
-    const newColis = await Colis.create({ code, expediteur, destinataire, telephone, montant, depot, adresse, statut, adminId, livreurId });
+    const newColis = await Colis.create({ code, expediteur, destinataire, telephone, montant, depot, adresse, suiviEmplacement, statut, adminId, livreurId });
     res.status(201).json(newColis);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -53,11 +54,11 @@ const createColis = async (req, res) => {
 // Update a colis by ID
 const updateColis = async (req, res) => {
   const { id } = req.params;
-  const { code, expediteur, destinataire, telephone, montant, depot, adresse, statut, adminId, livreurId, clientId } = req.body;
+  const { code, expediteur, destinataire, telephone, montant, depot, adresse, suiviEmplacement, statut, adminId, livreurId, clientId } = req.body;
   try {
     const colis = await Colis.findByPk(id);
     if (colis) {
-      await colis.update({ code, expediteur, destinataire, telephone, montant, depot, adresse, statut, adminId, livreurId, clientId });
+      await colis.update({ code, expediteur, destinataire, telephone, montant, depot, adresse,  suiviEmplacement, statut, adminId, livreurId, clientId });
       res.json(colis);
     } else {
       res.status(404).json({ error: 'Colis not found' });
@@ -150,6 +151,7 @@ module.exports = {
   getColisByLivreurId, 
   getAllColisByadmin,
   getColisCountByAdminIdAndDepot,
+  getColisByCode,
   
 };
 

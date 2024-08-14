@@ -17,6 +17,7 @@ const ListeColisAdmin = () => {
     montant: '',
     depot: '',
     adresse: '',
+    suiviEmplacement:'',
     statut: 'En Attente',
     livreurId: ''
   });
@@ -114,6 +115,7 @@ const ListeColisAdmin = () => {
           montant: '',
           depot: '',
           adresse: '',
+          suiviEmplacement:'',
           statut: 'En Attente',
           livreurId: ''
         });
@@ -146,11 +148,17 @@ const ListeColisAdmin = () => {
     }
   };
 
-  // Helper function to get livreur's name by ID
-  const getLivreurName = (livreurId) => {
-    const livreur = livreurData.find(livreur => livreur.id === livreurId);
-    return livreur ? `${livreur.nom} ${livreur.prenom}` : 'N/A';
-  };
+// Helper function to get livreur's name by ID
+const getLivreurName = (livreurId) => {
+  // Ensure that livreurId is a number if id in livreurData is a number
+  console.log('Looking for Livreur with ID:', livreurId);
+
+  const livreur = livreurData.find(livreur => livreur.id === Number(livreurId));
+  console.log('Found Livreur:', livreur);
+
+  return livreur ? `${livreur.nom} ${livreur.prenom}` : 'N/A';
+};
+
 
   return (
     <div className="liste-colis-admin-container">
@@ -165,7 +173,7 @@ const ListeColisAdmin = () => {
         </div>
         <form className="add-colis-form-container" onSubmit={handleSubmit}>
           <div className="add-colis-form-row">
-            {['code', 'expediteur', 'destinataire', 'telephone'].map(field => (
+            {['code', 'expediteur', 'destinataire', 'telephone' , 'suiviEmplacement'].map(field => (
               <div className="add-colis-input-group" key={field}>
                 <label htmlFor={field}>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
                 <input
@@ -203,8 +211,8 @@ const ListeColisAdmin = () => {
                 required
               >
                 <option value="En Attente">En Attente</option>
-                <option value="En Livraison">En Livraison</option>
-                <option value="Livré">Livré</option>
+                {/*        <option value="En Livraison">En Livraison</option>
+                <option value="Livré">Livré</option>*/}
               </select>
             </div>
           </div>
@@ -241,6 +249,7 @@ const ListeColisAdmin = () => {
                 <th>Montant</th>
                 <th>Depot</th>
                 <th>Adresse</th>
+                <th>suiviEmplacement</th>
                 <th>Livreur</th> 
                 <th>Statut</th>
                 <th>Actions</th>
@@ -256,6 +265,7 @@ const ListeColisAdmin = () => {
                   <td>{colis.montant}</td>
                   <td>{colis.depot}</td>
                   <td>{colis.adresse}</td>
+                  <td>{colis.suiviEmplacement}</td>
                   <td>{getLivreurName(colis.livreurId)}</td> 
                   <td>{colis.statut}</td>
                   <td>

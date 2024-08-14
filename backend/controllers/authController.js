@@ -39,6 +39,7 @@ const authenticateUser = (req, res, user, role) => {
   req.session.user = {
     id: user.id,
     email: user.email,
+    nom : user.nom, 
     role: role,
     superadminId: role === 'Superadmin' ? user.id : null,
     adminId: role === 'Admin' ? user.id : null,

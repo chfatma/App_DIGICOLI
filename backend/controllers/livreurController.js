@@ -24,20 +24,6 @@ exports.createLivreur = async (req, res) => {
   }
 };
 // Get all livreurs created by the specified admin
-exports.getAllLivreurs = async (req, res) => {
-  try {
-    const { adminId } = req.query;
-
-    if (!adminId) {
-      return res.status(400).json({ message: 'Admin ID is required' });
-    }
-
-    const livreurs = await Livreur.findAll({ where: { adminId } });
-    res.status(200).json(livreurs);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
 
 // Get a livreur by ID
 exports.getLivreurById = async (req, res) => {
@@ -101,6 +87,16 @@ exports.deleteLivreur = async (req, res) => {
       return res.status(404).json({ message: 'Livreur not found or not authorized' });
     }
     res.status(200).json({ message: 'Livreur deleted' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+exports.getAllLivreurs = async (req, res) => {
+  try {
+    const livreurs = await Livreur.findAll();
+    res.status(200).json(livreurs);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
